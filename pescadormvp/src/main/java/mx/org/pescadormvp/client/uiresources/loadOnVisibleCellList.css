@@ -1,0 +1,22 @@
+#-------------------------------------------------------------------------------
+# Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+# See LICENSE.txt for redistribution conditions.
+# 
+# D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+# Véase LICENSE.txt para los términos bajo los cuales se permite
+# la redistribución.
+#-------------------------------------------------------------------------------
+.emptyLoadingArea {
+	border-bottom: solid 1px #bbbbbb;
+	
+	/* this facilitates the calculation of the height of empty */
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.emptyLoadingArea span {
+	color: #aaaaaa;
+	margin-left: 2em;
+	font-size: 22px;
+}

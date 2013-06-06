@@ -1,0 +1,36 @@
+#-------------------------------------------------------------------------------
+# Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+# See LICENSE.txt for redistribution conditions.
+# 
+# D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+# Véase LICENSE.txt para los términos bajo los cuales se permite
+# la redistribución.
+#-------------------------------------------------------------------------------
+/* note: aspects of layout (positioning, padding) are set programmatically
+in the classes that use this stylesheet */
+
+.itemContainer {
+	background: #ffffff;
+	display: block;
+	cursor: pointer;
+	color: #5555ff;
+}
+
+.itemContainer:hover {
+	background-color: #5555ff;
+}
+
+.textArea {
+	color: #001166;
+	cursor: pointer;
+}
+
+.itemContainer:hover .textArea {
+	color: #f5ffcc;
+}
+
+/* not used; unsure whether it's actually possible to 
+set styles on GWT image widgets... */
+.image {
+	
+}

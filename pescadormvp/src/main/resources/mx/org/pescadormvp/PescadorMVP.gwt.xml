@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  See LICENSE.txt for redistribution conditions.
+  
+  D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  Véase LICENSE.txt para los términos bajo los cuales se permite
+  la redistribución.
+-->
+<module>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User' />
+  <inherits name="com.google.gwt.place.Place"/>
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.inject.Inject"/>
+
+  <!-- We need the JUnit module in the main module               -->
+  <inherits name='com.google.gwt.junit.JUnit' />
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard' />
+
+  <!-- Paths for translatable code                                -->
+  <source path='client' />
+  <source path='shared' />
+  
+  <!-- il8n  -->
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  <extend-property name="locale" values="en"/>
+  <set-property-fallback name="locale" value="en"/>
+  
+  <!-- client bundle support -->
+  <inherits name="com.google.gwt.resources.Resources" />
+  
+  <!-- XML -->
+  <inherits name="com.google.gwt.xml.XML" />
+  
+  <!--  gwt-dispatch support -->
+  <inherits name='net.customware.gwt.dispatch.Dispatch' />
+</module>

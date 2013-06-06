@@ -1,0 +1,104 @@
+<!--
+  Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  See LICENSE.txt for redistribution conditions.
+  
+  D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  Véase LICENSE.txt para los términos bajo los cuales se permite
+  la redistribución.
+-->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	
+	<ui:style type="mx.org.pescadormvp.client.uiresources.InternalButtonLink.InternalButtonLinkStyle">
+		@eval roundedCornerRadius mx.org.pescador.client.uiresources.InternalButtonLink.roundedCornerRadius();
+		
+		.link {
+			display: inline-block;
+			text-decoration: none;
+		}
+		
+		@sprite .linkEnabled {
+			cursor: pointer;
+			/* border: 1px solid #bbbbbb;
+			background-color: #ffffff; */
+			border-radius: roundedCornerRadius;
+			padding: 3px;
+			gwt-image: "backgroundImg";
+			
+			/* overriding stuff set by GWT for sprite */
+			width: auto;
+			height: auto;	
+			overflow: visible;	
+		}
+		
+		.linkEnabledHyperStyle {
+			cursor: pointer;
+		}
+		
+		@sprite .linkEnabled:hover {
+			/* background-color: #ffffff; */
+			gwt-image: "backgroundImgHover";
+			/* overriding stuff set by GWT for sprite */
+			width: auto;
+			height: auto;
+			overflow: visible;
+		}
+		
+		.linkDisabled {
+			/* border: 1px solid #c9c9c9; */
+			cursor: default;
+			/* background-color: #e0e0e0; */
+			border-radius: roundedCornerRadius;
+			padding: 3px;	
+		}
+
+		.linkDisabledHyperStyle {
+			cursor: default;
+		}
+		 
+		.htmlPanel {
+			display: inline;
+		}
+		
+		.imageDiv {
+			position: relative;
+		}
+		
+		.imagePlacetaker {
+			
+		}
+		
+		.linkEnabled .textSpan {
+			color: #444444;
+		}
+		
+		.linkEnabledHyperStyle .textSpan {
+			
+		} 
+		
+		.image {
+			position: absolute;
+		}
+		
+		@sprite .backgroundDiv {
+			gwt-image: "backgroundImg";
+			position: absolute;
+			width: auto;
+			height: auto;
+		}
+		
+	</ui:style>
+	
+	<ui:image field="backgroundImg" src="internalBtnBackground.png"/>
+	<ui:image field="backgroundImgHover" src="internalBtnBackgroundHover.png"/>
+	
+	<g:HTMLPanel ui:field="htmlPanel" styleName="{style.htmlPanel}">
+		<a ui:field="link" class="{style.link} {style.linkEnabled}">
+<!-- 			<div ui:field="backgroundDiv" class="{style.backgroundDiv}" /> -->
+			<div ui:field="imageDiv" class="{style.imageDiv}"/>
+			<div ui:field="imagePlacetaker" class="{style.imagePlacetaker}"/>
+			<span ui:field="textSpan" class="{style.textSpan}"/>
+		</a>
+	</g:HTMLPanel>
+	
+</ui:UiBinder>

@@ -1,0 +1,4 @@
+.*
+!.gitignore
+pescadormvp/target/*
+examples/jsonp/target/*

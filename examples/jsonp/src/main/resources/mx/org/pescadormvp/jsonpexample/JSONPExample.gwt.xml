@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  See LICENSE.txt for redistribution conditions.
+  
+  D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  Véase LICENSE.txt para los términos bajo los cuales se permite
+  la redistribución.
+-->
+<module rename-to='JSONPExample'>
+  <!-- Inherit the core Web Toolkit stuff. -->
+  <inherits name='com.google.gwt.user.User' />
+  <inherits name="com.google.gwt.place.Place"/>
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.inject.Inject"/>
+
+  <!-- Inherit PescadorMVP -->
+  <inherits name="mx.org.pescadormvp.PescadorMVP"/>
+
+  <!-- Limit permutations for compiling, un-comment as needed -->
+  <set-property name="user.agent" value="gecko1_8,safari"/>
+
+  <!-- We need the JUnit module in the main module -->
+  <inherits name='com.google.gwt.junit.JUnit' />
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard' />
+
+  <!-- Entry point class -->
+  <entry-point class='mx.org.pescadormvp.jsonpexample.client.JSONPExample' />
+
+  <!-- Paths for translatable code -->
+  <source path='client' />
+  <source path='shared' />
+  
+  <!-- il8n  -->
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  <extend-property name="locale" values="en"/>
+  <set-property-fallback name="locale" value="en"/>
+  
+  <!-- client bundle support -->
+  <inherits name="com.google.gwt.resources.Resources" />
+  
+  <!-- Library for webfonts -->
+  <!--  <inherits name="org.helios.gwt.fonts.GwtWebFonts"/> -->
+
+  <!-- OpenLayers for embedded map -->
+  <!-- This module makes use of javascript brought in via a <script> tag     -->
+  <!-- in the main .html file                                                -->
+  <inherits name='org.gwtopenmaps.openlayers.OpenLayers'/>
+  <!-- gwt-openlayers uses a script tag, which doesn't work with xsiframe  -->
+  <!-- Because of this, we have to inject the script manually -->
+  
+  <set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+  
+  <!-- For loading compiled code through a script tag, which lets you run GWT from local files -->
+  <add-linker name="xsiframe" />
+  
+  <!-- logging -->
+  <inherits name="com.google.gwt.logging.Logging"/>
+  <set-property name="gwt.logging.logLevel" value="FINEST"/>
+  <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
+  <set-property name="gwt.logging.systemHandler" value="ENABLED"/>
+
+</module>

@@ -1,0 +1,171 @@
+<!--
+  Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  See LICENSE.txt for redistribution conditions.
+  
+  D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  Véase LICENSE.txt para los términos bajo los cuales se permite
+  la redistribución.
+-->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' 
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:w='urn:import:mx.org.pescadormvp.jsonpexample.client.query' >
+
+	<!-- Here we have our CSS. This is modular, and GWT obfuscation prevents -->
+	<!-- collisions with other CSS classes of the same name in other modules. -->
+		
+	<ui:style type="mx.org.pescadormvp.jsonpexample.client.query.QueryViewImpl.Style">
+
+        /* Hera are values that we share with the Java view class */
+        @eval containerPadding mx.org.pescadormvp.jsonpexample.client.query.QueryViewImpl.getTextContainerPadding(); 
+	
+		.outerPanel {
+			height: 100%;
+			width: 100%;
+		}
+		
+		/* The strip of colour under the textbox and related elements */
+		.queryStrip {
+			top: 30px;
+			height: 130px;
+			position: absolute;
+			background-color: rgba(0,25,145,0.9);
+			padding: containerPadding;
+			visibility: hidden;
+		}
+
+		/* The strip of colour under the messages for the user */
+		.messageStrip {
+			top: 220px;
+			position: absolute;
+			background-color: rgba(20,10,150,0.8);
+			padding: containerPadding;
+			visibility: hidden;
+		}
+			
+		/* an element containing textbox and related elements */		
+		.queryContainer {
+			line-height: 130px;
+		}
+		
+		/* a container within the message strip element*/
+		.messageContainer {
+			color: rgb(255,255,255);
+		}
+		
+		/* adjustment for paragraphs within messages to the user */
+		.messagePar {
+			margin-top: 0;
+		}
+		
+		/* the text surronding the textbox */
+		.aroundTextBox {
+			color: rgb(255,255,255);
+		}
+		
+		/* font and font-size for all text on the screen*/
+		.aroundTextBox,
+		.textBox,
+		.messageContainer,
+		.embarassedTextBox  {
+			font-family:'Droid Sans', sans-serif;
+			font-size: 35px;
+		}
+		
+		/* the textbox where users type their query */
+		.textBox,
+		.embarassedTextBox {
+			font-size: 35px;
+			border: none;
+			max-height: 1.2em;
+			width: 8em;
+			padding: 0 3px 0 3px;
+			margin: 0 0.2em 0 0.2em;
+			color: rgb(90,90,95);
+		}
+		
+		.embarassedTextBox {
+			background-color: rgb(250,210,202);
+		}
+		
+		/* button next to the textbox */
+		.goButton {
+			display: inline;
+			padding: 0px 2px 0px 2px;
+		}
+		
+		.goButton:hover {
+			cursor: pointer;
+		}
+		
+		.goButton img {
+			vertical-align: top;
+			position: relative;
+			top: 19px;
+		}
+		
+		.mapContainer {
+			position: absolute;
+			background-color: rgb(220,220,230);
+			top: 0;
+			bottom: 0;
+			right: 0;
+		}
+		
+		/* decorative image */
+		@sprite .earthImageContainer {
+			gwt-image: "earth";
+			z-index: -9;
+			position: absolute;
+		}
+	</ui:style>
+	
+	<!-- all images resources used -->
+	<!-- these will be rolled into a bundle and fetched all together by GWT -->
+	<ui:image field="earth" src='earth.png'/>
+	<ui:image field="arrow" src='arrow.png'/>
+	<ui:image field="arrowDown" src='arrowDown.png'/>
+	<ui:image field="arrowHover" src='arrowHover.png'/>
+
+	<!-- Here is the specification of the "HTML" -->
+	<!-- Actually it's a mix of GWT widgets and HTML -->
+		
+	<g:SimpleLayoutPanel ui:field="outerPanel" styleName="{style.outerPanel}">
+		<g:HTMLPanel>
+		
+			<!-- The strip of colour under the textbox and related stuff -->
+			<div ui:field="queryStrip" class="{style.queryStrip}" >
+		
+				<!-- textbox and related stuff -->
+				<g:HTMLPanel  
+						ui:field="queryContainer" 
+						styleName="{style.queryContainer}">
+						 
+					<span ui:field="beforeQueryTextBoxSpan" class="{style.aroundTextBox}"/>
+					
+					<g:SuggestBox ui:field="suggestBox" styleName="{style.textBox}" />
+					
+					<span ui:field="afterQueryTextBoxSpan" class="{style.aroundTextBox}"/>
+					
+					<g:PushButton ui:field="goButton" styleName="{style.goButton}">
+						<g:upFace image="{arrow}" />
+						<g:downFace image="{arrowDown}" />
+						<g:upHoveringFace image="{arrowHover}" />
+					</g:PushButton>
+					
+				</g:HTMLPanel>
+			</div>
+			
+			<!-- Decorative Earth image -->
+			<div class="{style.earthImageContainer}" ui:field="earthImageContainer" />
+			
+			<!-- Container for messages to the user  -->
+			<div ui:field="messageStrip" class="{style.messageStrip}">
+				<div class="{style.messageContainer}" ui:field="messageContainer" />
+			</div>
+			
+			<!-- Container for map -->
+			<g:SimplePanel ui:field="mapContainer" styleName="{style.mapContainer}" />
+
+		</g:HTMLPanel>
+	</g:SimpleLayoutPanel>
+</ui:UiBinder>

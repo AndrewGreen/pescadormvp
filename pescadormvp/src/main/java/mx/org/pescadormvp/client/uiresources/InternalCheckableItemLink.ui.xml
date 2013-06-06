@@ -1,0 +1,37 @@
+<!--
+  Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  See LICENSE.txt for redistribution conditions.
+  
+  D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+  Véase LICENSE.txt para los términos bajo los cuales se permite
+  la redistribución.
+-->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:style>
+		.link {
+			text-decoration: none;
+			display: block;
+			cursor: pointer;
+	    }
+	    
+	</ui:style>
+	
+	<ui:with
+			field="itemResources" 
+			type="mx.org.pescador.client.uiresources.ItemResources" />
+	
+	<g:HTMLPanel>
+		<a ui:field="link" class="{style.link}">
+			<div class="{itemResources.style.itemContainer}"
+					ui:field="itemContainer">
+			
+				<g:Image ui:field="image" />
+				
+				<span ui:field="textArea"
+						class="{itemResources.style.textArea}"/>
+				
+			</div>
+		</a>
+	</g:HTMLPanel>
+</ui:UiBinder>
