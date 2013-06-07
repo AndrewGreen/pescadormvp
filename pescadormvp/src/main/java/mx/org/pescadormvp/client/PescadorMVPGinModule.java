@@ -24,6 +24,7 @@ import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceController;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceHistoryHandler;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapperImpl;
+import mx.org.pescadormvp.client.regionsandcontainers.LayoutHelper;
 import mx.org.pescadormvp.client.regionsandcontainers.NullPanelTools.NullActivity;
 import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.SessionImpl;
@@ -73,6 +74,9 @@ public class PescadorMVPGinModule extends AbstractGinModule {
 		install(new GinFactoryModuleBuilder()
 				.implement(ActivityManager.class, PescadorMVPActivityManager.class)
 				.build(ActivityManagersFactory.class));
+		
+		// layout helper
+		bind(LayoutHelper.class).in(Singleton.class);
 		
 		// session
 		bind(Session.class).to(SessionImpl.class).in(Singleton.class);
