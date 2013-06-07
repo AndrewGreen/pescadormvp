@@ -56,10 +56,16 @@ following command from the parent project directory (weather/):
 $ mvn clean install
 
 To start up the development mode server, go to the weather/weatherclient
-directory and run
+directory and run:
 
 $ mvn gwt:run
 
+Create javadoc and test reports for the example/jsonp project, go to that
+directory and run:
+
+$ mvn site:site
+
+The generated site will be at example/jsonp/target/site/project-info.html.
 
 ## Eclipse
 
