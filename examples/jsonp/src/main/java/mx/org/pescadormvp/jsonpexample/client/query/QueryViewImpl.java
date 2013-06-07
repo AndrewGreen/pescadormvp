@@ -338,19 +338,6 @@ public class QueryViewImpl extends ResizeComposite implements
 		// Note: the map location itself is set directly by the activity,
 		// by way of the map object.
 		
-//		if (!mapSetup)
-//			setupMap();
-//		
-//        //Set map location
-//        //transform lonlat to OSM coordinate system
-//		// Projection to use for translation of latitude and longitude
-//		// to OpenStreetMap coordinate system
-//		Projection DEFAULT_PROJECTION = new Projection("EPSG:4326");
-//		LonLat lonLat = new LonLat(lon, lat);
-//        lonLat.transform(DEFAULT_PROJECTION.getProjectionCode(),
-//                         map.getProjection()); 
-//        map.setCenter(lonLat, 12);
-		
 		setTextBoxEmbarassed(false);
 		finishNonLoadingRender();
 	}
@@ -396,25 +383,6 @@ public class QueryViewImpl extends ResizeComposite implements
 		setTextBoxEmbarassed(false);
 		finishNonLoadingRender();
 	}
-	
-//	private void setupMap() {
-//        //create some MapOptions
-//        MapOptions defaultMapOptions = new MapOptions();
-//        defaultMapOptions.setNumZoomLevels(16);
-//        
-//        //Create a MapWidget and add layer
-//        MapWidget mapWidget = new MapWidget("100%", "100%", defaultMapOptions);
-//        OSM osm_1 = OSM.Mapnik("Mapnik");
-//        osm_1.setIsBaseLayer(true);
-//        map = mapWidget.getMap();
-//        map.addLayer(osm_1);
-// 
-//        //Lets add some default controls to the map
-//        map.addControl(new OverviewMap()); //+ sign in the lowerright to display the overviewmap
-//
-//        mapContainer.add(mapWidget);
-//        mapSetup = true;
-//	}
 	
 	/**
 	 * Does standard things for all kinds of states other than loading.
