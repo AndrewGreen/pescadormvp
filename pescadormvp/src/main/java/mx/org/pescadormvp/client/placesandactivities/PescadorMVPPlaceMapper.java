@@ -22,4 +22,6 @@ public interface PescadorMVPPlaceMapper extends PlaceHistoryMapper,
 			P newPlace);
 	
 	public String getToken(PescadorMVPPlace place);
+
+	PescadorMVPPlace defaultPlace();
 }

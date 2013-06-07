@@ -11,7 +11,7 @@ package mx.org.pescadormvp.client.placesandactivities;
 import java.util.HashMap;
 import java.util.Map;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
+import mx.org.pescadormvp.client.components.ComponentRegistry;
 import mx.org.pescadormvp.shared.PescadorMVPLocale;
 
 import com.google.gwt.http.client.UrlBuilder;
@@ -22,31 +22,35 @@ import com.google.inject.Inject;
 
 public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 
-	private ComponentSetup componentSetup;
 	private static String MAIN_TOKEN_SEPARATOR = ";";
 	private static String KV_PAIR_SEPARATOR = "/";
 	private static String KV_SEPARATOR = "=";
 	
-	@Inject
-	protected PescadorMVPPlaceMapperImpl() { }
+	private ComponentRegistry componentRegistry;
+	private RawDefaultPlaceProvider defaultPlaceProvider;
 	
-	/**
-	 * Called from {@link ComponentSetup} after it has been injected there.
-	 * (This avoids circular injection problems.)
-	 * 
-	 * @param componentSetup
-	 */
-	@Override
-	public void setComponentSetup(ComponentSetup componentSetup) {
-		this.componentSetup = componentSetup;
+	@Inject
+	protected PescadorMVPPlaceMapperImpl(
+			ComponentRegistry componentRegistry,
+			RawDefaultPlaceProvider defaultPlaceProvider) { 
+		
+		this.componentRegistry = componentRegistry;
+		this.defaultPlaceProvider = defaultPlaceProvider;
 	}
-
+	
 	@Override
 	public Place getPlace(String fullToken) {
 		String[] tokenParts = fullToken.split(MAIN_TOKEN_SEPARATOR);
 		
+		PescadorMVPPAVComponent<?, ?> pavComponent =
+				componentRegistry.getPAVComponent(tokenParts[0]);
+
 		// if we've got a bad token, we get the default place
-		PescadorMVPPlace place = componentSetup.getPlace(tokenParts[0]);
+		PescadorMVPPlace place;
+		if (pavComponent != null)
+			place = pavComponent.getPlace();
+		else
+			place = defaultPlaceProvider.getRawDefaultPlace();
 		
 		if (tokenParts.length > 1) {
 			Map<String, String> properties = getKVMap(tokenParts[1]);
@@ -60,7 +64,7 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 	 * A method for getting a copy of a any place. Does not copy or set up
 	 * URL info.
 	 * 
-s	 */
+	 */
 	@Override
 	public <P extends PescadorMVPPlace> P copyPlaceInto(
 			P originalPlace,
@@ -182,4 +186,24 @@ s	 */
 	public Class<PescadorMVPPlaceMapper> publicInterface() {
 		return PescadorMVPPlaceMapper.class;
 	}
+	
+	@Override
+	public PescadorMVPPlace defaultPlace() {
+		
+		PescadorMVPPlace place = defaultPlaceProvider.getRawDefaultPlace();
+		setupURLInfo(place);
+		
+		// For some reason, it seems necessary to set this to an empty string
+		// rather than the real history token. This allows links to the default
+		// place in the UI (generated from this very object) to have no
+		// history token at all. If they have their normal history token,
+		// then clicking on them adds an extra, unwanted entry in the 
+		// browser history.
+		place.setHistoryToken("");
+		
+		return place;
+	}
+	
+//	@Override
+
 }

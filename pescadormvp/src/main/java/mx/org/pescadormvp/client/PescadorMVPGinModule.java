@@ -8,6 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.client;
 
+import mx.org.pescadormvp.client.components.ComponentRegistry;
+import mx.org.pescadormvp.client.components.ComponentRegistryImpl;
 import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.data.DataManagerImpl;
 import mx.org.pescadormvp.client.data.JsonpDispatchAsync;
@@ -48,6 +50,10 @@ public class PescadorMVPGinModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
+		// component registry
+		bind(ComponentRegistry.class)
+				.to(ComponentRegistryImpl.class).in(Singleton.class);
+		
 		// event bus
 		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 

@@ -14,7 +14,6 @@ import java.util.Set;
 
 import com.google.inject.Provider;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
 import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.SessionData;
@@ -29,12 +28,12 @@ import mx.org.pescadormvp.client.util.Reflect;
  */
 public abstract class PlaceActivityViewComponentBase<
 		// public interface offered as a component
-		I extends PescadorMVPViewComponent<I,P>,
+		I extends PescadorMVPPAVComponent<I,P>,
 		
 		// place class we're binding to
 		P extends PescadorMVPPlace				
 		
-		> implements PescadorMVPViewComponent<I,P> {
+		> implements PescadorMVPPAVComponent<I,P> {
 
 	private final Class<I> publicInterface;
 	private final String mainToken;
@@ -46,37 +45,23 @@ public abstract class PlaceActivityViewComponentBase<
 
 	private final PescadorMVPPlaceProvider<P> placeProvider;
 	
-	private ComponentSetup componentSetup;
+	private Session session;
 	
 	// no @Inject, injection used in the extending class's constructor
 	public PlaceActivityViewComponentBase(
 			Class<I> publicInterface,
 			String mainToken,
 			PescadorMVPPlaceProvider<P> placeProvider,
-			Class<P> placeClass) {
+			Class<P> placeClass,
+			Session session) {
 		
 		this.publicInterface = publicInterface;
 		this.mainToken = mainToken;
 		this.placeProvider = placeProvider;
 		this.placeClass = placeClass;
+		this.session = session;
 	}
 
-	/**
-	 * Sets the active {@link ComponentSetup} that this is a part of.
-	 * Called by {@link ComponentSetup} when this instance is added to it.
-	 * (Can't be injected because that would create an infinite injection cycle.)
-	 * 
-	 * @param componentSetup
-	 */
-	@Override
-	public void setComponentSetup(ComponentSetup componentSetup) {
-		this.componentSetup = componentSetup;
-	}
-	
-	public ComponentSetup getComponentSetup() {
-		return componentSetup;
-	}
-	
 	@Override
 	public String getMainToken() {
 		return mainToken;
@@ -146,8 +131,6 @@ public abstract class PlaceActivityViewComponentBase<
 	@SuppressWarnings("unchecked")
 	@Override
 	public <S extends SessionData> S ensureSessionData() {
-		Session session = componentSetup.getComponent(Session.class);
-
 		S sessionData = (S) session.getSessionData(publicInterface());
 		
 		if (sessionData == null) {

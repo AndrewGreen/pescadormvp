@@ -8,8 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.jsonpexample.client.query;
 
-import mx.org.pescadormvp.client.placesandactivities.DefaultPlaceProvider;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPViewComponent;
+import mx.org.pescadormvp.client.placesandactivities.RawDefaultPlaceProvider;
+import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponent;
 
 /**
  * The interface representing the general Query component. If we wanted this component
@@ -19,7 +19,7 @@ import mx.org.pescadormvp.client.placesandactivities.PescadorMVPViewComponent;
  *
  */
 public interface QueryComponent 
-		extends PescadorMVPViewComponent<
+		extends PescadorMVPPAVComponent<
 		QueryComponent, 
 		QueryPlace>,
-		DefaultPlaceProvider { }
+		RawDefaultPlaceProvider { }

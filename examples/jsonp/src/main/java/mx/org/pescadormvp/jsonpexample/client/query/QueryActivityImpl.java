@@ -12,7 +12,6 @@ import java.util.logging.Level;
 
 import mx.org.pescadormvp.jsonpexample.client.query.QueryMessages;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
 import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceActivityBase;
@@ -53,15 +52,26 @@ public class QueryActivityImpl
 	// OSMMap
 	private OSMMap map;
 	
+	// Components used
+	private QueryComponent queryComponent; // component this is part of
+	private DataManager dataManager;
+	private PescadorMVPLogger logger;
+	
 	@Inject
 	public QueryActivityImpl(
 			@Assisted QueryPlace place,
 			QueryMessages messages,
-			OSMMap map) {
+			OSMMap map,
+			QueryComponent queryComponent,
+			DataManager dataManager,
+			PescadorMVPLogger logger) {
 
 		super(place);
 		this.messages = messages;
 		this.map = map;
+		this.queryComponent = queryComponent;
+		this.dataManager = dataManager;
+		this.logger = logger;
 	}
 
 	/**
@@ -91,7 +101,7 @@ public class QueryActivityImpl
 				view, this);
 		
 		// Provide the view with a fresh place instance for the next query
-		view.setRawQueryPlace(getComponentThisIsPartOf().getPlace());
+		view.setRawQueryPlace(queryComponent.getPlace());
 		
 		// The Place object provides the data for this activity, which in this
 		// case is the name of the place whose latitude and longitude we'll query.
@@ -121,12 +131,7 @@ public class QueryActivityImpl
 			};
 			
 			loadingTimer.schedule(WAIT_FOR_LOADING_MESSAGE_MS);
-			
-			// Get the DataManager component
-			final ComponentSetup componentSetup = getComponentSetup();
-			DataManager dataManager = 
-					componentSetup.getComponent(DataManager.class);
-			
+						
 			// Create an action object with the name of the location to query
 			GetLatLonAction action = new GetLatLonAction(location);
 			
@@ -140,9 +145,6 @@ public class QueryActivityImpl
 					loadingTimer.cancel();
 					
 					// Log the error
-					PescadorMVPLogger logger = 
-							componentSetup.getComponent(PescadorMVPLogger.class);
-					
 					logger.log(Level.WARNING, caught.getLocalizedMessage());
 					
 					// Notify the user

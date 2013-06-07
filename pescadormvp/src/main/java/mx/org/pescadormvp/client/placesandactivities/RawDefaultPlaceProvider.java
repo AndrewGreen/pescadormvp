@@ -12,10 +12,12 @@ import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
 
 /**
  * Provides a default place, and may set up its presentation text depending on the
- * current locale. Not a provider in Guice/Gin terms.
+ * current locale. Not a provider in Guice/Gin terms. Should only be used directly
+ * by {@link PescadorMVPPlaceMapper}, which is the real provider of fully
+ * setup default places for the framework.
  * 
  */
-public interface DefaultPlaceProvider {
+public interface RawDefaultPlaceProvider {
 
-	public PescadorMVPPlace getDefaultPlace();
+	public PescadorMVPPlace getRawDefaultPlace();
 }

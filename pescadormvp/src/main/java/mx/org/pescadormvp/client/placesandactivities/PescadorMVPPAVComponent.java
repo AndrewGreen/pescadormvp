@@ -14,9 +14,9 @@ import mx.org.pescadormvp.client.components.Component;
 import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.client.session.SessionData;
 
-public interface PescadorMVPViewComponent<
+public interface PescadorMVPPAVComponent<
 		// public interface offered as a component
-		I  extends PescadorMVPViewComponent<I,P>,
+		I  extends PescadorMVPPAVComponent<I,P>,
 		
 		// place we're binding to
 		P extends PescadorMVPPlace>

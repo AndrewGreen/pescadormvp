@@ -18,8 +18,8 @@ import com.google.inject.TypeLiteral;
 import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.placesandactivities.ActivitiesFactory;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
 import mx.org.pescadormvp.client.placesandactivities.PlaceActivityViewComponentBase;
+import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.SessionData;
 import mx.org.pescadormvp.jsonpexample.client.layout.Layout.Body;
 
@@ -39,20 +39,25 @@ public class QueryComponentImpl extends PlaceActivityViewComponentBase<
 
 	private QueryPlace defaultPlace;
 	private GetLatLonActionHelper actionHelper;
+	private DataManager dataManager;
 
 	@Inject
 	public QueryComponentImpl(
 			QueryPlaceProvider queryPlaceProvider,
 			ActivitiesFactory<QueryPlace, QueryActivity> activitiesFactory,
-			GetLatLonActionHelper actionHelper) {
+			GetLatLonActionHelper actionHelper,
+			Session session,
+			DataManager dataManager) {
 		
 		super(
 			QueryComponent.class,
 			"query",
 			queryPlaceProvider,
-			QueryPlace.class);
+			QueryPlace.class,
+			session);
 
 		this.actionHelper = actionHelper;
+		this.dataManager = dataManager;
 		
 		// Here we establish that this component has an activity for the
 		// {@link Body} screen region (in this app, that's the only region).
@@ -110,23 +115,16 @@ public class QueryComponentImpl extends PlaceActivityViewComponentBase<
 	 * Provides a fully setup place for use as default place.
 	 */
 	@Override
-	public PescadorMVPPlace getDefaultPlace() {
-		if (defaultPlace == null) {
+	public PescadorMVPPlace getRawDefaultPlace() {
+		if (defaultPlace == null)
 			defaultPlace = getPlace();
-			
-			// let PlaceMapper take care of other URL-related setup
-			PescadorMVPPlaceMapper placeMapper = getComponentSetup().
-					getComponent(PescadorMVPPlaceMapper.class);
-			placeMapper.setupURLInfo(defaultPlace);
-		}
 
 		return defaultPlace;
 	}
 	
 	@Override
 	public void finalizeSetup() {
-		getComponentSetup().getComponent(DataManager.class)
-				.registerActionHelper(actionHelper);
+		dataManager.registerActionHelper(actionHelper);
 	}
 
 	@Override

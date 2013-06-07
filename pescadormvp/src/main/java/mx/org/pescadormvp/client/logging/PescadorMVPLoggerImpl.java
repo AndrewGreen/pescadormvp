@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 
 import com.google.gwt.logging.client.TextLogFormatter;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
-
 public class PescadorMVPLoggerImpl implements PescadorMVPLogger {
 
 	private Logger logger;
@@ -43,12 +41,6 @@ public class PescadorMVPLoggerImpl implements PescadorMVPLogger {
 		return logger;
 	}
 	
-	
-	@Override
-	public void setComponentSetup(ComponentSetup componentSetup) {
-		// do nothing, no need for a reference back to component setup
-	}
-
 	@Override
 	public Class<PescadorMVPLogger> publicInterface() {
 		return PescadorMVPLogger.class;

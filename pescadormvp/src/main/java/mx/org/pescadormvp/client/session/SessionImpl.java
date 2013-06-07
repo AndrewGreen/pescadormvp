@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.components.ComponentSetup;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.client.util.UUID;
 import mx.org.pescadormvp.shared.PescadorMVPLocale;
@@ -153,11 +152,6 @@ public class SessionImpl implements Session, PlaceChangeEvent.Handler {
 		return clientSessionID + UUID.uuid(4);
 	}
 	
-	@Override
-	public void setComponentSetup(ComponentSetup componentSetup) {
-		// do nothing; we don't need a ref to component setup in this case
-	}
-
 	@Override
 	public void finalizeSetup() {
 		// nothing to do

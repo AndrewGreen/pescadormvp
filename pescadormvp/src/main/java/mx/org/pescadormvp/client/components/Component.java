@@ -14,11 +14,6 @@ package mx.org.pescadormvp.client.components;
  * @param <I> The public interface that this component offers.
  */
 public interface Component<I> {
-
-	/**
-	 * Receives the current component setup for bi-directional communication 
-	 */
-	void setComponentSetup(ComponentSetup componentSetup);
 	
 	/**
 	 * Do stuff that can only be done once all components have been loaded

@@ -9,7 +9,6 @@
 package mx.org.pescadormvp.client.placesandactivities;
 
 import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.components.ComponentSetup;
 import mx.org.pescadormvp.client.regionsandcontainers.NullPanelTools.NullActivity;
 import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.StatePointer;
@@ -28,8 +27,7 @@ public abstract class PescadorMVPActivityBase<
 
 	private V view;
 	private S statePointer;
-	private ComponentSetup componentSetup;
-	private I componentThisIsPartOf;
+	private Session session;
 
 	// The place is gotten by subclasses via
 	// assisted inject.
@@ -40,17 +38,9 @@ public abstract class PescadorMVPActivityBase<
 	}
 
 	@Inject
-	public void setupStuff(
-			ComponentSetup componentSetup,
-			V view) {
-		this.componentSetup = componentSetup;
+	public void setupStuff(Session session, V view) {
 		this.view = view;
-
-		// For some reason, if we inject this parameter here instead
-		// of getting it this way, we end up with extra instances
-		// of the component in question.
-		this.componentThisIsPartOf = componentSetup
-				.getComponent(getComponentClass());
+		this.session = session;
 	}
 
 	protected abstract Class<I> getComponentClass();
@@ -72,14 +62,6 @@ public abstract class PescadorMVPActivityBase<
 		return statePointer;
 	}
 
-	protected ComponentSetup getComponentSetup() {
-		return componentSetup;
-	}
-
-	protected I getComponentThisIsPartOf() {
-		return componentThisIsPartOf;
-	}
-
 	/**
 	 * Makes it easy for {@link PescadorMVPPlaceActivityBase}s to respond to
 	 * {@link ActivateInternalLinkEvent}s from views.
@@ -97,7 +79,6 @@ public abstract class PescadorMVPActivityBase<
 	 *            Where to go
 	 */
 	protected void goTo(PescadorMVPPlace place) {
-		Session session = getComponentSetup().getComponent(Session.class);
 		session.goTo(place);
 	}
 }

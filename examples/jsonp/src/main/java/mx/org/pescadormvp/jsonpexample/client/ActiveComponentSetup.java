@@ -18,7 +18,9 @@ package mx.org.pescadormvp.jsonpexample.client;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 import mx.org.pescadormvp.client.PescadorMVPGinModule;
 import mx.org.pescadormvp.client.PescadorMVPGinjector;
+import mx.org.pescadormvp.client.components.ComponentRegistry;
 import mx.org.pescadormvp.client.components.ComponentSetup;
+import mx.org.pescadormvp.client.placesandactivities.RawDefaultPlaceProvider;
 import mx.org.pescadormvp.jsonpexample.client.layout.Layout;
 import mx.org.pescadormvp.jsonpexample.client.layout.LayoutImpl;
 import mx.org.pescadormvp.jsonpexample.client.query.QueryComponent;
@@ -76,6 +78,8 @@ public class ActiveComponentSetup extends ComponentSetup {
 	 */
 	@Inject
 	public ActiveComponentSetup(
+			// Component registry
+			ComponentRegistry componentRegistry,
 			
 			// The global window layout widget
 			Layout layout,
@@ -86,7 +90,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 			
 			) {
 		
-		super();
+		super(componentRegistry);
 
 		// We do this before registering components, so that Place-Activity-View
 		// components can be checked against the viewport regions available here
@@ -95,9 +99,6 @@ public class ActiveComponentSetup extends ComponentSetup {
 		// Register components
 		// TODO once multibindings and mapbindings are in Gin, look into using that
 		addComponents(queryComponent);
-		
-		// Set which component provides the default place
-		setDefaultPlaceProvider(queryComponent);
 		
 		// Inject external Javascript libraries for OpenLayers.
 		// The framework will ensure that these are loaded and available
@@ -123,6 +124,10 @@ public class ActiveComponentSetup extends ComponentSetup {
 
 			// window layout
 			bind(Layout.class).to(LayoutImpl.class).in(Singleton.class);
+			
+			// default place provider
+			bind(RawDefaultPlaceProvider.class)
+					.to(QueryComponent.class).in(Singleton.class);
 			
 			// If configuration values are to be injected into classes, they
 			// may be specified here.

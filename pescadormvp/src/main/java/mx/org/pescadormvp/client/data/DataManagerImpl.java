@@ -129,11 +129,6 @@ public class DataManagerImpl implements DataManager {
 		}
 	}
 
-	@Override
-	public void setComponentSetup(ComponentSetup componentSetup) {
-		this.componentSetup = componentSetup;
-	}
-
 	/**
 	 * Register an action helper for a specific JSONP action class.
 	 */

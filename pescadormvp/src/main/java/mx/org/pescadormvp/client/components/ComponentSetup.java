@@ -8,10 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.client.components;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -19,12 +16,11 @@ import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.client.placesandactivities.ActivityManagersFactory;
 import mx.org.pescadormvp.client.placesandactivities.ActivityMappersFactory;
-import mx.org.pescadormvp.client.placesandactivities.DefaultPlaceProvider;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPActivityMapper;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceActivity;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPViewComponent;
+import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponent;
 import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.client.regionsandcontainers.HasRegions;
 import mx.org.pescadormvp.client.regionsandcontainers.RootHasFixedSetOfRegions;
@@ -54,8 +50,7 @@ import com.google.web.bindery.event.shared.EventBus;
  */
 public abstract class ComponentSetup implements RootRegionManager {
 	
-	private Map<String, PescadorMVPViewComponent<?,?>> mainTokenIndex =
-			new HashMap<String, PescadorMVPViewComponent<?,?>>();
+	private ComponentRegistry componentRegistry;
 	
 	private RootHasFixedSetOfRegions regionsWidget;
 	private Set<Class<? extends ForRegionTag>> regions;
@@ -66,21 +61,21 @@ public abstract class ComponentSetup implements RootRegionManager {
 	private ActivityMappersFactory activityMappersFactory;
 	private ActivityManagersFactory activityManagersFactory;
 	
-	private DefaultPlaceProvider defaultPlaceProvider;
+	private PescadorMVPPlaceMapper placeMapper;
 	private NullActivity nullActivity;
-	
-	private Map<Class<?>, Component<?>> componentIndex = 
-			new HashMap<Class<?>, Component<?>>();
 	
 	private Set<String> scriptURLsLoading = new HashSet<String>();
 	private Set<String> scriptURLsFailedToLoad = new HashSet<String>();
 	private boolean startCalled;
 	private boolean started;
 	
+	public ComponentSetup(ComponentRegistry componentRegistry) {
+		this.componentRegistry = componentRegistry;
+	}
+	
 	public void addComponents(
 			Component<?>... components) {
-		for (Component<?> component : components)
-			addComponent(component);
+		componentRegistry.addComponents(components);
 	}
 	
 	/**
@@ -113,6 +108,8 @@ public abstract class ComponentSetup implements RootRegionManager {
 				placeMapper,
 				session,
 				logger});
+		
+		this.placeMapper = placeMapper;
 	}
 
 	@Override
@@ -123,7 +120,13 @@ public abstract class ComponentSetup implements RootRegionManager {
 	@Override
 	public void setRootRegionsWidget(RootHasFixedSetOfRegions regionsWidget) {
 		this.regionsWidget = regionsWidget;
-		this.regions = regionsWidget.getRegions(); // a reference, not a copy
+		
+		// a reference, not a copy
+		regions = regionsWidget.getRegions();
+		
+		// Tell the component registry what the regions are, so it can check 
+		// that components handle regions that are actually available
+		componentRegistry.setRegions(regions);
 	}
 
 	// not used so far; TODO check
@@ -144,25 +147,6 @@ public abstract class ComponentSetup implements RootRegionManager {
 	@Override
 	public Set<Class<? extends ForRegionTag>> getRegions() {
 		return regions;
-	}
-
-	protected void setDefaultPlaceProvider(DefaultPlaceProvider defaultPlaceProvider) {
-		this.defaultPlaceProvider = defaultPlaceProvider;
-	}
-	
-	public PescadorMVPPlace defaultPlace() {
-		
-		PescadorMVPPlace defaultPlace = defaultPlaceProvider.getDefaultPlace();
-		
-		// For some reason, it seems necessary to set this to an empty string
-		// rather than the real history token. This allows links to the default
-		// place in the UI (generated from this very object) to have no
-		// history token at all. If they have their normal history token,
-		// then clicking on them adds an extra, unwanted entry in the 
-		// browser history.
-		defaultPlace.setHistoryToken("");
-		
-		return defaultPlace;
 	}
 
 	/**
@@ -204,7 +188,10 @@ public abstract class ComponentSetup implements RootRegionManager {
 		// We should never have started before all requested scripts have been
 		// injected.
 		if (started) {
-			PescadorMVPLogger logger = tryToGetLogger();
+			
+			// Only log if a logger is available, of course--should assume it is
+			PescadorMVPLogger logger = 
+					componentRegistry.getComponent(PescadorMVPLogger.class);
 			if (logger != null)
 				logger.log(Level.SEVERE, "Framework started before all " +
 						"requested scripts injected.");
@@ -237,15 +224,14 @@ public abstract class ComponentSetup implements RootRegionManager {
 			// this class and components will have taken place by the time we get
 			// here; so run through all components and call finalizeSetup,
 			// which should be called after all components are loaded
-			for (Component<?> component : componentIndex.values()) {
-				component.finalizeSetup();
-			}
+			componentRegistry.callFinalizeSetup();
 
 			// Check if any requested scripts failed to load
 			if (scriptURLsFailedToLoad.size() > 0) {
 
 				// If so, and if a logger is available, log the error
-				PescadorMVPLogger logger = tryToGetLogger();
+				PescadorMVPLogger logger = 
+						componentRegistry.getComponent(PescadorMVPLogger.class);
 				
 				if (logger != null) {
 					for (String failedSriptURL : scriptURLsFailedToLoad)
@@ -270,7 +256,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 			historyHandler.register(
 					placeController,
 					eventBus,
-					defaultPlace().asGWTPlace());
+					placeMapper.defaultPlace().asGWTPlace());
 			
 			historyHandler.handleCurrentHistory();
 			
@@ -279,78 +265,19 @@ public abstract class ComponentSetup implements RootRegionManager {
 		}
 	}
 	
-	/**
-	 * There are times when it's appropriate to log messages from here, however
-	 * we can't assume that a logger is necessarily available. Here we try to
-	 * get one, and return null if there is none. 
-	 */
-	private PescadorMVPLogger tryToGetLogger() {
-		if (componentIndex.containsKey(PescadorMVPLogger.class))
-			return getComponent(PescadorMVPLogger.class);
-		else
-			return null;	
-	}
-	
-	private void addComponent(Component<?> component) {
-		component.setComponentSetup(this);
-		componentIndex.put(component.publicInterface(), component);
-		
-		if (component instanceof PescadorMVPViewComponent<?,?>) {
-			PescadorMVPViewComponent<?,?> pavComponent =
-					(PescadorMVPViewComponent<?,?>) component;
-			
-			mainTokenIndex.put(pavComponent.getMainToken(), pavComponent);
-			
-			for (Class<? extends ForRegionTag> region : 
-					pavComponent.handlesRegions()) {
-				
-				if (!regions.contains(region))
-					throw new IllegalArgumentException(
-							pavComponent + " handles region " + region +
-							" which is not managed by " + this);
-			}
-		}
-	}
-	
-	public PescadorMVPPlace getPlace(String mainToken) {
-		PescadorMVPViewComponent<?,?> pavComponent =
-				mainTokenIndex.get(mainToken);
-		
-		if (pavComponent != null)
-			return pavComponent.getPlace();
-		else
-			return defaultPlace(); // in case we get an incorrect token
-	}
-
-	/**
-	 * A method for getting a copy of a any place. Convenience method,
-	 * delegated to {@link PescadorMVPPlaceMapper}.
-	 */
-	public <P extends PescadorMVPPlace> P copyPlace(P originalPlace) {
-		PescadorMVPPlaceMapper placeMapper = 
-				getComponent(PescadorMVPPlaceMapper.class);
-		
-		PescadorMVPViewComponent<?,P> pavComponent =
-				getCastPAVComponent(originalPlace);
-		
-		P newPlace = pavComponent.getPlace();
-		
-		return placeMapper.copyPlaceInto(originalPlace, newPlace);
-	}
-
-	private <P extends PescadorMVPPlace> PescadorMVPViewComponent<?, P>
+	private <P extends PescadorMVPPlace> PescadorMVPPAVComponent<?, P>
 			getCastPAVComponent(P place) {
 
-		PescadorMVPViewComponent<?, ?> pavComponent =
-				mainTokenIndex.get(place.getMainToken());
-
+		PescadorMVPPAVComponent<?, ?> pavComponent =
+				componentRegistry.getPAVComponent(place.getMainToken());
+				
 		if (!Reflect.isOfSameClassOrSubclass(pavComponent.getPlaceClass(),
 				place))
 			throw new RuntimeException();
 
 		@SuppressWarnings("unchecked")
-		PescadorMVPViewComponent<?, P> castPAVComponent =
-				(PescadorMVPViewComponent<?, P>) pavComponent;
+		PescadorMVPPAVComponent<?, P> castPAVComponent =
+				(PescadorMVPPAVComponent<?, P>) pavComponent;
 
 		return castPAVComponent;
 	}
@@ -361,7 +288,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 			Class<? extends ForRegionTag> region,
 			P place) {
 		
-		PescadorMVPViewComponent<?,P> pavComponent =
+		PescadorMVPPAVComponent<?,P> pavComponent =
 				getCastPAVComponent(place);
 		
 		PescadorMVPPlaceActivity<?,?,?> activity =
@@ -371,20 +298,5 @@ public abstract class ComponentSetup implements RootRegionManager {
 			return activity;
 		else
 			return nullActivity;
-	}
-	
-	public <I extends Component<I>> I getComponent(Class<I> publicInterface) {
-		Component<?> uncastComponent =
-				componentIndex.get(publicInterface);
-
-		// GWT reflection doesn't provide for finding implemented interfaces
-		@SuppressWarnings("unchecked")
-		I component = (I) uncastComponent;
-
-		return component;
-	}
-	
-	public Collection<Component<?>> getComponents() {
-		return componentIndex.values();
 	}
 }
