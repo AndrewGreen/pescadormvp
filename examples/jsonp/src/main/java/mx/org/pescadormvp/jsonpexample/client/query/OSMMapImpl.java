@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Composite;
  */
 public class OSMMapImpl extends Composite implements OSMMap {
 
-	private Projection DEFAULT_PROJECTION = new Projection("EPSG:4326");
+	private Projection defaultProjection;
 
 	private MapWidget mapWidget;
 	private Map map;
@@ -38,6 +38,7 @@ public class OSMMapImpl extends Composite implements OSMMap {
 		osm.setIsBaseLayer(true);
 		map = mapWidget.getMap();
 		map.addLayer(osm);
+		defaultProjection = new Projection("EPSG:4326");
 
 		initWidget(mapWidget);
 	}
@@ -45,7 +46,7 @@ public class OSMMapImpl extends Composite implements OSMMap {
 	@Override
 	public void setLatLon(double lat, double lon) {
 		LonLat lonLat = new LonLat(lon, lat);
-		lonLat.transform(DEFAULT_PROJECTION.getProjectionCode(), map.getProjection());
+		lonLat.transform(defaultProjection.getProjectionCode(), map.getProjection());
 		map.setCenter(lonLat, 12);
 	}
 }
