@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
+ * See LICENSE.txt for redistribution conditions.
+ * 
+ * D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
+ * Véase LICENSE.txt para los términos bajo los cuales se permite
+ * la redistribución.
+ ******************************************************************************/
 package mx.org.pescadormvp.client.components;
 
 import java.util.HashMap;
@@ -7,6 +15,15 @@ import java.util.Set;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponent;
 import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
 
+/**
+ * Registry of components.
+ * 
+ * <p>By keeping this separate from {@link ComponentSetup} we avoid circular
+ * dependencies.</p>
+ * 
+ * @author Andrew Green
+ *
+ */
 public class ComponentRegistryImpl implements ComponentRegistry {
 
 	private Map<String, PescadorMVPPAVComponent<?,?>> mainTokenIndex =

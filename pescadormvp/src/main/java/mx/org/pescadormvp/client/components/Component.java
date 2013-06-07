@@ -9,7 +9,7 @@
 package mx.org.pescadormvp.client.components;
 
 /**
- * Interface that client app components must implement.
+ * Interface that components must implement.
  * 
  * @param <I> The public interface that this component offers.
  */

@@ -11,7 +11,12 @@ package mx.org.pescadormvp.client.placesandactivities;
 import mx.org.pescadormvp.client.components.Component;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
-
+/**
+ * An extension to {@link PlaceHistoryMapper}, this interface defines additional
+ * methods related to places.
+ *  
+ * @author Andrew Green
+ */
 public interface PescadorMVPPlaceMapper extends PlaceHistoryMapper, 
 		Component<PescadorMVPPlaceMapper> {
 

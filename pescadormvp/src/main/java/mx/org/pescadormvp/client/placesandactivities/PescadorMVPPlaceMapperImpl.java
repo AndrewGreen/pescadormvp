@@ -17,9 +17,16 @@ import mx.org.pescadormvp.shared.PescadorMVPLocale;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Window.Location;
 import com.google.inject.Inject;
 
+/**
+ * An extended {@link PlaceHistoryMapper} that works with the PescadorMVP
+ * place mechanisms.
+ * 
+ * @author Andrew Green
+ */
 public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 
 	private static String MAIN_TOKEN_SEPARATOR = ";";
@@ -203,7 +210,4 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 		
 		return place;
 	}
-	
-//	@Override
-
 }

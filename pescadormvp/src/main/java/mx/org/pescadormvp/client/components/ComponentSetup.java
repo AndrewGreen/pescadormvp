@@ -38,15 +38,8 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * Instances of this class configure the app by setting specific place-activity
- * bindings and related DI bindings.
- * 
- * There are circular dependencies between this class and WebClientPlaceMapper,
- * as well as all instances of PlaceActivityBinding. The pattern used is:
- * once those dependencies are received by this class, this class registers
- * itself with them.
- * 
- * TODO: See about other possible injection techniques (?)
+ * Instances of this class configure the app, including specific place-activity
+ * bindings, DI bindings, and the root layout widget for viewport.
  */
 public abstract class ComponentSetup implements RootRegionManager {
 	
