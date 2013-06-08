@@ -29,7 +29,7 @@ public abstract class PescadorMVPActivityBase<
 	private S statePointer;
 	private Session session;
 
-	// The place is gotten by subclasses via
+	// The state pointer (often a place) is gotten by subclasses via
 	// assisted inject.
 	public PescadorMVPActivityBase(
 			S statePointer) {

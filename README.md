@@ -63,9 +63,20 @@ $ mvn gwt:run
 Create javadoc and test reports for the example/jsonp project, go to that
 directory and run:
 
-$ mvn site:site
+$ mvn gwt:test site:site
 
 The generated site will be at example/jsonp/target/site/project-info.html.
+
+Alternately, to just perform tests and generate the test report, run:
+
+$ mvn gwt:test surefire-report:report 
+
+(Note: gwt:test doesn't work immediately after a mvn clean has been run. A full
+mvn install must be called first. Also, surefire-report:report doesn't generate
+the CSS needed for a decent report; site:site has to be run first.)
+
+GWT-based tests are configured to run in HtmlUnit. To run in a real browser,
+change the gwt.test.mode property in example/jsonp/pom.xml.
 
 ## Eclipse
 

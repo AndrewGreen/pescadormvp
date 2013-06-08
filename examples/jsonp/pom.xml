@@ -20,6 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
+		<gwt.test.mode>htmlunit</gwt.test.mode>
 	</properties>
 
 	<dependencies>
@@ -55,7 +56,6 @@
 			<classifier>sources</classifier>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- Pescador MVP (in other Maven module) -->
 		<dependency>
 			<groupId>mx.org.pescadormvp</groupId>

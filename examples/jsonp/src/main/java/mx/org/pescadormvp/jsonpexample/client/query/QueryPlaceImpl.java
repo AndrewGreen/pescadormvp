@@ -25,7 +25,6 @@ public class QueryPlaceImpl extends QueryPlace {
 		setPropertyKeys(new String[] { LOCATION_TOKEN_KEY });
 	}
 	
-	
 	@Override
 	protected void processProperty(String key, String value) {
 		if (key.compareTo(LOCATION_TOKEN_KEY) == 0) {

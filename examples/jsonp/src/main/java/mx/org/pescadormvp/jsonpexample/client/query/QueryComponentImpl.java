@@ -18,6 +18,7 @@ import com.google.inject.TypeLiteral;
 import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.placesandactivities.ActivitiesFactory;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
 import mx.org.pescadormvp.client.placesandactivities.PlaceActivityViewComponentBase;
 import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.SessionData;
@@ -112,7 +113,8 @@ public class QueryComponentImpl extends PlaceActivityViewComponentBase<
 	}
 
 	/**
-	 * Provides a fully setup place for use as default place.
+	 * Provides a raw (not fully setup) place for use as default place.
+	 * The place will be fully setup by {@link PescadorMVPPlaceMapper}.
 	 */
 	@Override
 	public PescadorMVPPlace getRawDefaultPlace() {
