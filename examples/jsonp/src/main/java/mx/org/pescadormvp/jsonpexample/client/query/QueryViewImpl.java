@@ -61,6 +61,9 @@ public class QueryViewImpl extends ResizeComposite implements
 	// Value shared between Java and in CSS
 	private static int TEXT_CONTAINER_PADDING_PX = 10;
 	
+	// Time to wait for a request to come back before showing a loading message
+	private static int WAIT_FOR_LOADING_MESSAGE_MS = 1500;
+	
 	// Durations for load throbber
 	private static int LOADING_THROBBER_REPEAT_MS = 2000;
 	private static int LOADING_THROBBER_THROB_MS = 800;
@@ -114,6 +117,9 @@ public class QueryViewImpl extends ResizeComposite implements
 	
 	// Map
 	private OSMMap map;
+	
+	// timer for showing loading message after a certain delay
+	private Timer loadingTimer; 
 	
 	// for animating the throbber shown while waiting for data to load
 	private LoadingThrob loadingThrob = new LoadingThrob();
@@ -325,13 +331,14 @@ public class QueryViewImpl extends ResizeComposite implements
 	// and render it with different types of messages.
 	@Override
 	public void renderEmpty() {
+		commonNonLoadingRender();
 		messageStrip.getStyle().setVisibility(Visibility.HIDDEN);
 		setTextBoxEmbarassed(false);
-		finishNonLoadingRender();
 	}
 
 	@Override
 	public void renderLatLon() {
+		commonNonLoadingRender();
 		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
 		messageContainer.setInnerSafeHtml(SafeHtmlUtils.fromString(latLonMsg));
 
@@ -339,11 +346,11 @@ public class QueryViewImpl extends ResizeComposite implements
 		// by way of the map object.
 		
 		setTextBoxEmbarassed(false);
-		finishNonLoadingRender();
 	}
 
 	@Override
 	public void renderNoSuchPlace() {
+		commonNonLoadingRender();
 		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
 		
 		messageContainer.setInnerHTML(
@@ -351,11 +358,34 @@ public class QueryViewImpl extends ResizeComposite implements
 				templates.p(style.messagePar(), tryAgain).asString());
 
 		setTextBoxEmbarassed(true);
-		finishNonLoadingRender();
 	}
 
 	@Override
-	public void renderLoading() {
+	public void renderError() {
+		commonNonLoadingRender();
+		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
+
+		messageContainer.setInnerHTML(
+				templates.p(style.messagePar(), errorCommunicating).asString() + 
+				templates.p(style.messagePar(), tryAgain).asString());
+
+		setTextBoxEmbarassed(false);
+	}
+	
+	@Override
+	public void startLoadingTimer() {
+		loadingTimer = new Timer() {
+			
+			@Override
+			public void run() {
+				renderLoading();
+			}
+		};
+		
+		loadingTimer.schedule(WAIT_FOR_LOADING_MESSAGE_MS);
+	}
+		
+	private void renderLoading() {		
 		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
 		messageContainer.setInnerSafeHtml(SafeHtmlUtils.fromString(loading));
 
@@ -372,22 +402,12 @@ public class QueryViewImpl extends ResizeComposite implements
 		setTextBoxEmbarassed(false);
 	}
 
-	@Override
-	public void renderError() {
-		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
-
-		messageContainer.setInnerHTML(
-				templates.p(style.messagePar(), errorCommunicating).asString() + 
-				templates.p(style.messagePar(), tryAgain).asString());
-
-		setTextBoxEmbarassed(false);
-		finishNonLoadingRender();
-	}
-	
 	/**
 	 * Does standard things for all kinds of states other than loading.
 	 */
-	private void finishNonLoadingRender() {
+	private void commonNonLoadingRender() {
+		loadingTimer.cancel();
+		
 		// If loading stuff if happening, turn it off.
 		if (loadingThobTimer != null)
 			loadingThobTimer.cancel();

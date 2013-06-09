@@ -56,9 +56,9 @@ public interface QueryView extends
 	
 	void renderNoSuchPlace();
 	
-	void renderLoading();
-	
 	void renderError();
+	
+	void startLoadingTimer();
 
 	void setRawQueryPlace(QueryPlace rawQueryPlace);
 }

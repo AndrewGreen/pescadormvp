@@ -19,7 +19,6 @@ import mx.org.pescadormvp.client.uiresources.ActivateInternalLinkEvent;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -39,9 +38,6 @@ public class QueryActivityImpl
 		PescadorMVPPlaceActivityBase<QueryView,QueryPlace,QueryComponent>
 		implements QueryActivity {
 
-	// Time to wait for a request to come back before showing a loading message
-	private static int WAIT_FOR_LOADING_MESSAGE_MS = 1500;
-	
 	// Localized messages for the UI. All static strings sent to the user come
 	// from here, making internationalization easy.
 	private final QueryMessages messages;
@@ -120,17 +116,10 @@ public class QueryActivityImpl
 			
 			// Before trying to retrieve the temperature information,
 			// set a timer to display a "Loading" message if the request
-			// doesn't come back quickly.
-			final Timer loadingTimer = new Timer() {
-				
-				@Override
-				public void run() {
-					view.setLoadingString(messages.loading());
-					view.renderLoading();
-				}
-			};
-			
-			loadingTimer.schedule(WAIT_FOR_LOADING_MESSAGE_MS);
+			// doesn't come back quickly. The view will cancel the timer
+			// once any state is rendered.
+			view.setLoadingString(messages.loading());
+			view.startLoadingTimer();
 						
 			// Create an action object with the name of the location to query
 			GetLatLonAction action = new GetLatLonAction(location);
@@ -141,8 +130,6 @@ public class QueryActivityImpl
 	
 				@Override
 				public void onFailure(Throwable caught) {
-					// Cancel loading timer (we're back, though with an error)
-					loadingTimer.cancel();
 					
 					// Log the error
 					logger.log(Level.WARNING, caught.getLocalizedMessage());
@@ -155,8 +142,6 @@ public class QueryActivityImpl
 		
 				@Override
 				public void onSuccess(GetLatLonResult result) {
-					// Cancel loading timer (we're back)
-					loadingTimer.cancel();
 					
 					if (result.isValid()) {
 						
