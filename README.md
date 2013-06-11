@@ -71,9 +71,12 @@ Alternately, to just perform tests and generate the test report, run:
 
 $ mvn gwt:test surefire-report:report 
 
-(Note: gwt:test doesn't work immediately after a mvn clean has been run. A full
-mvn install must be called first. Also, surefire-report:report doesn't generate
-the CSS needed for a decent report; site:site has to be run first.)
+Notes:
+- gwt:test doesn't work immediately after a mvn clean has been run. mvn install
+must have been called first.
+- surefire-report:report doesn't generate the CSS needed for a decent report;
+site:site has to be run first.
+- to allow for a longer timeout for dedicated JVM, use the option -DtestTimeOut=120. 
 
 GWT-based tests are configured to run in HtmlUnit. To run in a real browser,
 change the gwt.test.mode property in example/jsonp/pom.xml.
