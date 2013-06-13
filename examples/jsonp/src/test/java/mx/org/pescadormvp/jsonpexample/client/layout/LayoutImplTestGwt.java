@@ -11,7 +11,6 @@ import com.google.gwt.junit.client.GWTTestCase;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-
 public class LayoutImplTestGwt extends GWTTestCase {
 
 	public void testRegions() {

@@ -30,7 +30,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
 /**
- * This class performs various tests on {@lik QueryActivityImpl}.
+ * This class performs various tests on {@link QueryActivityImpl}.
  *  
  * @author Andrew Green
  */
