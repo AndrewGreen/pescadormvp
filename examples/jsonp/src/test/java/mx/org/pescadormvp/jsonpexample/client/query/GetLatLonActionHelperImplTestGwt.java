@@ -3,7 +3,7 @@ package mx.org.pescadormvp.jsonpexample.client.query;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class GetLatLonActionHelperImplTestGwt  extends GWTTestCase {
+public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 	
 	@Override
 	public String getModuleName() {

@@ -2,6 +2,7 @@ package mx.org.pescadormvp.jsonpexample.client;
 
 import mx.org.pescadormvp.jsonpexample.client.layout.LayoutImplTestGwt;
 import mx.org.pescadormvp.jsonpexample.client.query.GetLatLonActionHelperImplTestGwt;
+import mx.org.pescadormvp.jsonpexample.client.query.QueryViewImplTestGwt;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
 
@@ -15,6 +16,7 @@ public class GwtJSONPExampleTestSuite extends TestCase {
 		GWTTestSuite suite = new GWTTestSuite("tests that require GWT browser context");
 		suite.addTestSuite(LayoutImplTestGwt.class);
 		suite.addTestSuite(GetLatLonActionHelperImplTestGwt.class);
+		suite.addTestSuite(QueryViewImplTestGwt.class);
 		return suite;
 	}
 }

@@ -61,7 +61,8 @@ public class QueryViewImpl extends ResizeComposite implements
 	private static int TEXT_CONTAINER_PADDING_PX = 10;
 	
 	// Time to wait for a request to come back before showing a loading message
-	private static int WAIT_FOR_LOADING_MESSAGE_MS = 1500;
+	// Set to default visibility so we can get it in tests
+	static int WAIT_FOR_LOADING_MESSAGE_MS = 1500;
 	
 	// Durations for load throbber
 	private static int LOADING_THROBBER_REPEAT_MS = 2000;
@@ -405,7 +406,8 @@ public class QueryViewImpl extends ResizeComposite implements
 	 * Does standard things for all kinds of states other than loading.
 	 */
 	private void commonNonLoadingRender() {
-		loadingTimer.cancel();
+		if (loadingTimer != null)
+			loadingTimer.cancel();
 		
 		// If loading stuff if happening, turn it off.
 		if (loadingThobTimer != null)

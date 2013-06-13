@@ -53,7 +53,7 @@ Maven for building and running
 The .war file, including dependencies, can be built by running the
 following command from the parent project directory (weather/):
 
-$ mvn clean install
+$ mvn -DtestTimeOut=120 clean install
 
 To start up the development mode server, go to the weather/weatherclient
 directory and run:
@@ -67,16 +67,18 @@ $ mvn gwt:test site:site
 
 The generated site will be at example/jsonp/target/site/project-info.html.
 
-Alternately, to just perform tests and generate the test report, run:
+Alternately, to just perform tests and generate the test report, again from
+the example/jsonp directory, run:
 
-$ mvn gwt:test surefire-report:report 
+$ mvn -DtestTimeOut=120 gwt:test surefire-report:report 
 
 Notes:
 - gwt:test doesn't work immediately after a mvn clean has been run. mvn install
 must have been called first.
 - surefire-report:report doesn't generate the CSS needed for a decent report;
 site:site has to be run first.
-- to allow for a longer timeout for dedicated JVM, use the option -DtestTimeOut=120. 
+- The option -DtestTimeOut=120 allows for a longer timeout for the dedicated JVM
+used for tests requiring full GWT/browser context. 
 
 GWT-based tests are configured to run in HtmlUnit. To run in a real browser,
 change the gwt.test.mode property in example/jsonp/pom.xml.
