@@ -12,7 +12,6 @@ import mx.org.pescadormvp.client.uiresources.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.client.util.DOMUtils;
 
 import com.google.gwt.animation.client.Animation;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.DivElement;
@@ -72,10 +71,6 @@ public class QueryViewImpl extends ResizeComposite implements
 	interface QueryViewImplUiBinder extends
 			UiBinder<Widget, QueryViewImpl> {
 	}
-
-	// Instantiate the UiBinder
-	private static QueryViewImplUiBinder uiBinder =
-			GWT.create(QueryViewImplUiBinder.class);
 
 	// Java access to style names from UiBinder
 	interface Style extends CssResource {
@@ -148,7 +143,7 @@ public class QueryViewImpl extends ResizeComposite implements
 		SafeHtml p(String styleName, String txt);
 	}
 
-	private static final Templates templates = GWT.create(Templates.class);
+	private Templates templates;
 
 	public static String getTextContainerPadding() {
 		return TEXT_CONTAINER_PADDING_PX + "px";
@@ -156,11 +151,15 @@ public class QueryViewImpl extends ResizeComposite implements
 	
 	@Inject
 	public QueryViewImpl(
-			EventBus eventBus) {
+			EventBus eventBus,
+			Templates templates,
+			final QueryViewImplUiBinder uiBinder) {
+
+		this.eventBus = eventBus;
+		this.templates = templates;
 
 		// Firing up the UiBinder mechanism
 		initWidget(uiBinder.createAndBindUi(this));
-		this.eventBus = eventBus;
 		
 		// Handle events from the suggest box and go button.
 		suggestBox.addKeyPressHandler(new KeyPressHandler() {
