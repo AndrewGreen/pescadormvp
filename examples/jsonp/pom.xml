@@ -56,6 +56,7 @@
 			<classifier>sources</classifier>
 			<scope>test</scope>
 		</dependency>
+		
 		<!-- Pescador MVP (in other Maven module) -->
 		<dependency>
 			<groupId>mx.org.pescadormvp</groupId>
@@ -77,7 +78,6 @@
 			<version>1.2</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
@@ -85,13 +85,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-<!-- 		gwt-dev is needed for testing harness -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.gwt</groupId> -->
-<!-- 			<artifactId>gwt-dev</artifactId> -->
-<!-- 			<version>${gwtVersion}</version> -->
-<!-- 			<scope>testing</scope> -->
-<!-- 		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -185,12 +178,30 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
-		</plugins>
 
+            <!-- I tried this to avoid a silly error. Didn't work. -->
+			<!-- See http://code.google.com/p/google-web-toolkit/issues/detail?id=6443 -->
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<systemProperties> -->
+<!-- 			            <property> -->
+<!-- 			                <name>gwt.args</name> -->
+<!-- 			                <value>-out target/gwt-test</value> -->
+<!-- 			            </property> -->
+<!-- 			            <property> -->
+<!-- 			                <name>gwt.persistentunitcache</name> -->
+<!-- 			                <value>true</value> -->
+<!-- 			            </property> -->
+<!-- 			        </systemProperties> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+		</plugins>
+		
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!-- This configuration provides Eclipse m2e settings  
+					 only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
