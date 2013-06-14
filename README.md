@@ -22,6 +22,12 @@ Of course, it also supports all the other goodies that come with GWT
 includes resources for creating internal links (to places in the same GWT app)
 that are also native HTML links, and some miscellaneous utilities.
 
+Instructions on how to use Pescador MVP are in the [Javadoc](http://andrewgreen.github.io/pescadormvp/pescadormvp/apidocs/index.html) itself.
+
+You may also wish to walk through the example application, in the [examples/jsonp](tree/master/examples/jsonp) folder. [Here](http://andrewgreen.github.io/pescadormvp/examples/jsonp/app.html) is how the example app looks compiled and running in your browser.
+
+Pescador MVP was developed by the [Instituto Mora](http://www.mora.edu.mx) as part of the [Pescador](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-Pescador) system.
+
 
 # How to use [TODO]
 
