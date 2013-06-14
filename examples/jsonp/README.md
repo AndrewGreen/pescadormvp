@@ -1,4 +1,4 @@
-# PEscador MVP example application: JSONP
+# Pescador MVP example application: JSONP
 
 [TODO]
 
