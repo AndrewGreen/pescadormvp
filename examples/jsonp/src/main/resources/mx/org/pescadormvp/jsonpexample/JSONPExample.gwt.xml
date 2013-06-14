@@ -18,7 +18,7 @@
   <inherits name="mx.org.pescadormvp.PescadorMVP"/>
 
   <!-- Limit permutations for compiling, un-comment as needed -->
-  <set-property name="user.agent" value="gecko1_8,safari"/>
+<!--   <set-property name="user.agent" value="gecko1_8"/> -->
 
   <!-- We need the JUnit module in the main module TODO check -->
   <inherits name='com.google.gwt.junit.JUnit' />
