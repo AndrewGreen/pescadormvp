@@ -9,8 +9,8 @@
 package mx.org.pescadormvp.client.placesandactivities;
 
 import mx.org.pescadormvp.client.components.Component;
+import mx.org.pescadormvp.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.client.session.StatePointer;
-import mx.org.pescadormvp.client.uiresources.ActivateInternalLinkEvent;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;

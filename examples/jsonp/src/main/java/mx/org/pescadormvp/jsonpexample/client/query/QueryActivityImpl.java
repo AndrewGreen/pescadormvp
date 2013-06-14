@@ -13,9 +13,9 @@ import java.util.logging.Level;
 import mx.org.pescadormvp.jsonpexample.client.query.QueryMessages;
 
 import mx.org.pescadormvp.client.data.DataManager;
+import mx.org.pescadormvp.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceActivityBase;
-import mx.org.pescadormvp.client.uiresources.ActivateInternalLinkEvent;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;

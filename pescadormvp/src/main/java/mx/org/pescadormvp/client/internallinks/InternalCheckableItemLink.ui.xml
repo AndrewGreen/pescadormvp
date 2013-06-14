@@ -19,7 +19,7 @@
 	
 	<ui:with
 			field="itemResources" 
-			type="mx.org.pescador.client.uiresources.ItemResources" />
+			type="mx.org.pescadormvp.client.internallinks.ItemResources" />
 	
 	<g:HTMLPanel>
 		<a ui:field="link" class="{style.link}">

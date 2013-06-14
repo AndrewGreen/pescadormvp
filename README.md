@@ -29,6 +29,9 @@ to the server.
 - Vetting of generated HTML and URIs for unsafe strings.
 - Etc.
 
+It also includes some resources for creating internal links (to places in the
+same GWT app) that are also native HTML links, and some miscellaneous utilities.
+
 
 # How to use [TODO]
 

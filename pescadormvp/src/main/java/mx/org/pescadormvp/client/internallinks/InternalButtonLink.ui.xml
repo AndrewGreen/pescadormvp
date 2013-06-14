@@ -9,8 +9,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 	
-	<ui:style type="mx.org.pescadormvp.client.uiresources.InternalButtonLink.InternalButtonLinkStyle">
-		@eval roundedCornerRadius mx.org.pescador.client.uiresources.InternalButtonLink.roundedCornerRadius();
+	<ui:style type="mx.org.pescadormvp.client.internallinks.InternalButtonLink.InternalButtonLinkStyle">
+		@eval roundedCornerRadius mx.org.pescadormvp.client.internallinks.InternalButtonLink.roundedCornerRadius();
 		
 		.link {
 			display: inline-block;

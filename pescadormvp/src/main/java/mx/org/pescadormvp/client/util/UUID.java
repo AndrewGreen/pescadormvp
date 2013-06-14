@@ -1,10 +1,5 @@
 /*******************************************************************************
- * Copyright 2013 Instituto de Investigaciones Dr. José María Luis Mora
- * See LICENSE.txt for redistribution conditions.
- * 
- * D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
- * Véase LICENSE.txt para los términos bajo los cuales se permite
- * la redistribución.
+ * Copyright and license for this file are not the same as others. See below.
  ******************************************************************************/
 package mx.org.pescadormvp.client.util;
 /*

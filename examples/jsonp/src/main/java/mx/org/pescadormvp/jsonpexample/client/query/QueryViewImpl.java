@@ -8,7 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.jsonpexample.client.query;
 
-import mx.org.pescadormvp.client.uiresources.ActivateInternalLinkEvent;
+import mx.org.pescadormvp.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.client.util.DOMUtils;
 
 import com.google.gwt.animation.client.Animation;
