@@ -1,6 +1,6 @@
 # Pescador MVP
 
-Pescador MVP is an MVP framework for GWT that builds on the standard MVP-related
+Pescador MVP is a modular MVP framework for GWT that builds on the standard MVP-related
 classes provided by GWT.
 
 It integrates several Java and GWT best practices. Features include: 
@@ -11,26 +11,16 @@ It integrates several Java and GWT best practices. Features include:
   including for JSONP calls.
 - Testing and building with a single command (via Maven).
 - While maintaining compatibility with standard GWT classes for MVP, it provides:
-    - A generics-based mechanism for associating places, activities
-    and views.
+    - A generics-based mechanism for associating places, activities, views and
+      components
     - Facilities for storing key-value data in places.
     - The ability to associate activities and views with other kinds of state
-    indicators besides places. 
+      indicators besides places. 
 
-Of course, it also supports all the other goodies that come with GWT, such as:
-
-- Declarative, modularized HTML and CSS that's easy to read and easy 
-for designers to work with (via UiBinder).
-- Folding out of messages for easy internationalization.
-- A global event bus.
-- Client bundles for access to resources (like images), making for less traffic
-to the server.
-- Logging.
-- Vetting of generated HTML and URIs for unsafe strings.
-- Etc.
-
-It also includes some resources for creating internal links (to places in the
-same GWT app) that are also native HTML links, and some miscellaneous utilities.
+Of course, it also supports all the other goodies that come with GWT 
+(declarative HTML and CSS via UiBinder, client bundles, logging, etc.). Plus, it
+includes resources for creating internal links (to places in the same GWT app)
+that are also native HTML links, and some miscellaneous utilities.
 
 
 # How to use [TODO]
@@ -39,12 +29,10 @@ Add maven dependency
 Alternately, include in build path
 
 
-# Example application [TODO]
+# Example application
 
-There's an example app you can walk through
-Git to download just example app
-More doc in that dir
-Maven for building and running
+There's an example app you can walk through. See example/jsonp/README.md
+for more information.
 
 
 # Building, running and hacking the source
@@ -56,7 +44,7 @@ Maven for building and running
 The full project, including the example application, can be built by running the
 following command from the parent project directory:
 
-$ mvn -DtestTimeOut=120 clean install
+$ mvn clean install
 
 To start up the development mode server for the example app, go to the
 examples/jsonp directory and run:
