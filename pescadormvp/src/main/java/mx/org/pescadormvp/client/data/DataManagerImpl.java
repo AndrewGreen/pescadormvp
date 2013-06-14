@@ -5,6 +5,12 @@
  * D.R. 2013 Instituto de Investigaciones Dr. José María Luis Mora
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
+ * 
+ * 
+ * Partly based on work by David Chandler. Used with permission.
+ * See 
+ * http://turbomanage.wordpress.com/2010/07/12/caching-batching-dispatcher-for-gwt-dispatch/
+ * 
  ******************************************************************************/
 package mx.org.pescadormvp.client.data;
 
@@ -46,10 +52,10 @@ public class DataManagerImpl implements DataManager {
 	@Inject
 	public DataManagerImpl(
 			DispatchAsync standardDispatcher,
-			JsonpDispatchAsync jsnopDispatcher) {
+			JsonpDispatchAsync jsonpDispatcher) {
 		
 		this.standardDispatcher = standardDispatcher;
-		this.jsonpDispatcher = jsnopDispatcher;
+		this.jsonpDispatcher = jsonpDispatcher;
 	}
 	
 	public <A extends Action<R>, R extends Result> void execute(
