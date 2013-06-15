@@ -1,4 +1,5 @@
 .*
 !.gitignore
-examples/**
+examples/jsonp/src/**
+examples/jsonp/target/**
 pescadormvp/**
