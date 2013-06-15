@@ -8,11 +8,15 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>mx.org.pescadormvp</groupId>
 	<artifactId>jsonp-example</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Pescador MVP JSONP Example</name>
+
+	<parent>
+		<groupId>mx.org.pescadormvp</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<gwtVersion>2.5.1</gwtVersion>
@@ -146,11 +150,13 @@
 				</configuration>
 			</plugin>
 
-			<!-- Site plugin for easy viewing of test reports -->
+			<!-- Site plugin for easy viewing of test reports and javadoc generation-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.3</version>
+				<!-- Unexplained problem with version 3 of the site plugin -->
+				<!-- See http://jira.codehaus.org/browse/MSITE-614 -->
+				<version>2.3</version>
 				<configuration>
 					<reportPlugins>
 						<plugin>
@@ -179,23 +185,6 @@
 				</configuration>
 			</plugin>
 
-            <!-- I tried this to avoid a silly error. Didn't work. -->
-			<!-- See http://code.google.com/p/google-web-toolkit/issues/detail?id=6443 -->
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<systemProperties> -->
-<!-- 			            <property> -->
-<!-- 			                <name>gwt.args</name> -->
-<!-- 			                <value>-out target/gwt-test</value> -->
-<!-- 			            </property> -->
-<!-- 			            <property> -->
-<!-- 			                <name>gwt.persistentunitcache</name> -->
-<!-- 			                <value>true</value> -->
-<!-- 			            </property> -->
-<!-- 			        </systemProperties> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
 		</plugins>
 		
 		<pluginManagement>
