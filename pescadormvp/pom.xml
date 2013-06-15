@@ -12,7 +12,7 @@
 
 	<!-- POM file for Pescador MVP framework -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>pescadormvp</artifactId>
+	<artifactId>core</artifactId>
 	<packaging>jar</packaging>
 	<name>Pescador MVP</name>
 
@@ -115,7 +115,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>2.3</version>
+				<version>3.3</version>
 				<configuration>
 					<reportPlugins>
 						<plugin>

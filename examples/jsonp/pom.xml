@@ -64,7 +64,7 @@
 		<!-- Pescador MVP (in other Maven module) -->
 		<dependency>
 			<groupId>mx.org.pescadormvp</groupId>
-			<artifactId>pescadormvp</artifactId>
+			<artifactId>core</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
@@ -154,9 +154,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<!-- Unexplained problem with version 3 of the site plugin -->
-				<!-- See http://jira.codehaus.org/browse/MSITE-614 -->
-				<version>2.3</version>
+				<version>3.3</version>
 				<configuration>
 					<reportPlugins>
 						<plugin>
