@@ -60,7 +60,7 @@ $ mvn gwt:run
 To create javadoc and test reports for the example/jsonp project, go to that
 directory and run [TODO: fix, update this]:
 
-$ mvn gwt:test site:site
+$ mvn gwt:test site
 
 The generated site will be at example/jsonp/target/site/project-info.html.
 

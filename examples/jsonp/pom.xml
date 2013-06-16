@@ -182,9 +182,8 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
-
 		</plugins>
-		
+
 		<pluginManagement>
 			<plugins>
 				<!-- This configuration provides Eclipse m2e settings  
