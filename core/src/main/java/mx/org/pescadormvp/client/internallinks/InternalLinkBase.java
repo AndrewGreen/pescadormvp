@@ -85,7 +85,6 @@ public abstract class InternalLinkBase extends Composite
 	/**
 	 * URI should be sanitized <em>before</em> it is sent to this method.
 	 * 
-	 * @param presentaitonText
 	 */
 	protected abstract void setHref(String href);
 	

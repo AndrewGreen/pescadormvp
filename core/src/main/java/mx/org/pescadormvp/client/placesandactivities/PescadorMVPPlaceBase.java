@@ -97,7 +97,7 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 	}
 	
 	/**
-	 * Called from {@link #setProperty(Map)} for each property set.
+	 * Called from {@link #setProperties(Map)} for each property set.
 	 * Subclasses will check the property being set, and set some aspect of
 	 * their state if an appropriate key is used.
 	 * 

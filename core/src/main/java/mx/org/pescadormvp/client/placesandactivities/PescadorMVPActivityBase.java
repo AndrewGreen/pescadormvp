@@ -73,7 +73,7 @@ public abstract class PescadorMVPActivityBase<
 
 	/**
 	 * Convenience method that simply calls
-	 * {@link Session#goTo(WebClientPlaceBase)}.
+	 * {@link Session#goTo(PescadorMVPPlace)}
 	 * 
 	 * @param place
 	 *            Where to go
