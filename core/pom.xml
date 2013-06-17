@@ -111,7 +111,7 @@
 				</configuration>
 			</plugin>
 			
-			<!-- Site generation, including javadoc -->
+			<!-- Site generation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -128,10 +128,6 @@
 							<reports>
     							<report>dependencies</report>
 							</reports>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
 						</plugin>
 					</reportPlugins>
 				</configuration>
