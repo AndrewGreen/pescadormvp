@@ -114,10 +114,15 @@
 				<configuration>
 					<runTarget>jsonp-example.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
+
 					<!-- Classes for messages are generated as specified here -->
 					<i18nMessagesBundles>
 						<i18nMessagesBundle>mx.org.pescadormvp.jsonpexample.client.query.QueryMessages</i18nMessagesBundle>
 					</i18nMessagesBundles>
+
+					<!-- Required to avoid a minor bug in how the out directory is set -->
+					<!-- See https://groups.google.com/d/topic/codehaus-mojo-gwt-maven-plugin-users/KD5DZYgT_Ds/discussion -->
+					<out>${project.build.directory}/www-test</out>
 				</configuration>
 			</plugin>
 
