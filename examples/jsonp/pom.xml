@@ -24,7 +24,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<gwt.test.mode>htmlunit</gwt.test.mode>
 	</properties>
 
 	<dependencies>
@@ -123,6 +122,12 @@
 					<!-- Required to avoid a minor bug in how the out directory is set -->
 					<!-- See https://groups.google.com/d/topic/codehaus-mojo-gwt-maven-plugin-users/KD5DZYgT_Ds/discussion -->
 					<out>${project.build.directory}/www-test</out>
+					
+					<!-- Longer timeout for tests -->
+					<testTimeOut>120</testTimeOut>
+					
+					<!-- Run tests with htmlunit -->
+					<mode>htmlunit</mode>
 				</configuration>
 			</plugin>
 
