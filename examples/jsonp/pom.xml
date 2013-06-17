@@ -176,6 +176,7 @@
 								<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 							</configuration>
 							<reports>
+								<report>index</report>
     							<report>dependencies</report>
 							</reports>
 						</plugin>
@@ -251,4 +252,12 @@
 		</pluginManagement>
 
 	</build>
+	
+	<distributionManagement>
+		<site>
+			<id>website</id>
+			<url>http://andrewgreen.github.io/pescadormvp/maven-site/jsonp-example/</url>
+		</site>
+	</distributionManagement>
+
 </project>

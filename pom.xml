@@ -41,6 +41,7 @@
 								<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 							</configuration>
 							<reports>
+								<report>index</report>
 								<report>dependencies</report>
 							</reports>
 						</plugin>
@@ -63,4 +64,12 @@
 
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<site>
+			<id>website</id>
+			<url>http://andrewgreen.github.io/pescadormvp/maven-site/</url>
+		</site>
+	</distributionManagement>
+
 </project>
