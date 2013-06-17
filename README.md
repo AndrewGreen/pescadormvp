@@ -52,33 +52,20 @@ following command from the parent project directory:
 
 $ mvn clean install
 
+GWT-based tests are configured to run in HtmlUnit. To run in a real browser,
+change the mode parameter in the gwt-maven-plugin configuration section of
+in example/jsonp/pom.xml.
+
+To generate a Maven site at target/staging/index.html, complete with javadocs
+and surefire test reports, run:
+
+$ mvn site site:stage 
+
 To start up the development mode server for the example app, go to the
 examples/jsonp directory and run:
 
 $ mvn gwt:run
 
-To create javadoc and test reports for the example/jsonp project, go to that
-directory and run [TODO: fix, update this]:
-
-$ mvn gwt:test site
-
-The generated site will be at example/jsonp/target/site/project-info.html.
-
-Alternately, to just perform tests and generate the test report, again from
-the example/jsonp directory, run:
-
-$ mvn -DtestTimeOut=120 gwt:test surefire-report:report 
-
-Notes:
-- gwt:test doesn't work immediately after a mvn clean has been run. mvn install
-  must have been called first.
-- surefire-report:report doesn't generate the CSS needed for a decent report;
-  site:site has to be run first.
-- The option -DtestTimeOut=120 allows for a longer timeout for the dedicated JVM
-  used for tests requiring full GWT/browser context. 
-
-GWT-based tests are configured to run in HtmlUnit. To run in a real browser,
-change the gwt.test.mode property in example/jsonp/pom.xml.
 
 ## Eclipse
 
