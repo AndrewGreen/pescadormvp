@@ -8,9 +8,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>jsonp-example</artifactId>
+	<artifactId>examples-jsonp</artifactId>
 	<packaging>war</packaging>
-	<name>Pescador MVP JSONP Example</name>
+	<name>Pescador MVP Examples: JSONP</name>
 
 	<parent>
 		<groupId>mx.org.pescadormvp</groupId>
@@ -111,7 +111,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<runTarget>jsonp-example.html</runTarget>
+					<runTarget>index.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 
 					<!-- Classes for messages are generated as specified here -->
@@ -256,7 +256,7 @@
 	<distributionManagement>
 		<site>
 			<id>website</id>
-			<url>http://andrewgreen.github.io/pescadormvp/maven-site/jsonp-example/</url>
+			<url>http://andrewgreen.github.io/pescadormvp/maven-site/examples/jsonp/</url>
 		</site>
 	</distributionManagement>
 
