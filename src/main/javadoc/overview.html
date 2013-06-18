@@ -1,0 +1,69 @@
+<body>
+
+	<p>
+		Pescador MVP is a modular <a
+			href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">MVP</a>
+		framework for <a href="https://developers.google.com/web-toolkit/">GWT</a>
+		that builds on <a
+			href="https://developers.google.com/web-toolkit/doc/latest/DevGuideMvpActivitiesAndPlaces">standard
+			MVP-related classes provided by GWT</a>. Its main features include the
+		association of places, activities, views and components using <a
+			href="http://docs.oracle.com/javase/tutorial/java/generics/index.html">generics</a>,
+		and <a href="http://code.google.com/p/google-gin/">GIN-based
+			dependency injection</a>.
+	</p>
+
+	<h3>Components</h3>
+
+	<p>At its core, Pescador MVP is a set of conventions for organizing
+		your code, and some classes that help you work with those conventions.</p>
+
+	<p>A central concept of Pescador MVP is the component. A component
+		is a collection of related classes, plus a class that implements
+		{@link mx.org.pescadormvp.client.components.Component} and provides an
+		interface for any external services that the component may offer to
+		other components. Classes that implement {@link
+		mx.org.pescadormvp.client.components.Component} also perform tasks of
+		general interest to the component and set GIN bindings for all the
+		classes in the component.</p>
+
+	<p>Normally, all the classes in a component reside in the same
+		package, or at least share an ancestor package in the package
+		hierarchy.</p>
+
+	<p>
+		To use the MVP architecture with Pescador MVP, you designate certain
+		components as "Place-Activity-View components". These special
+		components associate a place class, an activity class, a view class,
+		and a region of the UI, and provide an implementation of {@link
+		mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponent}.
+		Pescador MVP and GWT take care of activating activities and views in
+		the right place at the right time. If you need to share implementations
+		and specifications across places, activities, views and UI regions,
+		you can use standard Java inheritance and polymorphism. (See <a
+			href="#pavcompoennts">below</a> for more details.)
+	</p>
+
+	<p>
+		In its present form, Pescador MVP does <b>not</b>:
+	</p>
+
+	<ul>
+		<li>enforce any conventions;</li>
+		<li>enforce encapsulation;</li>
+		<li>provide a way to specify dependencies among components;</li>
+		<li>provide a way to group components into larger units;</li>
+		<li>have fancy code generation to save you from reams of boilerplate; or</li>
+		<li>allow hot-swapping of components at runtime.</li>
+	</ul>
+
+	<p>It is conceivable that some of these features (excluding the
+		last one) might be implemented some time in the future. But even
+		without them, Pescador MVP can help keep your client codebase nice and clean.
+		(At least, that has been the author's experience.)</p>
+
+	<h3>
+		<a name="pavcompoennts" />Place-Activity-View Components
+	</h3>
+
+</body>

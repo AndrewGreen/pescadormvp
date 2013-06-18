@@ -57,6 +57,19 @@
 									</reports>
 								</reportSet>
 							</reportSets>
+							<configuration>
+								<groups>
+	  								<group>
+	    								<title>Core</title>
+	    								<packages>mx.org.pescadormvp.client*:mx.org.pescadormvp.shared*</packages>
+    								</group>
+	  								<group>
+	    								<title>JSONP Example</title>
+	    								<packages>mx.org.pescadormvp.jsonpexample.client*</packages>
+    								</group>
+   								</groups>
+   								<stylesheetfile>stylesheet.css</stylesheetfile>
+							</configuration>
 						</plugin>
 					</reportPlugins>
 				</configuration>
