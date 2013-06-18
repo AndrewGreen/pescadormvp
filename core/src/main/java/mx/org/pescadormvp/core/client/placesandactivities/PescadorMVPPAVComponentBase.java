@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +14,10 @@ import java.util.Set;
 
 import com.google.inject.Provider;
 
-import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
-import mx.org.pescadormvp.client.session.Session;
-import mx.org.pescadormvp.client.session.SessionData;
-import mx.org.pescadormvp.client.util.Reflect;
+import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
+import mx.org.pescadormvp.core.client.session.Session;
+import mx.org.pescadormvp.core.client.session.SessionData;
+import mx.org.pescadormvp.core.client.util.Reflect;
 
 /**
  * Provides a means for linking a place class to activity and view classes 

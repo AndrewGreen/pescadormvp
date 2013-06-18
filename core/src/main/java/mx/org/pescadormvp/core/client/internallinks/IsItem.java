@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.internallinks;
+package mx.org.pescadormvp.core.client.internallinks;
 
 import com.google.gwt.user.client.ui.IsWidget;
 

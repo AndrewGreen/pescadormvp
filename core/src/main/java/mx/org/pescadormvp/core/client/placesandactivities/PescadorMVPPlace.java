@@ -6,14 +6,14 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
 import java.util.Map;
 
 import com.google.gwt.place.shared.Place;
 
-import mx.org.pescadormvp.client.session.StatePointer;
-import mx.org.pescadormvp.shared.PescadorMVPLocale;
+import mx.org.pescadormvp.core.client.session.StatePointer;
+import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 public interface PescadorMVPPlace extends StatePointer {
 

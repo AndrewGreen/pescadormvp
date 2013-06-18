@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.regionsandcontainers;
+package mx.org.pescadormvp.core.client.regionsandcontainers;
 
 import java.util.Set;
 

@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.inject.Inject;

@@ -6,9 +6,9 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client;
+package mx.org.pescadormvp.core.client;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.components.ComponentSetup;
 
 import com.google.gwt.inject.client.Ginjector;
 

@@ -6,11 +6,11 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
-import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.internallinks.ActivateInternalLinkEvent;
-import mx.org.pescadormvp.client.session.StatePointer;
+import mx.org.pescadormvp.core.client.components.Component;
+import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
+import mx.org.pescadormvp.core.client.session.StatePointer;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;

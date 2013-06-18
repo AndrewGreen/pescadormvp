@@ -14,7 +14,7 @@
  * Véase COPYING.txt y LICENSE.txt para los términos bajo los cuales
  * se permite la redistribución.
  */
-package mx.org.pescadormvp.shared;
+package mx.org.pescadormvp.core.shared;
 
 import java.io.Serializable;
 import java.util.Comparator;

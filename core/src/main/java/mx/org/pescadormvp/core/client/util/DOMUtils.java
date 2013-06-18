@@ -14,7 +14,7 @@
  * Véase COPYING.txt y LICENSE.txt para los términos bajo los cuales
  * se permite la redistribución.
  */
-package mx.org.pescadormvp.client.util;
+package mx.org.pescadormvp.core.client.util;
 
 import com.google.gwt.dom.client.Element;
 

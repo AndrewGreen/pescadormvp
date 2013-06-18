@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright and license for this file are not the same as others. See below.
  ******************************************************************************/
-package mx.org.pescadormvp.client.util;
+package mx.org.pescadormvp.core.client.util;
 /*
 File: Math.uuid.js
 Version: 1.3

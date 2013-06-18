@@ -9,7 +9,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-	<ui:style type="mx.org.pescadormvp.client.internallinks.InternalImageLink.InternalImageLinkStyle">
+	<ui:style type="mx.org.pescadormvp.core.client.internallinks.InternalImageLink.InternalImageLinkStyle">
 
 		.image {
 			border: none;

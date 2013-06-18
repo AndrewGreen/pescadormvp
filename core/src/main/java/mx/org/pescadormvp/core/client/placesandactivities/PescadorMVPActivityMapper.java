@@ -6,10 +6,10 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
-import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
+import mx.org.pescadormvp.core.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;

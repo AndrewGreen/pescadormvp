@@ -6,28 +6,28 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client;
+package mx.org.pescadormvp.core.client;
 
-import mx.org.pescadormvp.client.components.ComponentRegistry;
-import mx.org.pescadormvp.client.components.ComponentRegistryImpl;
-import mx.org.pescadormvp.client.data.DataManager;
-import mx.org.pescadormvp.client.data.DataManagerImpl;
-import mx.org.pescadormvp.client.data.JsonpDispatchAsync;
-import mx.org.pescadormvp.client.data.JsonpDispatchAsyncImpl;
-import mx.org.pescadormvp.client.logging.PescadorMVPLogger;
-import mx.org.pescadormvp.client.logging.PescadorMVPLoggerImpl;
-import mx.org.pescadormvp.client.placesandactivities.ActivityManagersFactory;
-import mx.org.pescadormvp.client.placesandactivities.ActivityMappersFactory;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPActivityManager;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPActivityMapper;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceController;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceHistoryHandler;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapperImpl;
-import mx.org.pescadormvp.client.regionsandcontainers.LayoutHelper;
-import mx.org.pescadormvp.client.regionsandcontainers.NullPanelTools.NullActivity;
-import mx.org.pescadormvp.client.session.Session;
-import mx.org.pescadormvp.client.session.SessionImpl;
+import mx.org.pescadormvp.core.client.components.ComponentRegistry;
+import mx.org.pescadormvp.core.client.components.ComponentRegistryImpl;
+import mx.org.pescadormvp.core.client.data.DataManager;
+import mx.org.pescadormvp.core.client.data.DataManagerImpl;
+import mx.org.pescadormvp.core.client.data.JsonpDispatchAsync;
+import mx.org.pescadormvp.core.client.data.JsonpDispatchAsyncImpl;
+import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
+import mx.org.pescadormvp.core.client.logging.PescadorMVPLoggerImpl;
+import mx.org.pescadormvp.core.client.placesandactivities.ActivityManagersFactory;
+import mx.org.pescadormvp.core.client.placesandactivities.ActivityMappersFactory;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityManager;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityMapper;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceController;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceHistoryHandler;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapperImpl;
+import mx.org.pescadormvp.core.client.regionsandcontainers.LayoutHelper;
+import mx.org.pescadormvp.core.client.regionsandcontainers.NullPanelTools.NullActivity;
+import mx.org.pescadormvp.core.client.session.Session;
+import mx.org.pescadormvp.core.client.session.SessionImpl;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;

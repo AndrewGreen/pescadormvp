@@ -12,7 +12,7 @@
  * http://turbomanage.wordpress.com/2010/07/12/caching-batching-dispatcher-for-gwt-dispatch/
  * 
  ******************************************************************************/
-package mx.org.pescadormvp.client.data;
+package mx.org.pescadormvp.core.client.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +22,8 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 
-import mx.org.pescadormvp.client.components.ComponentSetup;
-import mx.org.pescadormvp.client.util.Reflect;
+import mx.org.pescadormvp.core.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.util.Reflect;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;

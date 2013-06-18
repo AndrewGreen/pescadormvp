@@ -6,9 +6,9 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.internallinks;
+package mx.org.pescadormvp.core.client.internallinks;
 
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;

@@ -6,11 +6,11 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.logging;
+package mx.org.pescadormvp.core.client.logging;
 
 import java.util.logging.Level;
 
-import mx.org.pescadormvp.client.components.Component;
+import mx.org.pescadormvp.core.client.components.Component;
 
 public interface PescadorMVPLogger extends Component<PescadorMVPLogger> {
 

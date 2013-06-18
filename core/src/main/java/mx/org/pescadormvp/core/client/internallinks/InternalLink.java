@@ -6,10 +6,10 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.internallinks;
+package mx.org.pescadormvp.core.client.internallinks;
 
-import mx.org.pescadormvp.client.internallinks.ActivateInternalLinkEvent.HasActivateInternalLinkHandlers;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent.HasActivateInternalLinkHandlers;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 public interface InternalLink extends HasActivateInternalLinkHandlers {
 

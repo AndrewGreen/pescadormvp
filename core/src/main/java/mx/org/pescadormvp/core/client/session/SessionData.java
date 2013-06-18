@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.session;
+package mx.org.pescadormvp.core.client.session;
 
 import java.io.Serializable;
 

@@ -6,9 +6,9 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.data;
+package mx.org.pescadormvp.core.client.data;
 
-import mx.org.pescadormvp.client.components.Component;
+import mx.org.pescadormvp.core.client.components.Component;
 import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 

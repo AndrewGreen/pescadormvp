@@ -6,7 +6,7 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.session;
+package mx.org.pescadormvp.core.client.session;
 
 
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
-import mx.org.pescadormvp.client.util.UUID;
-import mx.org.pescadormvp.shared.PescadorMVPLocale;
+import mx.org.pescadormvp.core.client.components.Component;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.util.UUID;
+import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;

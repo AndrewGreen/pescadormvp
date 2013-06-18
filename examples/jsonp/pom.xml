@@ -116,7 +116,7 @@
 
 					<!-- Classes for messages are generated as specified here -->
 					<i18nMessagesBundles>
-						<i18nMessagesBundle>mx.org.pescadormvp.jsonpexample.client.query.QueryMessages</i18nMessagesBundle>
+						<i18nMessagesBundle>mx.org.pescadormvp.examples.jsonp.client.query.QueryMessages</i18nMessagesBundle>
 					</i18nMessagesBundles>
 
 					<!-- Required to avoid a minor bug in how the out directory is set -->

@@ -14,7 +14,7 @@
  * Véase COPYING.txt y LICENSE.txt para los términos bajo los cuales
  * se permite la redistribución.
  */
-package mx.org.pescadormvp.client.util;
+package mx.org.pescadormvp.core.client.util;
 
 // TODO perhaps move to a real reflection framework like gwt-ent?
 public class Reflect {

@@ -61,11 +61,11 @@
 								<groups>
 	  								<group>
 	    								<title>Core</title>
-	    								<packages>mx.org.pescadormvp.client*:mx.org.pescadormvp.shared*</packages>
+	    								<packages>mx.org.pescadormvp.core.*</packages>
     								</group>
 	  								<group>
-	    								<title>JSONP Example</title>
-	    								<packages>mx.org.pescadormvp.jsonpexample.client*</packages>
+	    								<title>Examples: JSONP</title>
+	    								<packages>mx.org.pescadormvp.examples.jsonp.*</packages>
     								</group>
    								</groups>
    								<stylesheetfile>stylesheet.css</stylesheetfile>

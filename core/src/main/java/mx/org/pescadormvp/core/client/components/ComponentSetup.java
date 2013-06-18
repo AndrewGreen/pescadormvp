@@ -6,28 +6,28 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.components;
+package mx.org.pescadormvp.core.client.components;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
-import mx.org.pescadormvp.client.data.DataManager;
-import mx.org.pescadormvp.client.logging.PescadorMVPLogger;
-import mx.org.pescadormvp.client.placesandactivities.ActivityManagersFactory;
-import mx.org.pescadormvp.client.placesandactivities.ActivityMappersFactory;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPActivityMapper;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceActivity;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponent;
-import mx.org.pescadormvp.client.regionsandcontainers.ForRegionTag;
-import mx.org.pescadormvp.client.regionsandcontainers.HasRegions;
-import mx.org.pescadormvp.client.regionsandcontainers.RootHasFixedSetOfRegions;
-import mx.org.pescadormvp.client.regionsandcontainers.RootRegionManager;
-import mx.org.pescadormvp.client.regionsandcontainers.NullPanelTools.NullActivity;
-import mx.org.pescadormvp.client.session.Session;
-import mx.org.pescadormvp.client.util.Reflect;
+import mx.org.pescadormvp.core.client.data.DataManager;
+import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
+import mx.org.pescadormvp.core.client.placesandactivities.ActivityManagersFactory;
+import mx.org.pescadormvp.core.client.placesandactivities.ActivityMappersFactory;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityMapper;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivity;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
+import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
+import mx.org.pescadormvp.core.client.regionsandcontainers.HasRegions;
+import mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions;
+import mx.org.pescadormvp.core.client.regionsandcontainers.RootRegionManager;
+import mx.org.pescadormvp.core.client.regionsandcontainers.NullPanelTools.NullActivity;
+import mx.org.pescadormvp.core.client.session.Session;
+import mx.org.pescadormvp.core.client.util.Reflect;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.Callback;

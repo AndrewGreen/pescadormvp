@@ -6,12 +6,12 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.regionsandcontainers;
+package mx.org.pescadormvp.core.client.regionsandcontainers;
 
-import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceActivityBase;
-import mx.org.pescadormvp.client.regionsandcontainers.DynamicContainer.ContainerDeactivation;
+import mx.org.pescadormvp.core.client.components.Component;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase;
+import mx.org.pescadormvp.core.client.regionsandcontainers.DynamicContainer.ContainerDeactivation;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;

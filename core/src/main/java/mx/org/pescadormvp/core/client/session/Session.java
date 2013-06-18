@@ -6,13 +6,13 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.session;
+package mx.org.pescadormvp.core.client.session;
 
 import java.util.List;
 
-import mx.org.pescadormvp.client.components.Component;
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
-import mx.org.pescadormvp.shared.PescadorMVPLocale;
+import mx.org.pescadormvp.core.client.components.Component;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 public interface Session extends Component<Session>{
 

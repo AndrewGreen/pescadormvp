@@ -6,13 +6,13 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import mx.org.pescadormvp.client.components.ComponentRegistry;
-import mx.org.pescadormvp.shared.PescadorMVPLocale;
+import mx.org.pescadormvp.core.client.components.ComponentRegistry;
+import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.i18n.client.LocaleInfo;

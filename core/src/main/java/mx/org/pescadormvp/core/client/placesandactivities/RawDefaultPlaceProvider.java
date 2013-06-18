@@ -6,9 +6,9 @@
  * Véase LICENSE.txt para los términos bajo los cuales se permite
  * la redistribución.
  ******************************************************************************/
-package mx.org.pescadormvp.client.placesandactivities;
+package mx.org.pescadormvp.core.client.placesandactivities;
 
-import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 /**
  * Provides a raw default place, though does not set it up fully. 
