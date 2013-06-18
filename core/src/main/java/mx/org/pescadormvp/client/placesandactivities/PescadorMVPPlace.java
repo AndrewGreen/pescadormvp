@@ -18,7 +18,7 @@ import mx.org.pescadormvp.shared.PescadorMVPLocale;
 public interface PescadorMVPPlace extends StatePointer {
 
 	/**
-	 * Set via {@link PlaceActivityViewComponentBase}.
+	 * Set via {@link PescadorMVPPAVComponentBase}.
 	 * 
 	 * @param mainToken
 	 */

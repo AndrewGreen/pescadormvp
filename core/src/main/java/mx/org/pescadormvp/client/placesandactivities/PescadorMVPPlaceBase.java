@@ -47,7 +47,7 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 	}
 
 	/**
-	 * Set via {@link PlaceActivityViewComponentBase}.
+	 * Set via {@link PescadorMVPPAVComponentBase}.
 	 * 
 	 * @param mainToken
 	 */

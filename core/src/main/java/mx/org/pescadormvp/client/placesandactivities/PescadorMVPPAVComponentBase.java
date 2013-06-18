@@ -26,7 +26,7 @@ import mx.org.pescadormvp.client.util.Reflect;
  *
  * @param <P> Place class
  */
-public abstract class PlaceActivityViewComponentBase<
+public abstract class PescadorMVPPAVComponentBase<
 		// public interface offered as a component
 		I extends PescadorMVPPAVComponent<I,P>,
 		
@@ -48,7 +48,7 @@ public abstract class PlaceActivityViewComponentBase<
 	private Session session;
 	
 	// no @Inject, injection used in the extending class's constructor
-	public PlaceActivityViewComponentBase(
+	public PescadorMVPPAVComponentBase(
 			Class<I> publicInterface,
 			String mainToken,
 			PescadorMVPPlaceProvider<P> placeProvider,

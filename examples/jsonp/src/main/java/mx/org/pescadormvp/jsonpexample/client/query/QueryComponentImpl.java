@@ -19,7 +19,7 @@ import mx.org.pescadormvp.client.data.DataManager;
 import mx.org.pescadormvp.client.placesandactivities.ActivitiesFactory;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPlaceMapper;
-import mx.org.pescadormvp.client.placesandactivities.PlaceActivityViewComponentBase;
+import mx.org.pescadormvp.client.placesandactivities.PescadorMVPPAVComponentBase;
 import mx.org.pescadormvp.client.session.Session;
 import mx.org.pescadormvp.client.session.SessionData;
 import mx.org.pescadormvp.jsonpexample.client.layout.Layout.Body;
@@ -31,7 +31,7 @@ import mx.org.pescadormvp.jsonpexample.client.layout.Layout.Body;
  *  
  * @author Andrew Green
  */
-public class QueryComponentImpl extends PlaceActivityViewComponentBase< 
+public class QueryComponentImpl extends PescadorMVPPAVComponentBase< 
 		QueryComponent,
 		QueryPlace>
 		implements
