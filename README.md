@@ -24,7 +24,7 @@ that are also native HTML links, and some miscellaneous utilities.
 
 Instructions on how to use Pescador MVP are in the [Javadoc](http://andrewgreen.github.io/pescadormvp/site/apidocs/index.html?mx/org/pescadormvp/core/package-summary.html) itself.
 
-You may also wish to walk through the example application, in the [examples/jsonp](examples/jsonp) folder. [Here](http://andrewgreen.github.io/pescadormvp/examples/jsonp/app.html) is how the example app looks compiled and running in your browser.
+You may also wish to walk through the example application, in the [examples/jsonp](examples/jsonp) folder. [Here](http://andrewgreen.github.io/pescadormvp/site/examples/jsonp/live/index.html) is how the example app looks compiled and running in your browser.
 
 Pescador MVP was developed by Andrew Green at the [Audiovisual Laboratory for Social Research](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-LAIS) of the  [Instituto Mora](http://www.mora.edu.mx). It was originally developed as part of the [Pescador](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-Pescador) system.
 
