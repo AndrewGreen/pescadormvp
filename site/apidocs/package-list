@@ -1,0 +1,14 @@
+mx.org.pescadormvp.core
+mx.org.pescadormvp.core.client
+mx.org.pescadormvp.core.client.components
+mx.org.pescadormvp.core.client.data
+mx.org.pescadormvp.core.client.internallinks
+mx.org.pescadormvp.core.client.logging
+mx.org.pescadormvp.core.client.placesandactivities
+mx.org.pescadormvp.core.client.regionsandcontainers
+mx.org.pescadormvp.core.client.session
+mx.org.pescadormvp.core.client.util
+mx.org.pescadormvp.core.shared
+mx.org.pescadormvp.examples.jsonp.client
+mx.org.pescadormvp.examples.jsonp.client.layout
+mx.org.pescadormvp.examples.jsonp.client.query
