@@ -1,5 +1,5 @@
 .*
 !.gitignore
-examples/jsonp/src/**
-examples/jsonp/target/**
-pescadormvp/**
+examples/**
+core/**
+target/**
