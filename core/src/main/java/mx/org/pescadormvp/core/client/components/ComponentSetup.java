@@ -8,7 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.components;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -57,9 +58,10 @@ public abstract class ComponentSetup implements RootRegionManager {
 	private PescadorMVPPlaceMapper placeMapper;
 	private NullActivity nullActivity;
 	
-	private Set<String> scriptURLsLoading = new HashSet<String>();
-	private Set<String> scriptURLsFailedToLoad = new HashSet<String>();
-	private boolean startCalled;
+	private List<String> scriptURLsLoading = new ArrayList<String>();
+	private List<String> scriptURLsFailedToLoad = new ArrayList<String>();
+	private int scriptNowLoading = -1;
+	private boolean startPending;
 	private boolean started;
 	
 	public ComponentSetup(ComponentRegistry componentRegistry) {
@@ -150,51 +152,67 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 * @param urls The URLs of scripts to inject.
 	 */
 	public void injectScripts(String... urls) {
-		for (String url : urls) {
-			
-			final String finalURL = url;
-			
-			scriptURLsLoading.add(finalURL);
-			
-			ScriptInjector
-					.fromUrl(finalURL)
-					.setWindow(ScriptInjector.TOP_WINDOW)
-					.setCallback(
-					new Callback<Void, Exception>() {
+		for (String url : urls)
+			scriptURLsLoading.add(url);
+		
+		loadNextScript();
+	}
 
-				public void onFailure(Exception reason) {
-					scriptURLsLoading.remove(finalURL);
-					scriptURLsFailedToLoad.add(finalURL);
-					scriptInjectCallback();
-				}
-		                                                 
-				public void onSuccess(Void result) {
-					scriptURLsLoading.remove(finalURL);
-					scriptInjectCallback();
-				}
-						
-			}).inject();
+	private void loadNextScript() {
+		// Only log if a logger is available, of course--should not assume it is
+		PescadorMVPLogger logger = 
+				componentRegistry.getComponent(PescadorMVPLogger.class);
+		
+		scriptNowLoading++;
+		if (allScriptsLoaded()) {
+			if (startPending)
+				start();
+		} else {
+			if (started) {
+
+				if (logger != null)
+					logger.log(Level.SEVERE, "Framework started before all " +
+							"requested scripts injected.");
+			}
+			
+			String urlToLoad = scriptURLsLoading.get(scriptNowLoading);
+			launchScriptInjector(urlToLoad);
 		}
 	}
 	
-	private void scriptInjectCallback() {
-		// We should never have started before all requested scripts have been
-		// injected.
-		if (started) {
-			
-			// Only log if a logger is available, of course--should assume it is
-			PescadorMVPLogger logger = 
-					componentRegistry.getComponent(PescadorMVPLogger.class);
-			if (logger != null)
-				logger.log(Level.SEVERE, "Framework started before all " +
-						"requested scripts injected.");
-		}
+	private boolean allScriptsLoaded() {
+		return (scriptNowLoading >= scriptURLsLoading.size()) || 
+				scriptNowLoading == -1;
+	}
+	
+	private void launchScriptInjector(final String url) {
+
+		// Only log if a logger is available, of course--should not assume it is
+		final PescadorMVPLogger logger = 
+				componentRegistry.getComponent(PescadorMVPLogger.class);
+
 		
-		// If start has been called but the framework isn't started, that means
-		// that starting was postponed until all scripts have loaded. So try
-		// starting again.
-		if (startCalled)
-			start();
+		ScriptInjector
+				.fromUrl(url)
+				.setWindow(ScriptInjector.TOP_WINDOW)
+				.setCallback(
+				new Callback<Void, Exception>() {
+
+			public void onFailure(Exception reason) {
+				scriptURLsFailedToLoad.add(url);
+
+				if (logger != null)
+					logger.log(Level.FINEST, "Failed to load " + url);
+				
+				loadNextScript();
+			}
+
+			public void onSuccess(Void result) {
+
+				loadNextScript();
+			}
+
+		}).inject();
 	}
 	
 	/**
@@ -208,11 +226,22 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 */
 	public void start() {
 
+		PescadorMVPLogger logger = 
+				componentRegistry.getComponent(PescadorMVPLogger.class);
+		
 		// if there are still Javascript scripts to be injected, wait.
-		if (scriptURLsLoading.size() > 0) {
-			startCalled = true;
+		if (!allScriptsLoaded()) {
+
+			startPending = true;
+
+			if (logger != null)
+				logger.log(Level.FINEST, "Not actually starting; scripts still loading: " + scriptURLsLoading.get(scriptNowLoading));
 			
 		} else {
+
+			if (logger != null)
+				logger.log(Level.FINEST, "Now finally loading");
+
 			// it is assumed that all constructor and method injection for
 			// this class and components will have taken place by the time we get
 			// here; so run through all components and call finalizeSetup,
@@ -223,9 +252,6 @@ public abstract class ComponentSetup implements RootRegionManager {
 			if (scriptURLsFailedToLoad.size() > 0) {
 
 				// If so, and if a logger is available, log the error
-				PescadorMVPLogger logger = 
-						componentRegistry.getComponent(PescadorMVPLogger.class);
-				
 				if (logger != null) {
 					for (String failedSriptURL : scriptURLsFailedToLoad)
 						logger.log(Level.WARNING, "Couldn't inject script " + failedSriptURL);
@@ -254,7 +280,6 @@ public abstract class ComponentSetup implements RootRegionManager {
 			historyHandler.handleCurrentHistory();
 			
 			started = true;
-			
 		}
 	}
 	
