@@ -59,19 +59,48 @@
 							</reportSets>
 							<configuration>
 								<groups>
-	  								<group>
-	    								<title>Core</title>
-	    								<packages>mx.org.pescadormvp.core.*</packages>
-    								</group>
-	  								<group>
-	    								<title>Examples: JSONP</title>
-	    								<packages>mx.org.pescadormvp.examples.jsonp.*</packages>
-    								</group>
-   								</groups>
-   								<stylesheetfile>stylesheet.css</stylesheetfile>
+									<group>
+										<title>Core</title>
+										<packages>mx.org.pescadormvp.core*</packages>
+									</group>
+									<group>
+										<title>Examples: JSONP</title>
+										<packages>mx.org.pescadormvp.examples.jsonp*</packages>
+									</group>
+								</groups>
+								<stylesheetfile>stylesheet.css</stylesheetfile>
+								<links>
+									<link>http://google-web-toolkit.googlecode.com/svn/javadoc/2.5/</link>
+									<link>http://google-gin.googlecode.com/svn/trunk/javadoc/</link>
+								</links>
 							</configuration>
 						</plugin>
 					</reportPlugins>
+				</configuration>
+			</plugin>
+
+			<!-- Repeating the above javadoc config so that we can do mvn javadoc:aggregate -->
+			<!-- independently of mvn site. (Isn't there a better way to do this?) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<groups>
+						<group>
+							<title>Core</title>
+							<packages>mx.org.pescadormvp.core*</packages>
+						</group>
+						<group>
+							<title>Examples: JSONP</title>
+							<packages>mx.org.pescadormvp.examples.jsonp*</packages>
+						</group>
+					</groups>
+					<stylesheetfile>stylesheet.css</stylesheetfile>
+					<links>
+						<link>http://google-web-toolkit.googlecode.com/svn/javadoc/2.5/</link>
+						<link>http://google-gin.googlecode.com/svn/trunk/javadoc/</link>
+					</links>
 				</configuration>
 			</plugin>
 
