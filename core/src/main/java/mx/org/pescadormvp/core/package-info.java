@@ -7,23 +7,24 @@
  * href=
  * "https://developers.google.com/web-toolkit/doc/latest/DevGuideMvpActivitiesAndPlaces"
  * >standard MVP-related classes provided by GWT</a>. Its main features include
- * the association of places, activities, views and components using <a
+ * <a href="http://code.google.com/p/google-gin/">GIN-based dependency
+ * injection</a> and the association of places, activities, views, UI regions
+ * and components using <a
  * href="http://docs.oracle.com/javase/tutorial/java/generics/index.html"
- * >generics</a>, and <a href="http://code.google.com/p/google-gin/">GIN-based
- * dependency injection</a>.
+ * >generics</a>.
  * </p>
  * <h3>Components</h3>
  * <p>
  * At its core, Pescador MVP is a set of conventions for organizing your code,
- * and some classes that help you work with those conventions.
+ * plus some classes that help you work with those conventions.
  * </p>
  * <p>
  * A central concept of Pescador MVP is the component. A component is a
- * collection of related classes, plus a class that implements
+ * collection of related classes, including a class that implements
  * {@link mx.org.pescadormvp.core.client.components.Component} and provides an
  * interface for any external services that the component may offer to other
- * components. Classes that implement
- * {@link mx.org.pescadormvp.core.client.components.Component} also perform
+ * components. The class that implements
+ * {@link mx.org.pescadormvp.core.client.components.Component} also performs
  * tasks of general interest to the component. In addition, components provide a
  * {@link com.google.gwt.inject.client.GinModule} that sets GIN bindings for all
  * the classes in the component.
@@ -45,7 +46,7 @@
  * the right time. If you need to share implementations and specifications
  * across places, activities, views and UI regions, you can use standard Java
  * inheritance and polymorphism. (See <a href="#pavcompoennts">below</a> for
- * more details.)
+ * more on place-activity-view components.)
  * </p>
  * <p>
  * In its present form, Pescador MVP does <b>not</b>:
@@ -77,7 +78,7 @@
  * {@link mx.org.pescadormvp.examples.jsonp.client.query
  * ...examples.jsonp.client.query} will give you a good idea of how PAV
  * components work. (See {@link mx.org.pescadormvp.examples.jsonp.client
- * ...examples.jsonp.client} for a step-by-step explanation of this example. The
+ * ...examples.jsonp.client} for a step-by-step guide to this example. The
  * following is just a brief summary.)
  * </p>
  * <p>
@@ -88,11 +89,11 @@
  * and the implementation is a subclass of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
  * . This superclass provides methods for the activity to retrieve the correct
- * view and place instances when it starts.
+ * view and place instances when it starts. Note that there are interfaces
+ * and/or abstract superclasses for the view and place, too.
  * </p>
  * <p>
- * There are interfaces and/or abstract superclasses for the view and place,
- * too. Bindings for these and other classes in the component are set in the
+ * Bindings for all the classes in the component are set in the
  * component's {@link com.google.gwt.inject.client.GinModule},
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule
  * QueryGinModule}.
@@ -107,8 +108,8 @@
  * {@link com.google.gwt.activity.shared.ActivityManager}s as required.
  * </p>
  * <p>
- * You facilitate testing by using dependency injection and by avoiding
- * references to implementations in your code, as shown in the example.
+ * Testing is facilitated through dependency injection and the avoidance of
+ * references to implementations, as shown in the example.
  * Incidentally, the example also shows how to use <a
  * href="https://github.com/ArcBees/Jukito">Jukito</a> for pure Java tests and
  * {@link com.google.gwt.junit.client.GWTTestCase}s for tests that require a
@@ -135,12 +136,12 @@
  * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} subclass,
  * you must send the superclass a list of the components you want to activate,
  * along with your application's general layout widget (see <a
- * href="#layout">below</a>).
+ * href="#layout">below</a> for more about layouts).
  * </p>
  * <p>
  * You can also ask the superclass to fetch any external javascript libraries
  * you may need, and to make sure they're injected before the rest of the
- * application actually starts.
+ * application actually starts up.
  * </p>
  * <p>
  * Finally, in your GWT entry point class, you simply follow standard GIN
@@ -159,12 +160,13 @@
  * <h3>Places</h3> <h3><a name="layout" />Layout</h3>
  * <p>
  * Pescacaor MVP does <b>not</b> include a widget for laying out your app.
- * Rather, it provides some interfaces that define some behavior that your
+ * Rather, it provides some interfaces that define behavior that your
  * layout widget should implement. It does make some basic assumptions about
  * your application's layout, namely that it has regions. However, it does not
  * assume that the regions' dimensions will remain static, or that all regions
- * will at all times be associated with a view and an activity. It also makes
- * allowances for UI elements that are not visually contained within a region.
+ * must always be associated with a view and an activity. It also makes
+ * allowances for UI elements that are not visually contained within a region (though
+ * such elements <b>should</b> be <b>logically</b> part of a view).
  * </p>
  * <h3>Activities and Views Not Associated with a Place</h3>
  * <p>
@@ -179,7 +181,7 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityBase}
  * (instead of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
- * ). You can set up a container activity and view (that <i>are</i> be
+ * ). You can set up a container activity and view (that <b>are</b> be
  * associated with a place) to manage the embedded activities and views.
  * </p>
  */
