@@ -18,8 +18,6 @@ public interface Session extends Component<Session>{
 
 	PescadorMVPLocale currentLocale();
 	
-	PescadorMVPLocale fallbackLocale();
-	
 	List<PescadorMVPLocale> availableLocales();
 	
 	/**
