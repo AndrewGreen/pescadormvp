@@ -16,11 +16,14 @@ package mx.org.pescadormvp.core.client.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 import mx.org.pescadormvp.core.client.components.ComponentSetup;
 import mx.org.pescadormvp.core.client.util.Reflect;
@@ -32,10 +35,13 @@ public class DataManagerImpl implements DataManager {
 
 	private Map<Action<Result>, ArrayList<AsyncCallback<Result>>> pendingCallbacks 
 		= new HashMap<Action<Result>, ArrayList<AsyncCallback<Result>>>();
-	private Map<Action<Result>, Result> cache = new HashMap<Action<Result>, Result>();
+	private Map<Action<Result>, Result> cache;
 	private DispatchAsync standardDispatcher;
 	private JsonpDispatchAsync jsonpDispatcher;
 
+	private static Integer maxCacheSize;
+	private static int DEFAULT_MAX_CACHE_SIZE = 100;
+	
 	// will be used once we associate callbacks with app state
 	@SuppressWarnings("unused")
 	private ComponentSetup componentSetup;
@@ -49,6 +55,7 @@ public class DataManagerImpl implements DataManager {
 	// TODO allow callbacks to be associated with, and only called in, a given
 	// app state (as identified by the session component)
 	
+	@SuppressWarnings("serial") // To remove warning for LinkedHashMap
 	@Inject
 	public DataManagerImpl(
 			DispatchAsync standardDispatcher,
@@ -56,6 +63,29 @@ public class DataManagerImpl implements DataManager {
 		
 		this.standardDispatcher = standardDispatcher;
 		this.jsonpDispatcher = jsonpDispatcher;
+		
+		// The cache will be a LinkedHashMap that automatically
+		// removes the last entity that was accessed if the cache is larger
+		// than a certain size.
+		cache = new LinkedHashMap<Action<Result>, Result>(
+				DEFAULT_MAX_CACHE_SIZE * 2, (float) 0.75, true) {
+
+			@Override
+			protected boolean removeEldestEntry(
+					Entry<Action<Result>, Result> eldest) {
+				return size() > getMaxCacheSize();
+			}
+		};
+	}
+
+	@Inject(optional=true) public static void setMaxCacheSize(
+				@Named("maxDataManagerCacheSize") Integer maxCacheSize) {
+		
+		DataManagerImpl.maxCacheSize = maxCacheSize;
+	}
+
+	private int getMaxCacheSize() {
+		return maxCacheSize != null ? maxCacheSize : DEFAULT_MAX_CACHE_SIZE;  
 	}
 	
 	public <A extends Action<R>, R extends Result> void execute(
@@ -67,6 +97,8 @@ public class DataManagerImpl implements DataManager {
 				pendingCallbacks.get(action);
 		Result cachedResult = cache.get(action);
 		
+		// Check if there are callbacks pending for this action.
+		// If so, add this call to a list of pending callbacks and return. 
 		if (pendingCallbacksForSameAction != null) {
 
 			 // This cast should always work, since R extends Result (?)
@@ -81,6 +113,8 @@ public class DataManagerImpl implements DataManager {
 			return;
 		}
 		
+		// Check if there is a cached result for this action. If so, just
+		// use it.
 		if (cachedResult != null) {
 			if (!Reflect.isOfSameClassOrSubclass(resultClass, cachedResult))
 				throw new RuntimeException();
@@ -89,41 +123,53 @@ public class DataManagerImpl implements DataManager {
 			
 			callback.onSuccess(downcastCachedResult);
 		
+		// If there is no cached result, call the server to get it.
 		} else {
 			// This cast should always work, since A extends Action<R>,
 			// and the R parameter in Action extends Result (?) 
 			@SuppressWarnings("unchecked")
 			final Action<Result> upcastAction = (Action<Result>) action; 
 			
-			pendingCallbacks.put(upcastAction, 
-					new ArrayList<AsyncCallback<Result>>());
+			// Don't do cache-related stuff if the action is uncacheable
+			final boolean cacheable = action instanceof CacheableAction;
+			
+			if (cacheable)
+				pendingCallbacks.put(upcastAction, 
+						new ArrayList<AsyncCallback<Result>>());
 			
 			AsyncCallback<R> outerCallback = new AsyncCallback<R>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
 					// process other pending callbacks
-					ArrayList<AsyncCallback<Result>> localPendingCallbacksForSameAction =
-							pendingCallbacks.remove(upcastAction);
+					if (cacheable) {
+						ArrayList<AsyncCallback<Result>>
+								localPendingCallbacksForSameAction =
+								pendingCallbacks.remove(upcastAction);
+						
+						for (AsyncCallback<Result> pendingCallback : 
+							localPendingCallbacksForSameAction)
+							pendingCallback.onFailure(caught);
+					}
 					
-					for (AsyncCallback<Result> pendingCallback : 
-						localPendingCallbacksForSameAction)
-						pendingCallback.onFailure(caught);
-							
 					callback.onFailure(caught);
 				}
 
 				@Override
 				public void onSuccess(R result) {
 					// process other pending callbacks
-					ArrayList<AsyncCallback<Result>> localPendingCallbacksForSameAction =
-							pendingCallbacks.remove(upcastAction);
+					if (cacheable) {
+						ArrayList<AsyncCallback<Result>>
+								localPendingCallbacksForSameAction =
+								pendingCallbacks.remove(upcastAction);
+						
+						for (AsyncCallback<Result> pendingCallback : 
+							localPendingCallbacksForSameAction)
+							pendingCallback.onSuccess(result);
 					
-					for (AsyncCallback<Result> pendingCallback : 
-						localPendingCallbacksForSameAction)
-						pendingCallback.onSuccess(result);
+						cache.put(upcastAction, result);
+					}
 					
-					cache.put(upcastAction, result);
 					callback.onSuccess(result);
 				}
 			};
@@ -134,7 +180,7 @@ public class DataManagerImpl implements DataManager {
 				standardDispatcher.execute(action, outerCallback);
 		}
 	}
-
+	
 	/**
 	 * Register an action helper for a specific JSONP action class.
 	 */
@@ -151,5 +197,10 @@ public class DataManagerImpl implements DataManager {
 	@Override
 	public Class<DataManager> publicInterface() {
 		return DataManager.class;
+	}
+
+	@Override
+	public void clearCache() {
+		cache.clear();
 	}
 }

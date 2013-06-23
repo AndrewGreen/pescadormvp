@@ -20,6 +20,8 @@ public interface DataManager extends Component<DataManager> {
 			Class<R> resultClass,
 			final AsyncCallback<R> callback);
 
+	void clearCache();
+	
 	void registerActionHelper(JsonpActionHelper<?, ?> helper);
 	
 }

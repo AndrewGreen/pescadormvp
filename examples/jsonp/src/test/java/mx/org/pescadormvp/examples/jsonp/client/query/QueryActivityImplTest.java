@@ -107,6 +107,9 @@ public class QueryActivityImplTest {
 
 		@Override
 		public void registerActionHelper(JsonpActionHelper<?, ?> helper) { }
+
+		@Override
+		public void clearCache() { }
 	}
 	
 	/**

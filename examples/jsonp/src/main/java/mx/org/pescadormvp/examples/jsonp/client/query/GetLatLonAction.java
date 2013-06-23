@@ -10,6 +10,7 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
 
 
 import mx.org.pescadormvp.core.client.data.JsonpAction;
+import mx.org.pescadormvp.core.client.data.CacheableAction;
 
 /**
  * Action (following the Command pattern) for requesting temperature
@@ -17,7 +18,7 @@ import mx.org.pescadormvp.core.client.data.JsonpAction;
  *  
  * @author Andrew Green
  */
-public class GetLatLonAction implements JsonpAction<GetLatLonResult> {
+public class GetLatLonAction implements JsonpAction<GetLatLonResult>, CacheableAction {
 
 //	// This class is meant to be used only with this site 
 //	final static String BASE_URL = "http://api.openweathermap.org/data/2.5/find?q=";

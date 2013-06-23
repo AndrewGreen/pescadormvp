@@ -83,6 +83,7 @@ public class PescadorMVPGinModule extends AbstractGinModule {
 		
 		// data management
 		bind(DataManager.class).to(DataManagerImpl.class).in(Singleton.class);
+		requestStaticInjection(DataManagerImpl.class); // for max cache size config
 
 		bind(JsonpDispatchAsync.class).to(JsonpDispatchAsyncImpl.class)
 				.in(Singleton.class);

@@ -32,7 +32,9 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.GinModule;
 import com.google.gwt.inject.client.GinModules;
 import com.google.inject.Inject;
+import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 /**
  * <p>This class, together with its inner classes and interfaces, provides a full
@@ -147,9 +149,25 @@ public class ActiveComponentSetup extends ComponentSetup {
 			// default place provider
 			bind(RawDefaultPlaceProvider.class)
 					.to(QueryComponent.class).in(Singleton.class);
-			
-			// If configuration values are to be injected into classes, they
-			// may be specified here.
+		}
+
+		// If you need to set application-wide configuration values, you can
+		// inject them the Guice way here. 
+		
+		// As an example, here we set the maximum cache size for the data manager.
+		// (This particular configuration is not usually necessary--the 
+		// data manager's default maximum cache size is probably fine for most
+		// cases.)
+		
+		// Have a look at DataMangerImpl to see how to set up config
+		// value injection like this. Note that in the global
+		// PescadorMVPGinModule, static injection is requested for DataMangerImpl.
+		// This is necessary for the value to be injected in the static method
+		// that receives it.
+		@Provides
+		@Named("maxDataManagerCacheSize")
+		Integer providesMaxDataManagerCacheSize() {
+			return 50;
 		}
 	}
 }
