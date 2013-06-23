@@ -13,7 +13,28 @@
  * href="http://docs.oracle.com/javase/tutorial/java/generics/index.html"
  * >generics</a>.
  * </p>
- * <h3>Components</h3>
+ * <p>
+ * Contents:
+ * <ol>
+ * <li><a href="#components">Components</a></li>
+ * <li><a href="#pavcompoennts">Place-Activity-View Components</a></li>
+ * <li><a href="#componentsetup">Activating Components and Starting the
+ * Framework</a></li>
+ * <li><a href="#places">Places</a></li>
+ * <li><a href="#layout">Layout</a></li>
+ * <li><a href="#avnoplace">Activities and Views Not Associated with a Place</a>
+ * </li>
+ * <li><a href="#session">Session</a></li>
+ * <li><a href="#extras">Extras</a>
+ * <ol>
+ * <li><a href="#datamanager">Caching Command-Pattern Data Manager</a></li>
+ * <li><a href="#internallinks">Internal Links</a></li>
+ * <li><a href="#logger">Logger</a></li>
+ * </ol>
+ * </li>
+ * </ol>
+ * </p>
+ * <h3><a name="components"/>Components</h3>
  * <p>
  * At its core, Pescador MVP is a set of conventions for organizing your code,
  * plus some classes that help you work with those conventions.
@@ -60,10 +81,10 @@
  * <li>allow hot-swapping of components at runtime.</li>
  * </ul>
  * <p>
- * It is conceivable that some of these features (excluding the last one) might
- * be implemented some time in the future. But even without them, Pescador MVP
- * can help keep your client codebase nice and clean. (At least, that has been
- * the author's experience.)
+ * It is conceivable that these features (excluding the last one) might be
+ * implemented some time in the future. But even without them, Pescador MVP can
+ * help keep your client codebase nice and clean. (At least, that has been the
+ * author's experience.)
  * </p>
  * <h3><a name="pavcompoennts" />Place-Activity-View Components</h3>
  * <p>
@@ -93,8 +114,8 @@
  * and/or abstract superclasses for the view and place, too.
  * </p>
  * <p>
- * Bindings for all the classes in the component are set in the component's
- * {@link com.google.gwt.inject.client.GinModule},
+ * To see how bindings are set up for classes in this component, look at the
+ * component's {@link com.google.gwt.inject.client.GinModule},
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule
  * QueryGinModule}.
  * </p>
@@ -146,13 +167,12 @@
  * can call this method directly from your GWT entry point method.
  * (Alternatively, you can do so from a static method in your subclass of
  * {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and call
- * <b>that</b> static method from the GWT entry point. With this approach, you
- * keep all general setup code inside your subclass of
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and your
- * GWT entry point stays dirt-simple. See
+ * <b>that</b> static method from the GWT entry point. See
  * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup} and
  * {@link mx.org.pescadormvp.examples.jsonp.client.JSONPExample} in the example
- * app.)
+ * app. With this approach, you keep all general setup code inside your subclass
+ * of {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and your
+ * GWT entry point stays dirt-simple.)
  * </p>
  * <p>
  * Once the static startup method in
@@ -167,11 +187,11 @@
  * fetch them and make sure they're loaded before the application actually
  * starts up.
  * </p>
- * <h3>Places</h3>
+ * <h3><a name="places"/>Places</h3>
  * <p>
  * Places in Pescador MVP have a few extra features that are not included in
- * plain GWT {@link com.google.gwt.place.shared.Place}s. Plus, with Pescador
- * MVP, you never have to make your own
+ * plain GWT {@link com.google.gwt.place.shared.Place}s. One of them is that you
+ * never have to make your own
  * {@link com.google.gwt.place.shared.PlaceTokenizer}s.
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * store information as key-value pairs that are automatically serialized to and
@@ -204,14 +224,15 @@
  * must provide a container widget for each region it manages. In addition, it
  * must provide an
  * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions#attach()
- * attach()} method. This method is normally where you attach your layout widget
- * to the DOM. It will be called just once when the framework starts up.
+ * attach()} method. Whatever code attaches your layout widget to the
+ * DOM should be placed in this method. It will be called just once when the framework
+ * starts up.
  * </p>
  * <p>
  * For a very simple example, see
  * {@link mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl}.
  * </p>
- * <h3>Activities and Views Not Associated with a Place</h3>
+ * <h3><a name="avnoplace"/>Activities and Views Not Associated with a Place</h3>
  * <p>
  * It is possible to define activities and views that are not associated with a
  * specific place. This can be useful, for example, if you have a tab panel in a
@@ -224,21 +245,82 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityBase}
  * (instead of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
- * ). You can set up a container activity and view (that <b>are</b>
- * associated with a place) to manage the embedded activities and views. In such
- * a case, your container activity will probably look like a much
- * simplified version of GWT's
- * {@link com.google.gwt.activity.shared.ActivityManager}.
+ * ). You can set up a container activity and view (that <b>are</b> associated
+ * with a place) to manage the embedded activities and views. In such a scenario,
+ * your container activity will probably look like a much simplified version of
+ * GWT's {@link com.google.gwt.activity.shared.ActivityManager}.
  * </p>
- * <h3>Session Data</h3>
- * <h3>Extras</h3>
+ * <h3><a name="session"/>Session</h3>
+ * <p>
+ * The {@link mx.org.pescadormvp.core.client.session.Session} component has some
+ * facilities for working with
+ * {@link mx.org.pescadormvp.core.shared.PescadorMVPLocale}s (which are slightly
+ * different from plain GWT locales). Plus, it provides a standardized way to
+ * store serializable session data. This component is also for moving about: you
+ * use {@link mx.org.pescadormvp.core.client.session.Session#goTo
+ * Session.goTo(place)} make the app go to a new place.
+ * </p>
+ * <h3><a name="extras"/>Extras</h3>
  * <p>
  * Pescador MVP includes a few extra facilities that are not properly part of an
  * MVP framework, but that I've found quite useful.
  * </p>
- * <h5>Caching Command-Pattern Data Manager</h5>
- * <h5>Internal Links</h5>
- * <h5>Logger</h5> 
+ * <h4><a name="datamanager"/>Caching Command-Pattern Data Manager</h4>
+ * <p>
+ * Pescador MVP provides a data manager component for server requests following
+ * the <a href="http://en.wikipedia.org/wiki/Command_pattern">command
+ * pattern</a>, as implemented by <a
+ * href="http://code.google.com/p/gwt-dispatch/">gwt-dispatch</a>. With this
+ * pattern, your requests are encapsulated in
+ * {@link net.customware.gwt.dispatch.shared.Action} objects (for example,
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonAction}) and
+ * you get back {@link net.customware.gwt.dispatch.shared.Result} objects (such
+ * as {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonResult})
+ * that contain information provided by the server.
+ * </p>
+ * <p>
+ * In addition to using the command pattern, Pescador MVP's data manager can
+ * cache the results of server calls. (The code for this is based on <a href=
+ * "http://turbomanage.wordpress.com/2010/07/12/caching-batching-dispatcher-for-gwt-dispatch/"
+ * >this blog post</a> by David Chandler.) For results to be cached, the
+ * corresponding action must implement the tag interface
+ * {@link mx.org.pescadormvp.core.client.data.CacheableAction}. The maximum
+ * cache size is configurable (look at
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup} to see
+ * how to set it.)
+ * </p>
+ * <p>
+ * The data manager can handle both requests to your own server and requests to
+ * a third-party server (via JSONP). For requests to your own server, you must
+ * configure a servlet and register an
+ * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler} as
+ * described in the <a
+ * href="http://code.google.com/p/gwt-dispatch/wiki/GettingStarted">gwt-
+ * dispatch documentation</a>. For JSONP requests, create a
+ * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} (such as
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonActionHelperImpl}
+ * ) and register it with the data manager (as shown in
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl#finalizeSetup
+ * QueryComponentImpl}).
+ * </p>
+ * <h4><a name="internallinks"/>Internal Links</h4>
+ * <p>
+ * The {@link mx.org.pescadormvp.core.client.internallinks
+ * ...core.client.internallinks} package has some utility classes for
+ * creating internal links (i.e., links to places within your application). These classes work well with
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * and produce native HTML hyperlinks that stay within your application when
+ * clicked on normally (thus preserving state, data cache, etc.)&mdash;and can
+ * also be control-clicked and right-clicked for native browser hyperlink
+ * actions.
+ * </p>
+ * <h4><a name="logger"/>Logger</h4>
+ * <p>
+ * This is just an easy-to-use, injectable a wrapper for GWT's logger. An
+ * example configuration is in
+ * {@code examples/jsonp/src/main/resources/mx/org/pescadormvp/examples/jsonp/JSONPExample.gwt.xml}
+ * .
+ * </p>
  */
 package mx.org.pescadormvp.core;
 
