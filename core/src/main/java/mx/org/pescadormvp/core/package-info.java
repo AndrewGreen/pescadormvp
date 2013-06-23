@@ -93,8 +93,8 @@
  * and/or abstract superclasses for the view and place, too.
  * </p>
  * <p>
- * Bindings for all the classes in the component are set in the
- * component's {@link com.google.gwt.inject.client.GinModule},
+ * Bindings for all the classes in the component are set in the component's
+ * {@link com.google.gwt.inject.client.GinModule},
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule
  * QueryGinModule}.
  * </p>
@@ -109,8 +109,8 @@
  * </p>
  * <p>
  * Testing is facilitated through dependency injection and the avoidance of
- * references to implementations, as shown in the example.
- * Incidentally, the example also shows how to use <a
+ * references to implementations, as shown in the example. Incidentally, the
+ * example also shows how to use <a
  * href="https://github.com/ArcBees/Jukito">Jukito</a> for pure Java tests and
  * {@link com.google.gwt.junit.client.GWTTestCase}s for tests that require a
  * browser context. (See the source code under examples/jsonp/src/test/java.)
@@ -139,34 +139,77 @@
  * href="#layout">below</a> for more about layouts).
  * </p>
  * <p>
- * You can also ask the superclass to fetch any external javascript libraries
- * you may need, and to make sure they're injected before the rest of the
- * application actually starts up.
- * </p>
- * <p>
- * Finally, in your GWT entry point class, you simply follow standard GIN
- * protocol and instantiate the {@link com.google.gwt.inject.client.Ginjector}
- * you declared. You use the {@link com.google.gwt.inject.client.Ginjector} to
- * get an instance of your subclass of
+ * Framework initialization works like this:
+ * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} has a static
+ * method that you use to pass in your
+ * {@link com.google.gwt.inject.client.Ginjector} and start everything up. You
+ * can call this method directly from your GWT entry point method.
+ * (Alternatively, you can do so from a static method in your subclass of
  * {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and call
- * its {@link mx.org.pescadormvp.core.client.components.ComponentSetup#start()
- * start()} method.
+ * <b>that</b> static method from the GWT entry point. With this approach, you
+ * keep all general setup code inside your subclass of
+ * {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and your
+ * GWT entry point stays dirt-simple. See
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup} and
+ * {@link mx.org.pescadormvp.examples.jsonp.client.JSONPExample} in the example
+ * app.)
  * </p>
  * <p>
- * And that's that! Your layout widget will be attached to the DOM and your app
- * will go to the default place (or to whatever place is described in the URL
- * fragment identifier in the browser's location bar).
+ * Once the static startup method in
+ * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} is called,
+ * that's that! Dependency injection will boot up, your layout widget will be
+ * attached to the DOM and your app will go to the default place (or to whatever
+ * place is described in the URL fragment identifier in the browser's location
+ * bar).
  * </p>
- * <h3>Places</h3> <h3><a name="layout" />Layout</h3>
  * <p>
- * Pescacaor MVP does <b>not</b> include a widget for laying out your app.
- * Rather, it provides some interfaces that define behavior that your
- * layout widget should implement. It does make some basic assumptions about
- * your application's layout, namely that it has regions. However, it does not
- * assume that the regions' dimensions will remain static, or that all regions
- * must always be associated with a view and an activity. It also makes
- * allowances for UI elements that are not visually contained within a region (though
- * such elements <b>should</b> be <b>logically</b> part of a view).
+ * Also: if you use external javascript libraries, you can ask the framework to
+ * fetch them and make sure they're loaded before the application actually
+ * starts up.
+ * </p>
+ * <h3>Places</h3>
+ * <p>
+ * Places in Pescador MVP have a few extra features that are not included in
+ * plain GWT {@link com.google.gwt.place.shared.Place}s. Plus, with Pescador
+ * MVP, you never have to make your own
+ * {@link com.google.gwt.place.shared.PlaceTokenizer}s.
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * store information as key-value pairs that are automatically serialized to and
+ * retrieved from the URL fragment identifier. They may also contain locale
+ * information and presentation text (for describing the place in the UI).
+ * </p>
+ * <p>
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * are passed around the Pescador MVP framework as interfaces, unlike standard
+ * GWT {@link com.google.gwt.place.shared.Place}, which are implementations.
+ * However,
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * can always be converted to standard GWT
+ * {@link com.google.gwt.place.shared.Place}s if necessary.
+ * </p>
+ * <h3><a name="layout" />Layout</h3>
+ * <p>
+ * Pescador MVP does <b>not</b> include a widget for laying out your app.
+ * Rather, it provides some interfaces that define behavior that your layout
+ * widget should implement. It does make some basic assumptions about your
+ * application's layout, namely that it has regions. However, it does not assume
+ * that the regions' dimensions will remain static, or that all regions must
+ * always be visible and associated with a view and an activity. Also, it makes
+ * allowances for UI elements that are not visually contained within a region
+ * (though such elements should be <b>logically</b> part of a view).
+ * </p>
+ * <p>
+ * The central requirements for a Pescador MVP layout widget are: it must
+ * provide a set of interfaces that designate regions that it manages, and it
+ * must provide a container widget for each region it manages. In addition, it
+ * must provide an
+ * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions#attach()
+ * attach()} method. This method is normally where you attach your layout widget
+ * to the DOM. It will be called just once when the framework starts up.
+ * </p>
+ * <p>
+ * For a very simple example, see
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl}.
  * </p>
  * <h3>Activities and Views Not Associated with a Place</h3>
  * <p>
@@ -181,9 +224,21 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityBase}
  * (instead of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
- * ). You can set up a container activity and view (that <b>are</b> be
- * associated with a place) to manage the embedded activities and views.
+ * ). You can set up a container activity and view (that <b>are</b>
+ * associated with a place) to manage the embedded activities and views. In such
+ * a case, your container activity will probably look like a much
+ * simplified version of GWT's
+ * {@link com.google.gwt.activity.shared.ActivityManager}.
  * </p>
+ * <h3>Session Data</h3>
+ * <h3>Extras</h3>
+ * <p>
+ * Pescador MVP includes a few extra facilities that are not properly part of an
+ * MVP framework, but that I've found quite useful.
+ * </p>
+ * <h5>Caching Command-Pattern Data Manager</h5>
+ * <h5>Internal Links</h5>
+ * <h5>Logger</h5> 
  */
 package mx.org.pescadormvp.core;
 

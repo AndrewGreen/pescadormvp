@@ -35,13 +35,12 @@ public interface PescadorMVPPlace extends StatePointer {
 	/**
 	 * Set the text used to produce a user-friendly reference to this place
 	 * to display somewhere in the UI. May not be set when not needed.
-	 * Local-specific; when the local changes, this must be re-set.
 	 * 
 	 */
 	void setPresentationText(String presentationText);
 
 	/**
-	 * Returns presentation text for this locale. Warning: may return null.
+	 * Returns presentation text. Warning: may return null.
 	 * 
 	 * @return presentation text
 	 */
@@ -62,9 +61,9 @@ public interface PescadorMVPPlace extends StatePointer {
 	 * the whole app in the new locale. Null is used to indicate the same
 	 * locale as is currently active, whatever that may be. 
 	 */
-	PescadorMVPLocale getNewLocale();
-
 	void setNewLocale(PescadorMVPLocale newLocale);
+	
+	PescadorMVPLocale getNewLocale();
 
 	String getURL();
 
@@ -75,5 +74,4 @@ public interface PescadorMVPPlace extends StatePointer {
 	void setRequiresReload(boolean requiresReload);
 	
 	public Place asGWTPlace();
-
 }
