@@ -8,11 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client;
 
-import mx.org.pescadormvp.core.client.PescadorMVPGinjector;
-import mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup.ActiveSetupGinjector;
-
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
 
 /**
  * This class is the entry point--where GWT client code starts executing.
@@ -24,14 +20,10 @@ public class JSONPExample implements EntryPoint{
 
 	@Override
 	public void onModuleLoad() {
-
-		// Get the Ginjector to boot up dependency injection
-		PescadorMVPGinjector ginjector =
-				GWT.create(ActiveSetupGinjector.class);
 		
-		// The Ginjector provides the active ComponentSetup, which
-		// we use to start the app. This will initialize the UI
-		// and go to the default place.
-		ginjector.getComponetSetup().start();
+		// This static call on the class we've created in turn
+		// calls a static method on the superclass that starts everything 
+		// up, including DI, history management and the UI.
+		ActiveComponentSetup.startUp();
 	}
 }

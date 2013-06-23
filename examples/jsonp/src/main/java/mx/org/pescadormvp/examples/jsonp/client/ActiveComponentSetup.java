@@ -26,6 +26,7 @@ import mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl;
 import mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent;
 import mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.i18n.client.Messages;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.GinModule;
@@ -47,6 +48,32 @@ import com.google.inject.Singleton;
  */
 public class ActiveComponentSetup extends ComponentSetup {
 
+	/**
+	 * This method calls the superclass's static startup method, providing
+	 * the {@link PescadorMVPGinjector} to use, and
+	 * in this case, requesting the injection of some JS, too.
+	 */
+	public static void startUp() {
+		
+		PescadorMVPGinjectorHolder ginjectorHolder = 
+				new PescadorMVPGinjectorHolder() {
+
+			@Override
+			public PescadorMVPGinjector getPescadorMVPGinjector() {
+				return GWT.create(ActiveSetupGinjector.class);
+			}
+		};
+		
+		// Inject external Javascript libraries for OpenLayers.
+		// The framework will ensure that these are loaded and available
+		// before the framework actually starts up.
+		ComponentSetup.injectJSthenStartUp(
+				ginjectorHolder,
+				"JSONPExample/js/gwt-openlayers/util.js",
+				"http://www.openlayers.org/api/OpenLayers.js",
+				"http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+	}
+	
 	/**
 	 * Activate all necessary {@link GinModule}s for DI in the components to use,
 	 * as well as for basic infrastructure.
@@ -99,14 +126,6 @@ public class ActiveComponentSetup extends ComponentSetup {
 		// Register components
 		// TODO once multibindings and mapbindings are in Gin, look into using that
 		addComponents(queryComponent);
-		
-		// Inject external Javascript libraries for OpenLayers.
-		// The framework will ensure that these are loaded and available
-		// before the framework actually starts up.
-		injectScripts(
-				"JSONPExample/js/gwt-openlayers/util.js",
-				"http://www.openlayers.org/api/OpenLayers.js",
-				"http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
 	}
 	
 	/**
