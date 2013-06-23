@@ -71,6 +71,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 		// before the framework actually starts up.
 		ComponentSetup.injectJSthenStartUp(
 				ginjectorHolder,
+				true,
 				"JSONPExample/js/gwt-openlayers/util.js",
 				"http://www.openlayers.org/api/OpenLayers.js",
 				"http://www.openstreetmap.org/openlayers/OpenStreetMap.js");

@@ -7,6 +7,7 @@
 package mx.org.pescadormvp.core.client.components;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -45,9 +46,12 @@ import com.google.web.bindery.event.shared.EventBus;
 public abstract class ComponentSetup implements RootRegionManager {
 
 	// static stuff used for injecting scripts before startup
-	private static String[] scriptURLsToLoad;
-	private static List<String> scriptURLsFailedToLoad = new ArrayList<String>();
+	private static String[] scriptsToLoad;
+	private static Set<String> scriptsFailedToLoad = new HashSet<String>();
+	private static Set<String> scriptsLoaded = new HashSet<String>();
+	private static boolean loadScriptsInOrder;
 	private static int scriptNowLoading = -1;
+	
 	private static PescadorMVPGinjectorHolder pendingGinjectorHolder;
 	private static List<PendingLog> pendingLogs = 
 			new ArrayList<ComponentSetup.PendingLog>();
@@ -94,7 +98,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 	
 	/**
 	 * <p>
-	 * Request the injection of scripts before the framework starts. Scripts are
+	 * Request the loading of scripts before the framework starts. Scripts are
 	 * injected in the top window. Then the framework is started.
 	 * </p>
 	 * <p>
@@ -104,36 +108,47 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 * booting up DI.
 	 * </p>
 	 * 
-	 * @param scriptURLsToLoad
-	 *            The URLs of scripts to inject.
 	 * @param ginjectorHolder
 	 *            A holder for the {@link PescadorMVPGinjector} to use to boot
 	 *            up DI.
+	 * @param loadScriptsInOrder
+	 *            If more than one script is requested, make sure they are
+	 *            loaded sequentially. (Some libraries need this.)
+	 * @param scriptsToLoad
+	 *            The URLs of scripts to load.
+     *
 	 */
 	public static void injectJSthenStartUp(
 			PescadorMVPGinjectorHolder ginjectorHolder,
-			String... scriptURLsToLoad) {
+			boolean loadScriptsInOrder,
+			String... scriptsToLoad) {
 
 		ComponentSetup.pendingGinjectorHolder = ginjectorHolder;
-		ComponentSetup.scriptURLsToLoad = scriptURLsToLoad;
-		loadNextScript();
-	}
+		ComponentSetup.scriptsToLoad = scriptsToLoad;
+		ComponentSetup.loadScriptsInOrder = loadScriptsInOrder;
+		
+		if (loadScriptsInOrder) {
+			scriptNowLoading = 0;
+			launchScriptInjector(scriptsToLoad[0]);
 
-	private static void loadNextScript() {
-
-		scriptNowLoading++;
-
-		if (allScriptsLoaded()) {
-			startUp(pendingGinjectorHolder);
 		} else {
-			String urlToLoad = scriptURLsToLoad[scriptNowLoading];
-			launchScriptInjector(urlToLoad);
+			for (String url : scriptsToLoad)
+				launchScriptInjector(url);
 		}
 	}
 
+	private static void scriptInjectReturned() {
+		if (allScriptsLoaded()) {
+			startUp(pendingGinjectorHolder);
+		} else if (loadScriptsInOrder) {
+			scriptNowLoading++;
+			launchScriptInjector(scriptsToLoad[scriptNowLoading]);
+		}
+	}
+	
 	private static boolean allScriptsLoaded() {
-		return (scriptNowLoading >= scriptURLsToLoad.length) ||
-				scriptNowLoading == -1;
+		return scriptsToLoad.length ==
+				scriptsLoaded.size() + scriptsFailedToLoad.size();
 	}
 
 	private static void launchScriptInjector(final String url) {
@@ -147,13 +162,17 @@ public abstract class ComponentSetup implements RootRegionManager {
 			public void onFailure(Exception reason) {
 				pendingLogs.add(new PendingLog(Level.SEVERE,
 						"Failed to load JS " + url));
-				loadNextScript();
+				
+				scriptsFailedToLoad.add(url);
+				scriptInjectReturned();
 			}
 
 			public void onSuccess(Void result) {
 				pendingLogs.add(new PendingLog(Level.INFO,
 						"Successfully loaded JS " + url));
-				loadNextScript();
+				
+				scriptsLoaded.add(url);
+				scriptInjectReturned();
 			}
 
 		}).inject();
@@ -271,11 +290,11 @@ public abstract class ComponentSetup implements RootRegionManager {
 		}
 
 		// Check if any requested scripts failed to load
-		if (scriptURLsFailedToLoad.size() > 0) {
+		if (scriptsFailedToLoad.size() > 0) {
 
 			// If so, and if a logger is available, log the error
 			if (logger != null) {
-				for (String failedSriptURL : scriptURLsFailedToLoad)
+				for (String failedSriptURL : scriptsFailedToLoad)
 					logger.log(Level.WARNING, "Couldn't inject script "
 							+ failedSriptURL);
 			}
