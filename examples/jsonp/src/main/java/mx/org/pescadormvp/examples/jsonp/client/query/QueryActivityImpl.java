@@ -78,7 +78,7 @@ public class QueryActivityImpl
 
 		// Attach the view to the container for this region of the layout.
 		// (In this example there's only one region.)
-		final QueryView view = getView(); 
+		QueryView view = getView(); 
 		container.setWidget(view);
 		
 		// Make sure the view's query area is set up
@@ -95,6 +95,12 @@ public class QueryActivityImpl
 		linkHandlerReg = eventBus.addHandlerToSource(
 				ActivateInternalLinkEvent.TYPE,
 				view, this);
+		
+		doQuery();
+	}
+
+	private void doQuery() {
+		final QueryView view = getView();
 		
 		// Provide the view with a fresh place instance for the next query
 		view.setRawQueryPlace(queryComponent.getPlace());
@@ -180,6 +186,23 @@ public class QueryActivityImpl
 					}
 				}
 			});
+		}		
+	}
+	
+	@Override
+	public void onActivateInternalLink(ActivateInternalLinkEvent event) {
+		
+		// If we've been asked to go to the same place again, well, try
+		// the server call again. In fact, this only has the possibility of 
+		// changing anything if the server returned an error--if not, the 
+		// response will have gotten cached, so we can't get an error
+		// after a successful result.
+		// We have to do this manually because GWT's PlaceController just does
+		// nothing if asked to go to a place that equals the current place.
+		if (event.getPlace().equals(getPlace())) {
+			 doQuery();
+		} else {
+			super.onActivateInternalLink(event);
 		}
 	}
 	
