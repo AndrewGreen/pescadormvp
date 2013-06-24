@@ -51,9 +51,10 @@ public abstract class ComponentSetup implements RootRegionManager {
 	private static Set<String> scriptsLoaded = new HashSet<String>();
 	private static boolean loadScriptsInOrder;
 	private static int scriptNowLoading = -1;
-	
+	private static LoadingPleaseWait loadingPleaseWait;
+
 	private static PescadorMVPGinjectorHolder pendingGinjectorHolder;
-	private static List<PendingLog> pendingLogs = 
+	private static List<PendingLog> pendingLogs =
 			new ArrayList<ComponentSetup.PendingLog>();
 
 	private ComponentRegistry componentRegistry;
@@ -71,18 +72,17 @@ public abstract class ComponentSetup implements RootRegionManager {
 	private NullActivity nullActivity;
 
 	/**
-	 *	A mini interface that allows us to pass around a 
-	 *  specific {@link PescadorMVPGinjector} while delaying its actual
-	 *  instantiation. Necessary because {@link GWT#create(Class) GWT.create()}
-	 *  only takes class literals.
+	 * A mini interface that allows us to pass around a specific
+	 * {@link PescadorMVPGinjector} while delaying its actual instantiation.
+	 * Necessary because {@link GWT#create(Class) GWT.create()} only takes class
+	 * literals.
 	 */
 	public interface PescadorMVPGinjectorHolder {
 		public PescadorMVPGinjector getPescadorMVPGinjector();
 	}
-	
+
 	/**
-	 * *
-	 * This method is static so we can use it before DI boots up. That way the
+	 * * This method is static so we can use it before DI boots up. That way the
 	 * framework to take care of booting up DI.
 	 * 
 	 * @param ginjectorHolder
@@ -95,7 +95,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 		// and go to the default place.
 		ginjectorHolder.getPescadorMVPGinjector().getComponetSetup().start();
 	}
-	
+
 	/**
 	 * <p>
 	 * Request the loading of scripts before the framework starts. Scripts are
@@ -111,22 +111,31 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 * @param ginjectorHolder
 	 *            A holder for the {@link PescadorMVPGinjector} to use to boot
 	 *            up DI.
+	 * @param loadingPleaseWait
+	 *            An object that does something when scriptloading starts (like
+	 *            show a "please wait" message) and when it finishes (like
+	 *            remove the message)
 	 * @param loadScriptsInOrder
 	 *            If more than one script is requested, make sure they are
 	 *            loaded sequentially. (Some libraries need this.)
 	 * @param scriptsToLoad
 	 *            The URLs of scripts to load.
-     *
 	 */
-	public static void injectJSthenStartUp(
+	public static void loadJSthenStartUp(
 			PescadorMVPGinjectorHolder ginjectorHolder,
+			LoadingPleaseWait loadingPleaseWait,
 			boolean loadScriptsInOrder,
 			String... scriptsToLoad) {
 
 		ComponentSetup.pendingGinjectorHolder = ginjectorHolder;
-		ComponentSetup.scriptsToLoad = scriptsToLoad;
+		ComponentSetup.loadingPleaseWait = loadingPleaseWait;
 		ComponentSetup.loadScriptsInOrder = loadScriptsInOrder;
+		ComponentSetup.scriptsToLoad = scriptsToLoad;
 		
+		// if a loadingPleaseWait has been sent, start it up
+		if (loadingPleaseWait != null)
+			loadingPleaseWait.start();
+
 		if (loadScriptsInOrder) {
 			scriptNowLoading = 0;
 			launchScriptInjector(scriptsToLoad[0]);
@@ -139,16 +148,21 @@ public abstract class ComponentSetup implements RootRegionManager {
 
 	private static void scriptInjectReturned() {
 		if (allScriptsLoaded()) {
+			// if a loadingPleaseWait has been sent, finish it
+			if (loadingPleaseWait != null)
+				loadingPleaseWait.finish();
+			
 			startUp(pendingGinjectorHolder);
+			
 		} else if (loadScriptsInOrder) {
 			scriptNowLoading++;
 			launchScriptInjector(scriptsToLoad[scriptNowLoading]);
 		}
 	}
-	
+
 	private static boolean allScriptsLoaded() {
-		return scriptsToLoad.length ==
-				scriptsLoaded.size() + scriptsFailedToLoad.size();
+		return scriptsToLoad.length == scriptsLoaded.size()
+				+ scriptsFailedToLoad.size();
 	}
 
 	private static void launchScriptInjector(final String url) {
@@ -157,25 +171,25 @@ public abstract class ComponentSetup implements RootRegionManager {
 				.fromUrl(url)
 				.setWindow(ScriptInjector.TOP_WINDOW)
 				.setCallback(
-				new Callback<Void, Exception>() {
+						new Callback<Void, Exception>() {
 
-			public void onFailure(Exception reason) {
-				pendingLogs.add(new PendingLog(Level.SEVERE,
-						"Failed to load JS " + url));
-				
-				scriptsFailedToLoad.add(url);
-				scriptInjectReturned();
-			}
+							public void onFailure(Exception reason) {
+								pendingLogs.add(new PendingLog(Level.SEVERE,
+										"Failed to load JS " + url));
 
-			public void onSuccess(Void result) {
-				pendingLogs.add(new PendingLog(Level.INFO,
-						"Successfully loaded JS " + url));
-				
-				scriptsLoaded.add(url);
-				scriptInjectReturned();
-			}
+								scriptsFailedToLoad.add(url);
+								scriptInjectReturned();
+							}
 
-		}).inject();
+							public void onSuccess(Void result) {
+								pendingLogs.add(new PendingLog(Level.INFO,
+										"Successfully loaded JS " + url));
+
+								scriptsLoaded.add(url);
+								scriptInjectReturned();
+							}
+
+						}).inject();
 	}
 
 	public ComponentSetup(ComponentRegistry componentRegistry) {
@@ -374,5 +388,19 @@ public abstract class ComponentSetup implements RootRegionManager {
 		String getText() {
 			return message;
 		}
+	}
+
+	/**
+	 * Implement this interface on a class that does something when JS
+	 * scriptloading starts (like show a "please wait" message) and when it
+	 * finishes (like remove the message). Then pass an instance to
+	 * {@link ComponentSetup#loadJSthenStartUp}.
+	 * 
+	 * @author Andrew Green
+	 */
+	public interface LoadingPleaseWait {
+		public void start();
+
+		public void finish();
 	}
 }

@@ -69,8 +69,10 @@ public class ActiveComponentSetup extends ComponentSetup {
 		// Inject external Javascript libraries for OpenLayers.
 		// The framework will ensure that these are loaded and available
 		// before the framework actually starts up.
-		ComponentSetup.injectJSthenStartUp(
+		// Also send an object to display a loading timer while scripts load.
+		ComponentSetup.loadJSthenStartUp(
 				ginjectorHolder,
+				new InitialLoadingTimer(),
 				true,
 				"JSONPExample/js/gwt-openlayers/util.js",
 				"http://www.openlayers.org/api/OpenLayers.js",
