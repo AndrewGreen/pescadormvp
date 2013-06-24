@@ -114,12 +114,12 @@ public class QueryActivityImpl
 			// We don't sanitize it here, that's for the view to do
 			view.setTextboxContents(location);
 			
-			// Before trying to retrieve the temperature information,
+			// Before trying to retrieve information,
 			// set a timer to display a "Loading" message if the request
 			// doesn't come back quickly. The view will cancel the timer
 			// once any state is rendered.
 			view.setLoadingString(messages.loading());
-			view.startLoadingTimer();
+			view.scheduleLoadingMessage();
 						
 			// Create an action object with the name of the location to query
 			GetLatLonAction action = new GetLatLonAction(location);
@@ -187,6 +187,9 @@ public class QueryActivityImpl
 	public void onStop() {
 		super.onStop();
 
+		// cancel loading message in view
+		getView().cancelLoadingMessage();
+		
 		// de-register event handling from the view when this event stops
 		if (linkHandlerReg != null)
 			linkHandlerReg.removeHandler();

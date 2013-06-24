@@ -215,7 +215,7 @@ public class QueryActivityImplTest {
 	
 		// verify that loading timer is called before location is rendered
 		InOrder inOrderView= inOrder(queryView);
-		inOrderView.verify(queryView).startLoadingTimer();
+		inOrderView.verify(queryView).scheduleLoadingMessage();
 		inOrderView.verify(queryView).renderLatLon();
 	}
 
@@ -229,7 +229,7 @@ public class QueryActivityImplTest {
 		startTestActivity(true, true, false);
 
 		InOrder inOrder = inOrder(queryView);
-		inOrder.verify(queryView).startLoadingTimer();
+		inOrder.verify(queryView).scheduleLoadingMessage();
 		inOrder.verify(queryView).renderNoSuchPlace();
 	}
 	
@@ -245,7 +245,7 @@ public class QueryActivityImplTest {
 		// Verify that the activity starts the loading timer, 
 		// sets an error state in the view, and logs the error
 		InOrder inOrder = inOrder(queryView);
-		inOrder.verify(queryView).startLoadingTimer();
+		inOrder.verify(queryView).scheduleLoadingMessage();
 		inOrder.verify(queryView).renderError();
 		
 		verify(logger).log(isA(Level.class), contains(MOCK_SERVER_ERROR_STR));

@@ -82,7 +82,7 @@ public class QueryViewImplTestGwt extends GWTTestCase {
 		final String loadingMsg = "Loading...";
 		
 		view.setLoadingString(loadingMsg);
-		view.startLoadingTimer();
+		view.scheduleLoadingMessage();
 		
 		Timer t = new Timer() {
 			

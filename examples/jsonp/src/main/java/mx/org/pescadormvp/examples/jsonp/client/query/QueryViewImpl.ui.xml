@@ -116,6 +116,7 @@
 			gwt-image: "earth";
 			z-index: -9;
 			position: absolute;
+			visibility: hidden;
 		}
 	</ui:style>
 	

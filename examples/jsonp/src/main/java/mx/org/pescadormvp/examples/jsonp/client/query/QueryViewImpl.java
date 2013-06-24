@@ -247,6 +247,7 @@ public class QueryViewImpl extends ResizeComposite implements
 					
 					earthImageContainer.getStyle().setLeft(earthContainerLeft, Unit.PX);
 					earthImageContainer.getStyle().setBottom(0, Unit.PX);
+					earthImageContainer.getStyle().setVisibility(Visibility.VISIBLE);
 				}
 			});
 		}
@@ -373,7 +374,7 @@ public class QueryViewImpl extends ResizeComposite implements
 	}
 	
 	@Override
-	public void startLoadingTimer() {
+	public void scheduleLoadingMessage() {
 		loadingTimer = new Timer() {
 			
 			@Override
@@ -384,7 +385,19 @@ public class QueryViewImpl extends ResizeComposite implements
 		
 		loadingTimer.schedule(WAIT_FOR_LOADING_MESSAGE_MS);
 	}
+	
+	@Override
+	public void cancelLoadingMessage() {
+		if (loadingTimer != null)
+			loadingTimer.cancel();
 		
+		// If loading stuff if happening, turn it off.
+		if (loadingThobTimer != null)
+			loadingThobTimer.cancel();
+		
+		loadingThrob.cancel();
+	}
+	
 	private void renderLoading() {		
 		messageStrip.getStyle().setVisibility(Visibility.VISIBLE);
 		messageContainer.setInnerSafeHtml(SafeHtmlUtils.fromString(loading));
@@ -406,14 +419,7 @@ public class QueryViewImpl extends ResizeComposite implements
 	 * Does standard things for all kinds of states other than loading.
 	 */
 	private void commonNonLoadingRender() {
-		if (loadingTimer != null)
-			loadingTimer.cancel();
-		
-		// If loading stuff if happening, turn it off.
-		if (loadingThobTimer != null)
-			loadingThobTimer.cancel();
-		
-		loadingThrob.cancel();
+		cancelLoadingMessage();
 		
 		// Get the text box ready for the next input 
 		suggestBox.setFocus(true);
