@@ -162,8 +162,11 @@ public class QueryViewImpl extends ResizeComposite implements
 		// Firing up the UiBinder mechanism
 		initWidget(uiBinder.createAndBindUi(this));
 		
-		// Handle events from the suggest box and go button.
-		suggestBox.addKeyPressHandler(new KeyPressHandler() {
+		// Handle events from the suggest box
+		// Adding handler to internal box to avoid duplicate events.
+		// See http://comments.gmane.org/gmane.org.google.gwt/63762 and
+		// and http://code.google.com/p/google-web-toolkit/issues/detail?id=3533
+		suggestBox.getValueBox().addKeyPressHandler(new KeyPressHandler() {
 			
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
@@ -172,6 +175,7 @@ public class QueryViewImpl extends ResizeComposite implements
 			}
 		});
 		
+		// Handle events from the go button.
 		goButton.addClickHandler(new ClickHandler() {
 
 			@Override
