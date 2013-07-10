@@ -10,7 +10,12 @@ import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.Timer;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-
+/**
+ * Performs tests on {@link QueryViewImpl} in a browser context.
+ * 
+ *  TODO: test interaction with widgets and correct removal of loading
+ *  message if the request takes a while to come back.
+ */
 public class QueryViewImplTestGwt extends GWTTestCase {
 	
 	@Override

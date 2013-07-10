@@ -10,6 +10,24 @@ package mx.org.pescadormvp.core.client.placesandactivities;
 
 import mx.org.pescadormvp.core.client.session.StatePointer;
 
+/**
+ * <p>
+ * Used by GIN to inject activities.
+ * </p>
+ * <p>The following example, from
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule QueryGinModule}
+ * , shows how to bind a {@link PescadorMVPActivity} to its implementation using
+ * an {@link ActivitiesFactory}.</p>
+ * {@code
+	install(new GinFactoryModuleBuilder().implement(
+			QueryActivity.class, QueryActivityImpl.class)
+			.build(
+			new TypeLiteral< ActivitiesFactory<QueryPlace, QueryActivity>>() ));}
+ * 
+ * @author Andrew Green
+ * @param <S>
+ * @param <A>
+ */
 public interface ActivitiesFactory 
 		<S extends StatePointer,
 		A extends PescadorMVPActivity<?,?,?>> {

@@ -6,8 +6,8 @@
  * href="https://developers.google.com/web-toolkit/">GWT</a> that builds on <a
  * href=
  * "https://developers.google.com/web-toolkit/doc/latest/DevGuideMvpActivitiesAndPlaces"
- * >standard MVP-related classes provided by GWT</a>. Its main features include
- * <a href="http://code.google.com/p/google-gin/">GIN-based dependency
+ * >standard MVP-related classes provided by GWT</a>. Its features include <a
+ * href="http://code.google.com/p/google-gin/">GIN-based dependency
  * injection</a> and the association of places, activities, views, UI regions
  * and components using <a
  * href="http://docs.oracle.com/javase/tutorial/java/generics/index.html"
@@ -58,8 +58,8 @@
  * <p>
  * To use the MVP pattern, you designate certain components as
  * "place-activity-view components". These special components associate a place
- * class, an activity class, a view class, and a region of the UI, and include a
- * class that implements
+ * class with one or more activity classes, view classes, and regions of the UI.
+ * They also include a class that implements
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
  * (a subinterface of
  * {@link mx.org.pescadormvp.core.client.components.Component}). Pescador MVP
@@ -88,8 +88,8 @@
  * </p>
  * <h3><a name="pavcompoennts" />Place-Activity-View Components</h3>
  * <p>
- * Place-activity-view (PAV) components associate a place class, an activity
- * class, a view class and a region of the UI. They do this through GIN,
+ * Place-activity-view (PAV) components associate a place class with activity
+ * classes, view classes and regions of the UI. They do this through GIN,
  * generics and tag interfaces that designate UI regions.
  * </p>
  * <p>
@@ -104,7 +104,7 @@
  * </p>
  * <p>
  * As you can see in {@link mx.org.pescadormvp.examples.jsonp.client.query
- * ...examples.jsonp.client.query}, the activity has an interface and an
+ * ...examples.jsonp.client.query}, the single activity has an interface and an
  * implementation. The interface extends
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivity}
  * and the implementation is a subclass of
@@ -118,6 +118,11 @@
  * component's {@link com.google.gwt.inject.client.GinModule},
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl.QueryGinModule
  * QueryGinModule}.
+ * </p>
+ * <p>
+ * This PAV component has only one activity class and only one view class because, in
+ * this simple example, there only one UI region (designated with
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body}).
  * </p>
  * <p>
  * To create your own PAV components, just copy the general pattern in the
@@ -185,7 +190,8 @@
  * <p>
  * Also: if you use external javascript libraries, you can ask the framework to
  * fetch them and make sure they're loaded before the application actually
- * starts up.
+ * starts up. There is also a facility for displaying "loading" messages and the
+ * like while external JS libraries load.
  * </p>
  * <h3><a name="places"/>Places</h3>
  * <p>
@@ -196,12 +202,12 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * store information as key-value pairs that are automatically serialized to and
  * retrieved from the URL fragment identifier. They may also contain locale
- * information and presentation text (for describing the place in the UI).
+ * information and presentation text (for describing places in the UI).
  * </p>
  * <p>
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * are passed around the Pescador MVP framework as interfaces, unlike standard
- * GWT {@link com.google.gwt.place.shared.Place}, which are implementations.
+ * GWT {@link com.google.gwt.place.shared.Place}s, which are implementations.
  * However,
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * can always be converted to standard GWT
@@ -224,8 +230,8 @@
  * must provide a container widget for each region it manages. In addition, it
  * must provide an
  * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions#attach()
- * attach()} method. Whatever code attaches your layout widget to the
- * DOM should be placed in this method. It will be called just once when the framework
+ * attach()} method. Whatever code attaches your layout widget to the DOM should
+ * be placed in this method. It will be called just once when the framework
  * starts up.
  * </p>
  * <p>
@@ -246,9 +252,9 @@
  * (instead of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
  * ). You can set up a container activity and view (that <b>are</b> associated
- * with a place) to manage the embedded activities and views. In such a scenario,
- * your container activity will probably look like a much simplified version of
- * GWT's {@link com.google.gwt.activity.shared.ActivityManager}.
+ * with a place) to manage the embedded activities and views. In such a
+ * scenario, your container activity will probably look like a much simplified
+ * version of GWT's {@link com.google.gwt.activity.shared.ActivityManager}.
  * </p>
  * <h3><a name="session"/>Session</h3>
  * <p>
@@ -306,11 +312,12 @@
  * <h4><a name="internallinks"/>Internal Links</h4>
  * <p>
  * The {@link mx.org.pescadormvp.core.client.internallinks
- * ...core.client.internallinks} package has some utility classes for
- * creating internal links (i.e., links to places within your application). These classes work well with
+ * ...core.client.internallinks} package has some utility classes for creating
+ * internal links (i.e., links to places within your application). These classes
+ * work well with
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * and produce native HTML hyperlinks that stay within your application when
- * clicked on normally (thus preserving state, data cache, etc.)&mdash;and can
+ * clicked on normally, and can
  * also be control-clicked and right-clicked for native browser hyperlink
  * actions.
  * </p>
