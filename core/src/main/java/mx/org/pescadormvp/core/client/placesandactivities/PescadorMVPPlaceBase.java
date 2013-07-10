@@ -228,15 +228,21 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 	@Override
 	public String toString() {
 		String[] splitName = this.getClass().getName().split("\\.");
+		String name = splitName[Math.max(0, splitName.length - 1)];
 		
-		String separator = "";
-		StringBuffer sb = new StringBuffer();
-		for (String key : properties.keySet()) {
-			sb.append(separator + key + ":" + properties.get(key));
-			separator = ", ";
+		if (properties != null) {
+			String separator = "";
+			StringBuffer sb = new StringBuffer();
+			
+			for (String key : properties.keySet()) {
+				sb.append(separator + key + ":" + properties.get(key));
+				separator = ", ";
+			}
+			
+			return name + " " + sb.toString();
+			
+		} else {
+			return name;
 		}
-		
-		return splitName[Math.max(0, splitName.length - 1)] + " | " + 
-				sb.toString();
 	}
 }
