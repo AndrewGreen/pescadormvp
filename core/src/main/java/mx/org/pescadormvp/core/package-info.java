@@ -121,8 +121,11 @@
  * </p>
  * <p>
  * This PAV component has only one activity class and only one view class because, in
- * this simple example, there only one UI region (designated with
- * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body}).
+ * this simple example, there is only one UI region (designated with
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body}). For each
+ * PAV component (and so for each place) there can
+ * be as many activity-view pairs as there are UI regions. So in the example,
+ * if there were more UI regions, there could be more activity-view pairs. 
  * </p>
  * <p>
  * To create your own PAV components, just copy the general pattern in the

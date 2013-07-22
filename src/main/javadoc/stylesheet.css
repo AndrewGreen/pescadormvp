@@ -29,7 +29,9 @@ a[name]:hover {
     color:#353833;
 }
 pre {
-    font-size:1.3em;
+    font-family:color: #393; 
+    font-family: "Consolas", "Lucida Console", "Droid Sans Mono", "Andale Mono", "Monaco", "Lucida Sans Typewriter";
+    font-size: 93%;
 }
 h1 {
     font-size:1.8em;

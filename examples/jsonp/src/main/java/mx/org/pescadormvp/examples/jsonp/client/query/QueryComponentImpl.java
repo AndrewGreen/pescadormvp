@@ -50,12 +50,14 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 			Session session,
 			DataManager dataManager) {
 		
+		// send some stuff to the superclass
 		super(
-			QueryComponent.class,
-			"query",
-			queryPlaceProvider,
-			QueryPlace.class,
-			session);
+				QueryComponent.class, // component's public interface
+				"query",              // main token for this place in URL fragment
+				queryPlaceProvider,   // place provider
+				QueryPlace.class,     // place class
+				session               // interface for session component
+				);
 
 		this.actionHelper = actionHelper;
 		this.dataManager = dataManager;
