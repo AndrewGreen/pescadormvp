@@ -23,8 +23,6 @@ public interface PescadorMVPPAVComponent<
 
 		extends Component<I> {
 
-	String getMainToken();
-
 	P getPlace();
 	
 	Set<Class<? extends ForRegionTag>> handlesRegions();

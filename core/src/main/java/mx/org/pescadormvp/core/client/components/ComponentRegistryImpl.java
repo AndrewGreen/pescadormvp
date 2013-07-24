@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
 /**
@@ -77,7 +78,11 @@ public class ComponentRegistryImpl implements ComponentRegistry {
 			PescadorMVPPAVComponent<?,?> pavComponent =
 					(PescadorMVPPAVComponent<?,?>) component;
 			
-			mainTokenIndex.put(pavComponent.getMainToken(), pavComponent);
+			// get a throwaway place to find the main token
+			PescadorMVPPlace place = pavComponent.getPlace();
+			String mainToken = place.getMainToken();
+			
+			mainTokenIndex.put(mainToken, pavComponent);
 			
 			for (Class<? extends ForRegionTag> region : 
 					pavComponent.handlesRegions()) {

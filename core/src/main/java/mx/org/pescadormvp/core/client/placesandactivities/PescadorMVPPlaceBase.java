@@ -32,8 +32,9 @@ import com.google.gwt.place.shared.Place;
  */
 public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPPlace {
 
-	private String mainToken;
-	private String[] propertyKeys;
+	private final String mainToken;
+	private final String[] propertyKeys;
+	
 	private Map<String, String> properties;
 	private PescadorMVPLocale newLocale;
 	
@@ -42,18 +43,9 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 	private String URL;
 	private boolean requiresReload;
 
-	public PescadorMVPPlaceBase() {
-		super();
-	}
-
-	/**
-	 * Set via {@link PescadorMVPPAVComponentBase}.
-	 * 
-	 * @param mainToken
-	 */
-	@Override
-	public void setMainToken(String mainToken) {
+	public PescadorMVPPlaceBase(String mainToken, String[] propertyKeys) {
 		this.mainToken = mainToken;
+		this.propertyKeys = propertyKeys;
 	}
 
 	@Override
@@ -66,10 +58,6 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 		return propertyKeys;
 	}
 
-	protected void setPropertyKeys(String[] propertyKeys) {
-		this.propertyKeys = propertyKeys;
-	}
-	
 	@Override
 	public void setProperties(Map<String, String> properties) {
 		initializeProperties();

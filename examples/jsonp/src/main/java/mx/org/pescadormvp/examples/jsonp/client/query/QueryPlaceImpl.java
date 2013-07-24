@@ -19,17 +19,18 @@ import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase;
  */
 public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
 
-	private static final String LOCATION_TOKEN_KEY = "l";
+	private static final String MAIN_TOKEN = "query";
+	private static final String LOCATION_KEY = "l";
 	
 	private String location;
 	
 	public QueryPlaceImpl() {
-		setPropertyKeys(new String[] { LOCATION_TOKEN_KEY });
+		super(MAIN_TOKEN, new String[] { LOCATION_KEY });
 	}
 	
 	@Override
 	protected void processProperty(String key, String value) {
-		if (key.compareTo(LOCATION_TOKEN_KEY) == 0) {
+		if (key.compareTo(LOCATION_KEY) == 0) {
 			location = value;
 		} 
 	}
@@ -41,6 +42,6 @@ public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
 
 	@Override
 	public void setLocation(String location) {
-		setProperty(LOCATION_TOKEN_KEY, location);
+		setProperty(LOCATION_KEY, location);
 	}
 }

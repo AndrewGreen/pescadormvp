@@ -17,13 +17,6 @@ import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 public interface PescadorMVPPlace extends StatePointer {
 
-	/**
-	 * Set via {@link PescadorMVPPAVComponentBase}.
-	 * 
-	 * @param mainToken
-	 */
-	void setMainToken(String mainToken);
-
 	String getMainToken();
 
 	String[] getPropertyKeys();

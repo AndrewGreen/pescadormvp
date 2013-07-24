@@ -20,8 +20,6 @@ import mx.org.pescadormvp.core.client.placesandactivities.ActivitiesFactory;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
-import mx.org.pescadormvp.core.client.session.Session;
-import mx.org.pescadormvp.core.client.session.SessionData;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body;
 
 /**
@@ -39,31 +37,23 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 	{
 
 	private QueryPlace defaultPlace;
-	private GetLatLonActionHelper actionHelper;
-	private DataManager dataManager;
 
 	@Inject
 	public QueryComponentImpl(
 			QueryPlaceProvider queryPlaceProvider,
 			ActivitiesFactory<QueryPlace, QueryActivity> activitiesFactory,
 			GetLatLonActionHelper actionHelper,
-			Session session,
 			DataManager dataManager) {
 		
 		// send some stuff to the superclass
-		super(
-				"query",              // main token for this place in URL fragment
-				QueryComponent.class, // component's public interface
-				queryPlaceProvider,   // place provider
-				session               // interface for session component
-				);
+		super(queryPlaceProvider);
 
-		this.actionHelper = actionHelper;
-		this.dataManager = dataManager;
-		
 		// Here we establish that this component has an activity for the
 		// {@link Body} screen region (in this app, that's the only region).
 		addRegionAndActivitiesFactory(Body.class, activitiesFactory);
+
+		// register JSONP action helper for getting lat-lon data
+		dataManager.registerActionHelper(actionHelper);
 	}
 	
 	/**
@@ -124,15 +114,9 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 
 		return defaultPlace;
 	}
-	
-	@Override
-	public void finalizeSetup() {
-		dataManager.registerActionHelper(actionHelper);
-	}
 
 	@Override
-	protected SessionData createSessionData() {
-		// not used
-		return null;
+	public Class<QueryComponent> publicInterface() {
+		return QueryComponent.class;
 	}
 }

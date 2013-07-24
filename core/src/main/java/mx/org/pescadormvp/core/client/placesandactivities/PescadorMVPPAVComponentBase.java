@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
@@ -34,39 +35,38 @@ public abstract class PescadorMVPPAVComponentBase<
 		
 		> implements PescadorMVPPAVComponent<I,P> {
 
-	private final Class<I> publicInterface;
-	private final String mainToken;
 	private final Map<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> > regionsAndActivitiesFactories =
 			new HashMap<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> >();
 
-	private final PescadorMVPPlaceProvider<P> placeProvider;
+	private PescadorMVPPlaceProvider<P> placeProvider;
 	
 	private Session session;
 	
 	// no @Inject, injection used in the extending class's constructor
+	// and in method setBasicComponents
 	public PescadorMVPPAVComponentBase(
-			String mainToken,
-			Class<I> publicInterface,
-			PescadorMVPPlaceProvider<P> placeProvider,
-			Session session) {
-		
-		this.publicInterface = publicInterface;
-		this.mainToken = mainToken;
+			PescadorMVPPlaceProvider<P> placeProvider) {
+
 		this.placeProvider = placeProvider;
+	}
+
+	/**
+	 * Use method injection to get basic stuff, to keep subclasses'
+	 * constructors simpler.
+	 */
+	@Inject
+	public void setBasicComponents(Session session) {
+		
 		this.session = session;
 	}
-
-	@Override
-	public String getMainToken() {
-		return mainToken;
-	}
-
-	public Class<I> publicInterface() {
-		return publicInterface;
-	}
-
+	
+	/**
+	 * Override this method if the component has to do something
+	 * after all components have been loaded.
+	 * 
+	 */
 	@Override
 	public void finalizeSetup() {
 		// usually we'll have nothing to do; in any cases, subclasses can
@@ -88,7 +88,6 @@ public abstract class PescadorMVPPAVComponentBase<
 	@Override
 	public P getPlace() {
 		P place = placeProvider.get();
-		place.setMainToken(mainToken);
 		return place;
 	}
 	
@@ -128,5 +127,12 @@ public abstract class PescadorMVPPAVComponentBase<
 		return sessionData;
 	}
 	
-	protected abstract SessionData createSessionData();
+	/**
+	 * Override this method if the component requires session data
+	 * 
+	 * @return Session data for this component
+	 */
+	protected SessionData createSessionData() {
+		return null;
+	}
 }

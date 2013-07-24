@@ -77,7 +77,6 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 			P originalPlace,
 			P newPlace) {
 		
-		newPlace.setMainToken(originalPlace.getMainToken());
 		newPlace.setProperties(originalPlace.getProperties());
 		newPlace.setNewLocale(originalPlace.getNewLocale());
 		newPlace.setPresentationText(originalPlace.getPresentationText());
