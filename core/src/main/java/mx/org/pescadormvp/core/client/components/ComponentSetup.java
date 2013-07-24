@@ -28,7 +28,6 @@ import mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegi
 import mx.org.pescadormvp.core.client.regionsandcontainers.RootRegionManager;
 import mx.org.pescadormvp.core.client.regionsandcontainers.NullPanelTools.NullActivity;
 import mx.org.pescadormvp.core.client.session.Session;
-import mx.org.pescadormvp.core.client.util.Reflect;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.Callback;
@@ -342,10 +341,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 		PescadorMVPPAVComponent<?, ?> pavComponent =
 				componentRegistry.getPAVComponent(place.getMainToken());
 
-		if (!Reflect.isOfSameClassOrSubclass(pavComponent.getPlaceClass(),
-				place))
-			throw new RuntimeException();
-
+		// GWT reflection doesn't provide for finding implemented interfaces
 		@SuppressWarnings("unchecked")
 		PescadorMVPPAVComponent<?, P> castPAVComponent =
 				(PescadorMVPPAVComponent<?, P>) pavComponent;

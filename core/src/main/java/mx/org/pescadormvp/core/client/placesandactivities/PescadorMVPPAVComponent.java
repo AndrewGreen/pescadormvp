@@ -25,8 +25,6 @@ public interface PescadorMVPPAVComponent<
 
 	String getMainToken();
 
-	Class<P> getPlaceClass();
-
 	P getPlace();
 	
 	Set<Class<? extends ForRegionTag>> handlesRegions();

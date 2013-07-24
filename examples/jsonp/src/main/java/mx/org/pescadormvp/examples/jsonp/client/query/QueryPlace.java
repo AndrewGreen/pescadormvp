@@ -8,10 +8,10 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase;
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 /**
- * <p>Abstract class representing the Query place (in GWT's MVP scheme),
+ * <p>Interface representing the Query place (in GWT's MVP scheme),
  * in this app the only place we have.</p>
  * 
  * <p>As with standard GWT MVP, places have a representation as fragment identifier
@@ -21,10 +21,10 @@ import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase;
  * @author Andrew Green
  *
  */
-public abstract class QueryPlace extends PescadorMVPPlaceBase {
+public interface QueryPlace extends PescadorMVPPlace {
 	
-	public abstract String getLocation();
+	String getLocation();
 	
-	public abstract void setLocation(String location);
+	void setLocation(String location);
 
 }

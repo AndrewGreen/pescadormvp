@@ -52,10 +52,9 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 		
 		// send some stuff to the superclass
 		super(
-				QueryComponent.class, // component's public interface
 				"query",              // main token for this place in URL fragment
+				QueryComponent.class, // component's public interface
 				queryPlaceProvider,   // place provider
-				QueryPlace.class,     // place class
 				session               // interface for session component
 				);
 

@@ -17,7 +17,6 @@ import com.google.inject.Provider;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.core.client.session.Session;
 import mx.org.pescadormvp.core.client.session.SessionData;
-import mx.org.pescadormvp.core.client.util.Reflect;
 
 /**
  * Provides a means for linking a place class to activity and view classes 
@@ -37,7 +36,6 @@ public abstract class PescadorMVPPAVComponentBase<
 
 	private final Class<I> publicInterface;
 	private final String mainToken;
-	private final Class<P> placeClass;
 	private final Map<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> > regionsAndActivitiesFactories =
 			new HashMap<Class<? extends ForRegionTag>, 
@@ -49,16 +47,14 @@ public abstract class PescadorMVPPAVComponentBase<
 	
 	// no @Inject, injection used in the extending class's constructor
 	public PescadorMVPPAVComponentBase(
-			Class<I> publicInterface,
 			String mainToken,
+			Class<I> publicInterface,
 			PescadorMVPPlaceProvider<P> placeProvider,
-			Class<P> placeClass,
 			Session session) {
 		
 		this.publicInterface = publicInterface;
 		this.mainToken = mainToken;
 		this.placeProvider = placeProvider;
-		this.placeClass = placeClass;
 		this.session = session;
 	}
 
@@ -97,11 +93,6 @@ public abstract class PescadorMVPPAVComponentBase<
 	}
 	
 	@Override
-	public Class<P> getPlaceClass() {
-		return placeClass;
-	}
-	
-	@Override
 	public <PS extends P, 
 			A extends PescadorMVPPlaceActivity<?,?,?>>
 			A getActivity(Class<? extends ForRegionTag> region, P place) {
@@ -112,15 +103,11 @@ public abstract class PescadorMVPPAVComponentBase<
 		if (activitiesFactory == null)
 			return null;
 
+		// GWT reflection doesn't provide for finding implemented interfaces
 		@SuppressWarnings("unchecked")
 		A activity = ((ActivitiesFactory<PS,A>) activitiesFactory)
 				.create((PS) place);
 
-		// this check may be unnecessary
-		if (!Reflect.isOfSameClassOrSubclass(activity.getPlaceClass(),
-				place))
-			throw new RuntimeException();
-		
 		return activity;
 	}
 	

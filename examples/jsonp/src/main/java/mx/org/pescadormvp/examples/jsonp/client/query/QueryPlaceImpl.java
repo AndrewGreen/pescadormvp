@@ -8,6 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
+import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase;
+
 /**
  * Implementation for our only place, which only has one key/value property to
  * serialize to the URL fragment identifier. (Specifically, the location whose
@@ -15,7 +17,7 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
  *  
  * @author Andrew Green
  */
-public class QueryPlaceImpl extends QueryPlace {
+public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
 
 	private static final String LOCATION_TOKEN_KEY = "l";
 	
