@@ -45,7 +45,7 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 			GetLatLonActionHelper actionHelper,
 			DataManager dataManager) {
 		
-		// send some stuff to the superclass
+		// send the place provider to the superclass
 		super(queryPlaceProvider);
 
 		// Here we establish that this component has an activity for the
@@ -95,7 +95,7 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 	}
 
 	public static class QueryPlaceProvider
-		extends PescadorMVPPlaceProvider<QueryPlace> {
+		extends PescadorMVPRawPlaceProvider<QueryPlace> {
 		
 		@Override
 		public QueryPlace get() {

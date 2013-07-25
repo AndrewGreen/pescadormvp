@@ -40,14 +40,14 @@ public abstract class PescadorMVPPAVComponentBase<
 			new HashMap<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> >();
 
-	private PescadorMVPPlaceProvider<P> placeProvider;
+	private PescadorMVPRawPlaceProvider<P> placeProvider;
 	
 	private Session session;
 	
 	// no @Inject, injection used in the extending class's constructor
 	// and in method setBasicComponents
 	public PescadorMVPPAVComponentBase(
-			PescadorMVPPlaceProvider<P> placeProvider) {
+			PescadorMVPRawPlaceProvider<P> placeProvider) {
 
 		this.placeProvider = placeProvider;
 	}
@@ -110,7 +110,7 @@ public abstract class PescadorMVPPAVComponentBase<
 		return activity;
 	}
 	
-	public abstract static class PescadorMVPPlaceProvider<P extends PescadorMVPPlace> 
+	public abstract static class PescadorMVPRawPlaceProvider<P extends PescadorMVPPlace> 
 		implements Provider<P> { }
 	
 	// TODO use generics to avoid cast or unchecked warnings...
