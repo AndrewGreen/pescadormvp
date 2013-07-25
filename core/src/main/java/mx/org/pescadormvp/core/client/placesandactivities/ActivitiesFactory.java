@@ -28,6 +28,7 @@ import mx.org.pescadormvp.core.client.session.StatePointer;
  * @param <S>
  * @param <A>
  */
+@SuppressWarnings("javadoc")
 public interface ActivitiesFactory 
 		<S extends StatePointer,
 		A extends PescadorMVPActivity<?,?,?>> {
