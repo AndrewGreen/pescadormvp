@@ -97,7 +97,7 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 
 		Map<String, String> properties = place.getProperties();
 
-		if (properties == null)
+		if ((properties == null) || (properties.keySet().size() == 0))
 			return place.getMainToken();
 		
 		String propertiesString = makeKVString(properties,
