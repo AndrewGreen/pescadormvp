@@ -1,5 +1,4 @@
 /**
- * <h3><a name="introduction"/>Introduction</h3>
  * <p>
  * JSONP Example is a sample application that demonstrates basic Pescador MVP
  * usage.
@@ -14,6 +13,20 @@
  * <p>
  * Here's how it works.
  * </p>
+ * <h4>Contents:</h4>
+ * <ol>
+ * <li><a href="#component">The Query Component</a></li>
+ * <li><a href="#generalqcstuff">General Query Component Stuff</a></li>
+ * <li><a href="#queryactivity">The Query Activity</a></li>
+ * <li><a href="#queryview">The Query View</a></li>
+ * <li><a href="#map">The Map Widget</a></li>
+ * <li><a href="#queryplace">The Query Place</a></li>
+ * <li><a href="#actionhelper">The JSONP Action Helper</a></li>
+ * <li><a href="#layout">Application Layout</a></li>
+ * <li><a href="#generalsetup">General Setup</a></li>
+ * <li><a href="#tests">Tests</a></li>
+ * </ol>
+ * 
  * <h3><a name="component"/>The Query Component</h3>
  * <p>
  * In Pescador MVP, you create a component by grouping some classes together in
@@ -55,16 +68,6 @@
  * </tr>
  * <tr class="altColor">
  * <td class="colFirst"><a href=
- * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryPlace.html"
- * > QueryPlace</a></td>
- * <td class="colFirst"><a href=
- * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryPlaceImpl.html"
- * > QueryPlaceImpl</a></td>
- * <td class="colOne"><div class="block">The place associated with this
- * component.</div></td>
- * </tr>
- * <tr class="rowColor">
- * <td class="colFirst"><a href=
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryActivity.html"
  * > QueryActivity</a></td>
  * <td class="colFirst"><a href=
@@ -73,7 +76,7 @@
  * <td class="colOne"><div class="block">The activity associated with this
  * component and the main (and only) region of the UI.</div></td>
  * </tr>
- * <tr class="altColor">
+ * <tr class="rowColor">
  * <td class="colFirst"><a href=
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryView.html"
  * > QueryView</a></td>
@@ -83,7 +86,7 @@
  * <td class="colOne"><div class="block">The view associated with this component
  * and the main (and only) region of the UI.</div></td>
  * </tr>
- * <tr class="rowColor">
+ * <tr class="altColor">
  * <td class="colFirst"><a href=
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/OSMMap.html"
  * > OSMMap</a></td>
@@ -91,6 +94,16 @@
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/OSMMapImpl.html"
  * > OSMMapImpl</a></td>
  * <td class="colOne"><div class="block">The map widget.</div></td>
+ * </tr>
+ * <tr class="rowColor">
+ * <td class="colFirst"><a href=
+ * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryPlace.html"
+ * > QueryPlace</a></td>
+ * <td class="colFirst"><a href=
+ * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryPlaceImpl.html"
+ * > QueryPlaceImpl</a></td>
+ * <td class="colOne"><div class="block">The place associated with this
+ * component.</div></td>
  * </tr>
  * <tr class="altColor">
  * <td class="colFirst"><a href=
@@ -111,7 +124,7 @@
  * <p>
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
  * takes responsibility for everything of general interest to the Query
- * Component. One such responsibility is to implement
+ * Component. One such responsibility is the implementation
  * {@link mx.org.pescadormvp.core.client.components.Component}&mdash;Pescado MVP
  * requires that all components include an implementation of that interface.
  * </p>
@@ -186,11 +199,12 @@
  * </code>
  * </pre>
  * <p>
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
- * extends
+ * By extending
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase}
- * , as should all PAV components. By doing so, they gain access to many
- * convenience methods for dealing with places, activities and UI regions.
+ * , (as all PAV components should)
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
+ * gains access to many convenience methods for dealing with places, activities
+ * and UI regions.
  * </p>
  * <p>
  * What actual logic goes in
@@ -198,9 +212,9 @@
  * First, in Pescador MVP, if a component provides any extra functionality to
  * other parts of the system, that functionality should be made available via
  * the class that implements
- * {@link mx.org.pescadormvp.core.client.components.Component} (i.e.,
+ * {@link mx.org.pescadormvp.core.client.components.Component} (in this case,
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}).
- * In this case, only one method of this sort is offered,
+ * The Query Component offers only one method of this sort,
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl#getRawDefaultPlace()
  * getRawDefaultPlace()}, which provides the application's default place. (More
  * about this in a minute.)
@@ -315,12 +329,11 @@
  * </p>
  * <p>
  * If you find all of the above a bit boilerplatey, you're right! Admittedly, it
- * would be possible to set up some fancy code generation to make PAV
- * component creation easier. Nonetheless, until such features are implemented,
- * it's not an onerous amount of boilerplate, and it does help you organize your
- * dependency-injected MVP-architected code.
+ * would be possible to set up some fancy code generation to make PAV component
+ * creation easier. Nonetheless, it's not an onerous amount of boilerplate, and
+ * it does help you organize your dependency-injected MVP-architected code.
  * </p>
- * <h3><a name="queryactivity"/>Query Activity</h3>
+ * <h3><a name="queryactivity"/>The Query Activity</h3>
  * <p>
  * This is the fun part: the activity. Here's the constructor:
  * </p>
@@ -330,16 +343,16 @@
  * 	{@literal @}Inject
  * 	public QueryActivityImpl(
  * 			{@literal @}Assisted QueryPlace place,
+ * 			QueryComponent queryComponent,
  * 			QueryMessages messages,
  * 			OSMMap map,
- * 			QueryComponent queryComponent,
  * 			DataManager dataManager,
  * 			PescadorMVPLogger logger) {
  * 
  * 		super(place);
+ * 		this.queryComponent = queryComponent;
  * 		this.messages = messages;
  * 		this.map = map;
- * 		this.queryComponent = queryComponent;
  * 		this.dataManager = dataManager;
  * 		this.logger = logger;
  * 	}
@@ -384,6 +397,7 @@
  * (where the user will enter information) has been rendered. If it hasn't, we
  * tell the view to render it.
  * </p>
+ * 
  * <pre>
  * <code class=java>
  *         if (!view.isQueryAreaRendered()) {
@@ -395,22 +409,188 @@
  * </code>
  * </pre>
  * <p>
- * Then, we register to receive events from the view:
+ * Then, we register to receive events from the view, and call
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivityImpl#doQuery()
+ * doQuery()} (where the real action takes place):
  * </p>
+ * 
  * <pre>
  * <code class=java>
- * 		linkHandlerReg = eventBus.addHandlerToSource(
-				ActivateInternalLinkEvent.TYPE,
-				view, this);
+ *         linkHandlerReg = eventBus.addHandlerToSource(
+ *                 ActivateInternalLinkEvent.TYPE,
+ *                 view, this);
+ * 
+ *          doQuery();
+ *      }
  * </code>
  * </pre>
+ * <p>
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryView} has five
+ * renderable states:
+ * </p>
+ * <ol>
+ * <li><i>Empty</i>&nbsp;&nbsp;&nbsp;In this state, no messages or information
+ * are shown.</li>
+ * <li><i>Loading</i>&nbsp;&nbsp;&nbsp;The view displays a message saying that
+ * the requested information is loading.</li>
+ * <li><i>Error</i>&nbsp;&nbsp;&nbsp;The view displays a message explaining that
+ * there was an error communicating with the server.</li>
+ * <li><i>Lat-lon</i>&nbsp;&nbsp;&nbsp;The view displays a place's latitude and
+ * longitude, and a map.</li>
+ * <li><i>No such place</i>&nbsp;&nbsp;&nbsp;The view displays a message
+ * explaining that no place was found with the name entered.</li>
+ * </ol>
+ * <p>
+ * It's the activity's responsibility to tell the view which state to render,
+ * and to provide it with the information it needs to do so.
+ * </p>
+ * <p>
+ * So, in
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivityImpl#doQuery()
+ * doQuery()}, the activity first gets the name of the location the user wants
+ * to hear about. It gets this information from the current
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} instance.
+ * If the {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} has
+ * no information on this, then the activity tells the view to render an empty
+ * state.
+ * </p>
  * 
+ * <pre>
+ * <code class=java>
+ *         final String location = getPlace().getLocation();
+ *         
+ *         // If there's no location data, set up the view as "empty"
+ *         if ((location == null) || (location.length() == 0)) {
+ *             view.setTextboxContents("");
+ *             view.renderEmpty();
+ * </code>
+ * </pre>
+ * <p>
+ * On the other hand, if the
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} <i>does</i>
+ * have the name of a location to be queried, then the activity sends a request
+ * to the {@link mx.org.pescadormvp.core.client.data.DataManager}, and decides
+ * what to do on the basis of the result. Here's the code:
+ * </p>
  * 
+ * <pre>
+ * <code class=java>
+ *         } else {
+ *             
+ *             // Make sure the text box contains the location string the user asked for
+ *             // We don't sanitize it here, that's for the view to do
+ *             view.setTextboxContents(location);
+ *             
+ *             // Before trying to retrieve information,
+ *             // set a timer to display a "Loading" message if the request
+ *             // doesn't come back quickly. The view will cancel the timer
+ *             // once any state is rendered.
+ *             view.setLoadingString(messages.loading());
+ *             view.scheduleLoadingMessage();
+ *                         
+ *             // Create an action object with the name of the location to query
+ *             GetLatLonAction action = new GetLatLonAction(location);
+ *             
+ *             // Perform the request
+ *             dataManager.execute(action, GetLatLonResult.class,
+ *                     new AsyncCallback&lt;GetLatLonResult>() {
+ *     
+ *                 {@literal @}Override
+ *                 public void onFailure(Throwable caught) {
+ *                     
+ *                     // Log the error
+ *                     logger.log(Level.WARNING, caught.getLocalizedMessage());
+ *                     
+ *                     // Notify the user
+ *                     view.setErrorStrings(messages.errorCommunicating(),
+ *                             messages.tryAgain());
+ *                     view.renderError();
+ *                 }
+ *         
+ *                 {@literal @}Override
+ *                 public void onSuccess(GetLatLonResult result) {
+ *                     
+ *                     if (result.isValid()) {
+ *                         
+ *                         double lat = result.getLat();
+ *                         double lon = result.getLon();
+ *                         
+ *                         String latNSStr = lat > 0 ? "N" : "S";
+ *                         String latStr = Math.abs(lat) + " " + latNSStr;
+ *                         
+ *                         String lonEWStr = lon > 0 ? "E" : "W";
+ *                         String lonStr = Math.abs(lon) + " " + lonEWStr;
+ *                         
+ *                         String info = messages.XisAtY(
+ *                                 result.getDisplayName(), latStr, lonStr);
+ *                         
+ *                         // Send the info to the view
+ *                         view.setLatLonMsg(info);
+ *                         
+ *                         // Ensure the view has the map it will use
+ *                         if (!view.osmMapSet())
+ *                             view.setOSMMap(map);
+ *                         
+ *                         // Set the map to the correct location
+ *                         map.setLatLon(lat, lon);
+ *                         
+ *                         // Tell the view to render
+ *                         view.renderLatLon();
+ * 
+ *                     } else {
+ *                         
+ *                         view.setNoSuchPlaceStrings(
+ *                                 messages.neverHeardOf(location),
+ *                                 messages.tryAgain());
+ *                         
+ *                         view.renderNoSuchPlace();
+ *                     }
+ *                 }
+ *             });
+ *         }
+ * </code>
+ * </pre>
+ * <p>
+ * In summary, we tell the view to set the contents of the text box with the
+ * name of the location being queried, and to start a timer and render the
+ * Loading state if it doesn't hear back from us right away. Then we create a
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonAction} with
+ * the name of the location to query, and send it to the (third-party) server
+ * via the {@link mx.org.pescadormvp.core.client.data.DataManager}. When the
+ * request comes back, we tell the view to render Error, Lat-lon or No such
+ * place, depending on the result. We also provide the view with the localized
+ * messages it needs to do this. In the case of the Lat-lon state, there's a bit
+ * of string processing to do, and we have to set the map location and make sure
+ * the view has the required map widget (
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMap}&mdash; see
+ * below).
+ * </p>
+ * <p>
+ * In truth, there's not much extraordinary about this activity. The most
+ * significant things about it are: we get everything we need via DI and methods
+ * provided by the superclass, push to the view and handle events from it,
+ * and send requests via a handy {@link mx.org.pescadormvp.core.client.data.DataManager}
+ * that uses the command pattern (more on that below).
+ * </p>
+ *
+ * <h3><a name="queryview"/>The Query View</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="map"/>The Map Widget</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="queryplace"/>The Query Place</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="actionhelper"/>The JSONP Action Helper</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="layout"/>Application Layout</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="generalsetup"/>General Setup</h3>
+ * <p><i>[TODO]</i></p>
+ * <h3><a name="tests"/>Tests</h3>
+ * <p><i>[TODO]</i></p>
  * <pre>
  * <code class=java>
  * </code>
  * </pre>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
 

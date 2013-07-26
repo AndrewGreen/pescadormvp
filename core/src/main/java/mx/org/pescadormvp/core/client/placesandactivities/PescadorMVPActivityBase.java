@@ -38,7 +38,7 @@ public abstract class PescadorMVPActivityBase<
 	private Session session;
 
 	/**
-	 * @param statePointer The cinstance (often a
+	 * @param statePointer The instance (often a
 	 *  {@link PescadorMVPPlace}) for this instance of the activity.
 	 */
 	protected PescadorMVPActivityBase(
