@@ -23,4 +23,6 @@ public interface PescadorMVPPlaceActivity<
 	 */
 	public Class<P> getPlaceClass();
 	
+	void setPlace(P place);
+	
 }

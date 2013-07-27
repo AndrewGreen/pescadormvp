@@ -260,9 +260,11 @@ public class QueryActivityImplTest {
 			boolean succeed,
 			boolean resultIsValid) {
 
-		QueryPlace mockedPlace = placeHasData ? mockedPlaceWithData : mockedPlaceEmpty;
-		QueryActivity activity = activitiesFactory.create(mockedPlace);
+		QueryActivity activity = activitiesFactory.create();
 
+		QueryPlace mockedPlace = placeHasData ? mockedPlaceWithData : mockedPlaceEmpty;
+		activity.setStatePointer(mockedPlace);
+		
 		MockDataManager mockDataManager = (MockDataManager) dataManager;
 		mockDataManager.setSucceed(succeed);
 		GetLatLonResult result = resultIsValid ? validResult : invalidResult; 

@@ -92,8 +92,7 @@ public abstract class PescadorMVPPAVComponentBase<
 	}
 	
 	@Override
-	public <PS extends P, 
-			A extends PescadorMVPPlaceActivity<?,?,?>>
+	public <A extends PescadorMVPPlaceActivity<?,P,?>>
 			A getActivity(Class<? extends ForRegionTag> region, P place) {
 
 		ActivitiesFactory<?,?> activitiesFactory = 
@@ -104,8 +103,11 @@ public abstract class PescadorMVPPAVComponentBase<
 
 		// GWT reflection doesn't provide for finding implemented interfaces
 		@SuppressWarnings("unchecked")
-		A activity = ((ActivitiesFactory<PS,A>) activitiesFactory)
-				.create((PS) place);
+		A activity = ((ActivitiesFactory<P,A>) activitiesFactory)
+				.create();
+		
+		// TODO figure out how to set this via DI
+		activity.setPlace(place);
 
 		return activity;
 	}

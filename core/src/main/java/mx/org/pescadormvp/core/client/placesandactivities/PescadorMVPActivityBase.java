@@ -37,16 +37,13 @@ public abstract class PescadorMVPActivityBase<
 	private S statePointer;
 	private Session session;
 
-	/**
-	 * @param statePointer The instance (often a
-	 *  {@link PescadorMVPPlace}) for this instance of the activity.
-	 */
-	protected PescadorMVPActivityBase(
-			S statePointer) {
-
+	// TODO find a way of doing this via DI without making it visible in
+	// the constructors of concrete subclasses.
+	@Override
+	public void setStatePointer(S statePointer) { 
 		this.statePointer = statePointer;
 	}
-
+	
 	/**
 	 * Method used by GIN to inject some stuff we need. 
 	 */

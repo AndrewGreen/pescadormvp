@@ -22,7 +22,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 
 /**
  * <p>Implementation of the Query component's only activity, {@link QueryActivity}.
@@ -55,17 +54,15 @@ public class QueryActivityImpl
 	
 	@Inject
 	public QueryActivityImpl(
-			@Assisted QueryPlace place,
+			QueryComponent queryComponent,
 			QueryMessages messages,
 			OSMMap map,
-			QueryComponent queryComponent,
 			DataManager dataManager,
 			PescadorMVPLogger logger) {
 
-		super(place);
+		this.queryComponent = queryComponent;
 		this.messages = messages;
 		this.map = map;
-		this.queryComponent = queryComponent;
 		this.dataManager = dataManager;
 		this.logger = logger;
 	}

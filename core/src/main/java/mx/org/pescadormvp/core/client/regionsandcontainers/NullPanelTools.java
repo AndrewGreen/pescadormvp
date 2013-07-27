@@ -49,7 +49,6 @@ public class NullPanelTools {
 		private static final NullView nullView = new NullView();
 		
 		public NullActivity() {
-			super(null);
 			setView(nullView);
 		}
 

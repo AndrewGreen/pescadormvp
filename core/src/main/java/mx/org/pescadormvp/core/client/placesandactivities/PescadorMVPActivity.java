@@ -30,4 +30,6 @@ public interface PescadorMVPActivity<
 		I extends Component<I>>
 		extends Activity, ActivateInternalLinkEvent.Handler {
 
+	
+	void setStatePointer(S StatePointer);
 }

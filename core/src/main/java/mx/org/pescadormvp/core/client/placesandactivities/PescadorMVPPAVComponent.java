@@ -27,7 +27,7 @@ public interface PescadorMVPPAVComponent<
 	
 	Set<Class<? extends ForRegionTag>> handlesRegions();
 
-	<PS extends P, A extends PescadorMVPPlaceActivity<?,?,?>>
+	<A extends PescadorMVPPlaceActivity<?,P,?>>
 			A getActivity(Class<? extends ForRegionTag> region, P place);
 
 	<S extends SessionData> S ensureSessionData();

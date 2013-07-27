@@ -26,15 +26,12 @@ public abstract class
 	extends PescadorMVPActivityBase<V,P,I>
 	implements PescadorMVPPlaceActivity<V,P,I> {
 
-	
-	// The place is gotten by subclasses via
-	// assisted inject.
-	public PescadorMVPPlaceActivityBase(
-			P place) {
-		super(place);
-	}
-
 	protected P getPlace() {
 		return getStatePointer();
+	}
+	
+	@Override
+	public void setPlace(P place) {
+		setStatePointer(place);
 	}
 }

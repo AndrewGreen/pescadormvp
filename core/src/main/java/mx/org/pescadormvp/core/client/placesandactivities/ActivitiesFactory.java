@@ -31,7 +31,7 @@ import mx.org.pescadormvp.core.client.session.StatePointer;
 @SuppressWarnings("javadoc")
 public interface ActivitiesFactory 
 		<S extends StatePointer,
-		A extends PescadorMVPActivity<?,?,?>> {
+		A extends PescadorMVPActivity<?,S,?>> {
 	 
-	A create(S statePointer);
+	A create();
 }
