@@ -26,7 +26,6 @@
  * <li><a href="#generalsetup">General Setup</a></li>
  * <li><a href="#tests">Tests</a></li>
  * </ol>
- * 
  * <h3><a name="component"/>The Query Component</h3>
  * <p>
  * In Pescador MVP, you create a component by grouping some classes together in
@@ -201,7 +200,7 @@
  * <p>
  * By extending
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase}
- * , (as all PAV components should)
+ * (as all PAV components should)
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
  * gains access to many convenience methods for dealing with places, activities
  * and UI regions.
@@ -342,14 +341,12 @@
  * <code class=java>
  * 	{@literal @}Inject
  * 	public QueryActivityImpl(
- * 			{@literal @}Assisted QueryPlace place,
  * 			QueryComponent queryComponent,
  * 			QueryMessages messages,
  * 			OSMMap map,
  * 			DataManager dataManager,
  * 			PescadorMVPLogger logger) {
  * 
- * 		super(place);
  * 		this.queryComponent = queryComponent;
  * 		this.messages = messages;
  * 		this.map = map;
@@ -359,8 +356,8 @@
  * </code>
  * </pre>
  * <p>
- * OK, that's pretty straightforward. We get everything we need via DI, tell the
- * superclass about the place, and store the rest in instance variables.
+ * OK, that's pretty straightforward. We get everything we need via DI and store
+ * it all in instance variables.
  * </p>
  * <p>
  * The activity's
@@ -449,9 +446,12 @@
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivityImpl#doQuery()
  * doQuery()}, the activity first gets the name of the location the user wants
  * to hear about. It gets this information from the current
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} instance.
- * If the {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} has
- * no information on this, then the activity tells the view to render an empty
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace}
+ * instance, available via the
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase#getPlace()
+ * getPlace()} method. If the
+ * current Place has no
+ * information on this, then the activity tells the view to render an empty
  * state.
  * </p>
  * 
@@ -559,8 +559,9 @@
  * via the {@link mx.org.pescadormvp.core.client.data.DataManager}. When the
  * request comes back, we tell the view to render Error, Lat-lon or No such
  * place, depending on the result. We also provide the view with the localized
- * messages it needs to do this. In the case of the Lat-lon state, there's a bit
- * of string processing to do, and we have to set the map location and make sure
+ * messages it needs to do this. If the Lat-lon state is to be rendered, 
+ * we also do a bit
+ * of string processing, set the map location and make sure
  * the view has the required map widget (
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMap}&mdash; see
  * below).
@@ -568,25 +569,40 @@
  * <p>
  * In truth, there's not much extraordinary about this activity. The most
  * significant things about it are: we get everything we need via DI and methods
- * provided by the superclass, push to the view and handle events from it,
- * and send requests via a handy {@link mx.org.pescadormvp.core.client.data.DataManager}
- * that uses the command pattern (more on that below).
+ * provided by the superclass, push to the view and handle events from it, and
+ * send requests via a handy
+ * {@link mx.org.pescadormvp.core.client.data.DataManager} that uses the command
+ * pattern (more on that below).
  * </p>
- *
  * <h3><a name="queryview"/>The Query View</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="map"/>The Map Widget</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="queryplace"/>The Query Place</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="actionhelper"/>The JSONP Action Helper</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="layout"/>Application Layout</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="generalsetup"/>General Setup</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
  * <h3><a name="tests"/>Tests</h3>
- * <p><i>[TODO]</i></p>
+ * <p>
+ * <i>[TODO]</i>
+ * </p>
+ * 
  * <pre>
  * <code class=java>
  * </code>
