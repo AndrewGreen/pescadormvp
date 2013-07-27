@@ -6,7 +6,7 @@ classes provided by GWT.
 It integrates several Java and GWT best practices. Features include: 
 
 - A modular global application architecture.
-- Dependency injection (using GIN/Guice).
+- Dependency injection (via GIN/Guice).
 - Command pattern for server calls (using gwt-dispatch) and caching of responses,
   including for JSONP calls.
 - Testing and building with a single command (via Maven).
@@ -22,9 +22,8 @@ Of course, it also supports all the other goodies that come with GWT
 includes resources for creating internal links (to places in the same GWT app)
 that are also native HTML links, and some miscellaneous utilities.
 
-Instructions on how to use Pescador MVP are in the [Javadoc](http://andrewgreen.github.io/pescadormvp/site/apidocs/index.html?mx/org/pescadormvp/core/package-summary.html) itself.
-
-You may also wish to walk through the example application, in the [examples/jsonp](examples/jsonp) folder. [Here](http://andrewgreen.github.io/pescadormvp/site/examples/jsonp/live/index.html) is how the example app looks compiled and running in your browser.
+For information on how to use Pescador MVP, see the [walk-through of the example
+application](http://andrewgreen.github.io/pescadormvp/site/apidocs/index.html?mx/org/pescadormvp/examples/jsonp/client/package-summary.html) and the [overview](http://andrewgreen.github.io/pescadormvp/site/apidocs/index.html?mx/org/pescadormvp/core/package-summary.html). Code for the example app is in the [examples/jsonp](examples/jsonp) folder. [Here](http://andrewgreen.github.io/pescadormvp/site/examples/jsonp/live/index.html) is how the example app looks compiled and running in your browser.
 
 Pescador MVP was developed by Andrew Green at the [Audiovisual Laboratory for Social Research](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-LAIS) of the  [Instituto Mora](http://www.mora.edu.mx). It was originally developed as part of the [Pescador](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-Pescador) system.
 
@@ -33,12 +32,6 @@ Pescador MVP was developed by Andrew Green at the [Audiovisual Laboratory for So
 
 Add maven dependency
 Alternately, include in build path
-
-
-# Example application
-
-There's an example app you can walk through. See example/jsonp/README.md
-for more information.
 
 
 # Building, running and hacking the source
