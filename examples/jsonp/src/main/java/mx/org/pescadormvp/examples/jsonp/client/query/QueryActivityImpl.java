@@ -100,7 +100,7 @@ public class QueryActivityImpl
 		final QueryView view = getView();
 		
 		// Provide the view with a fresh place instance for the next query
-		view.setRawQueryPlace(queryComponent.getPlace());
+		view.setRawQueryPlace(queryComponent.getRawPlace());
 		
 		// The Place object provides the data for this activity, which in this
 		// case is the name of the place whose latitude and longitude we'll query.

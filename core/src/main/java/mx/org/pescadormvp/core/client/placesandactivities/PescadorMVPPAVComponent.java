@@ -23,7 +23,7 @@ public interface PescadorMVPPAVComponent<
 
 		extends Component<I> {
 
-	P getPlace();
+	P getRawPlace();
 	
 	Set<Class<? extends ForRegionTag>> handlesRegions();
 

@@ -20,6 +20,7 @@ import mx.org.pescadormvp.core.client.placesandactivities.ActivitiesFactory;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
+import mx.org.pescadormvp.core.client.placesandactivities.RawPlaceFactory;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body;
 
 /**
@@ -40,14 +41,10 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 
 	@Inject
 	public QueryComponentImpl(
-			QueryPlaceProvider queryPlaceProvider,
 			ActivitiesFactory<QueryPlace, QueryActivity> activitiesFactory,
 			GetLatLonActionHelper actionHelper,
 			DataManager dataManager) {
 		
-		// send the place provider to the superclass
-		super(queryPlaceProvider);
-
 		// Here we establish that this component has an activity for the
 		// {@link Body} screen region (in this app, that's the only region).
 		addRegionAndActivitiesFactory(Body.class, activitiesFactory);
@@ -66,40 +63,49 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 
 		@Override
 		protected void configure() {
-			// bind the enclosing class
+			// Bind the component interface to its implementation
+			// (which is the enclosing class).
+			// This is something all components will do.
 			bind(QueryComponent.class).
 					to(QueryComponentImpl.class).in(Singleton.class);
 
-			// bind place provider
-			bind(QueryPlaceProvider.class).in(Singleton.class);
+			// Create the places factory.
+			// All place-activity-view components will do this.
+			install(new GinFactoryModuleBuilder().implement(
+					QueryPlace.class, QueryPlaceImpl.class)
+					.build(
+					new TypeLiteral<
+					RawPlaceFactory<QueryPlace>>(){}));
+
+			// The next two bindings are for the activity and the view.
+			// Place-activity-view components will do this for each 
+			// activity and view they define.
+			// (This component has only one activity and one view.)
 			
-			// create activities factory
+			// Create the activities factory.
 			install(new GinFactoryModuleBuilder().implement(
 					QueryActivity.class, QueryActivityImpl.class)
 					.build(
 					new TypeLiteral<
 					ActivitiesFactory<QueryPlace, QueryActivity>>(){}));
 			
-			// bind view
+			// Bind the view.
 			bind(QueryView.class).to(QueryViewImpl.class)
 					.in(Singleton.class);
 			
-			// bind jsonp action helper
+			// The remaining bindings are specific to this component.
+			// Other place-activity-view components may or may not have
+			// additional bindings like these, depending on what they do.
+			
+			// Bind JSONP action helper.
+			// Any component that sets up JSONP requests will do something
+			// like this.
 			bind(GetLatLonActionHelper.class)
 					.to(GetLatLonActionHelperImpl.class)
 					.in(Singleton.class);
 			
-			// bind OSMMap
+			// Bind OSMMap widget.
 			bind(OSMMap.class).to(OSMMapImpl.class).in(Singleton.class);
-		}
-	}
-
-	public static class QueryPlaceProvider
-		extends PescadorMVPRawPlaceProvider<QueryPlace> {
-		
-		@Override
-		public QueryPlace get() {
-			return new QueryPlaceImpl();
 		}
 	}
 
@@ -110,7 +116,7 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 	@Override
 	public PescadorMVPPlace getRawDefaultPlace() {
 		if (defaultPlace == null)
-			defaultPlace = getPlace();
+			defaultPlace = getRawPlace();
 
 		return defaultPlace;
 	}

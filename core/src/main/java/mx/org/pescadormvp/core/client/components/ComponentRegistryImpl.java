@@ -79,7 +79,7 @@ public class ComponentRegistryImpl implements ComponentRegistry {
 					(PescadorMVPPAVComponent<?,?>) component;
 			
 			// get a throwaway place to find the main token
-			PescadorMVPPlace place = pavComponent.getPlace();
+			PescadorMVPPlace place = pavComponent.getRawPlace();
 			String mainToken = place.getMainToken();
 			
 			mainTokenIndex.put(mainToken, pavComponent);

@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.core.client.session.Session;
@@ -40,26 +39,21 @@ public abstract class PescadorMVPPAVComponentBase<
 			new HashMap<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> >();
 
-	private PescadorMVPRawPlaceProvider<P> placeProvider;
+	private RawPlaceFactory<P> placeFactory;
 	
 	private Session session;
 	
-	// no @Inject, injection used in the extending class's constructor
-	// and in method setBasicComponents
-	public PescadorMVPPAVComponentBase(
-			PescadorMVPRawPlaceProvider<P> placeProvider) {
-
-		this.placeProvider = placeProvider;
-	}
-
 	/**
 	 * Use method injection to get basic stuff, to keep subclasses'
 	 * constructors simpler.
 	 */
 	@Inject
-	public void setBasicComponents(Session session) {
+	public void setBasicComponents(
+			Session session,
+			RawPlaceFactory<P> placeFactory) {
 		
 		this.session = session;
+		this.placeFactory = placeFactory;
 	}
 	
 	/**
@@ -86,8 +80,8 @@ public abstract class PescadorMVPPAVComponentBase<
 	}
 	
 	@Override
-	public P getPlace() {
-		P place = placeProvider.get();
+	public P getRawPlace() {
+		P place = placeFactory.create();
 		return place;
 	}
 	
@@ -111,9 +105,6 @@ public abstract class PescadorMVPPAVComponentBase<
 
 		return activity;
 	}
-	
-	public abstract static class PescadorMVPRawPlaceProvider<P extends PescadorMVPPlace> 
-		implements Provider<P> { }
 	
 	// TODO use generics to avoid cast or unchecked warnings...
 	@SuppressWarnings("unchecked")

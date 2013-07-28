@@ -55,7 +55,7 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 		// if we've got a bad token, we get the default place
 		PescadorMVPPlace place;
 		if (pavComponent != null)
-			place = pavComponent.getPlace();
+			place = pavComponent.getRawPlace();
 		else
 			place = defaultPlaceProvider.getRawDefaultPlace();
 		
