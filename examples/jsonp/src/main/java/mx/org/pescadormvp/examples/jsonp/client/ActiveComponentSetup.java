@@ -98,11 +98,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 	public interface ActiveSetupGinjector extends PescadorMVPGinjector {}
 
 	/**
-	 *  <p>Sets specific bindings;
-	 *  Backreferences (from components back to {@link ActiveComponentSetup})
-	 *  are set as components are received.</p>
-	 *  
-	 *  <p>Also set the root region provider.</p>
+	 *  <p>Set the root region provider.</p>
 	 *  
 	 *  <p>Note: components that rely on automatic generation of internationalized
 	 *  {@link Messages} by Maven must also set up the appropriate configuration in the

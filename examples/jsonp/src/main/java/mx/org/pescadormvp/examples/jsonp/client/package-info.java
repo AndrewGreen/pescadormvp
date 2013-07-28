@@ -133,20 +133,20 @@
  * component that associates a place class with one or more activity classes,
  * view classes, and regions of the UI. Pescado MVP requires that PAV components
  * include an implementation of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * (a subinterface of
  * {@link mx.org.pescadormvp.core.client.components.Component}).
  * </p>
  * <p>
  * The {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent}
  * interface is a subinterface of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * . So
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}, by
  * implementing
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent}, also
  * implements
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * and {@link mx.org.pescadormvp.core.client.components.Component}.
  * </p>
  * <p>
@@ -156,7 +156,7 @@
  * 
  * <pre>
  * <code class=java>
- *     public interface QueryComponent extends PescadorMVPPAVComponent&lt;
+ *     public interface QueryComponent extends PAVComponent&lt;
  *             QueryComponent, 
  *             QueryPlace>,
  *             RawDefaultPlaceProvider { }
@@ -166,18 +166,18 @@
  * As you can see,
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent} fills
  * in the generic parameters of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * . (For now, don't worry about the reference to
  * {@link mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider}
  * &mdash;it'll be explained in a moment.) The opening line of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * goes like this:
  * </p>
  * 
  * <pre>
  * <code class=java>
- *     public interface PescadorMVPPAVComponent&lt;
- *             I extends PescadorMVPPAVComponent&lt;I,P>, // component's interface
+ *     public interface PAVComponent&lt;
+ *             I extends PAVComponent&lt;I,P>, // component's interface
  *             P extends PescadorMVPPlace>             // place
  *             extends Component&lt;I>
  * </code>
@@ -190,7 +190,7 @@
  * 
  * <pre>
  * <code class=java>
- *     public class QueryComponentImpl extends PescadorMVPPAVComponentBase&lt; 
+ *     public class QueryComponentImpl extends PAVComponentBase&lt; 
  *             QueryComponent,
  *             QueryPlace>
  *             implements
@@ -199,7 +199,7 @@
  * </pre>
  * <p>
  * By extending
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponentBase}
  * (as all PAV components should)
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
  * gains access to many convenience methods for dealing with places, activities
@@ -234,48 +234,49 @@
  * 
  *         {@literal @}Override
  *         protected void configure() {
- *             // bind the enclosing class
+ *             // Bind the component interface to its implementation
+ *             // (which is the enclosing class).
+ *             // This is something all components will do.
  *             bind(QueryComponent.class).
  *                     to(QueryComponentImpl.class).in(Singleton.class);
  * 
- *             // bind place provider
- *             bind(QueryPlaceProvider.class).in(Singleton.class);
+ *             // Create the places factory.
+ *             // All place-activity-view components will do this.
+ *             install(new GinFactoryModuleBuilder().implement(
+ *                     QueryPlace.class, QueryPlaceImpl.class)
+ *                     .build(
+ *                     new TypeLiteral&lt;
+ *                     RawPlaceFactory&lt;QueryPlace>>(){}));
+ * 
+ *             // The next two bindings are for the activity and the view.
+ *             // Place-activity-view components will have bindings like these 
+ *             // for each activity and view they define.
+ *             // (This component has only one activity and one view.)
  *             
- *             // create activities factory
+ *             // Create the activities factory.
  *             install(new GinFactoryModuleBuilder().implement(
  *                     QueryActivity.class, QueryActivityImpl.class)
  *                     .build(
  *                     new TypeLiteral&lt;
  *                     ActivitiesFactory&lt;QueryPlace, QueryActivity>>(){}));
  *             
- *             // bind view
+ *             // Bind the view.
  *             bind(QueryView.class).to(QueryViewImpl.class)
  *                     .in(Singleton.class);
  *             
- *             // bind jsonp action helper
+ *             // The remaining bindings are specific to this component.
+ *             // Other place-activity-view components may or may not have
+ *             // additional bindings like these, depending on what they do.
+ *             
+ *             // Bind JSONP action helper.
+ *             // Any component that sets up JSONP requests will do something
+ *             // like this.
  *             bind(GetLatLonActionHelper.class)
  *                     .to(GetLatLonActionHelperImpl.class)
  *                     .in(Singleton.class);
  *             
- *             // bind OSMMap
+ *             // Bind OSMMap widget.
  *             bind(OSMMap.class).to(OSMMapImpl.class).in(Singleton.class);
- *         }
- *     }
- * </code>
- * </pre>
- * <p>
- * DI-related code is completed by another static inner class, a place
- * {@link com.google.inject.Provider}:
- * </p>
- * 
- * <pre>
- * <code class=java>
- *     public static class QueryPlaceProvider
- *         extends PescadorMVPRawPlaceProvider&lt;QueryPlace> {
- *         
- *         {@literal @}Override
- *         public QueryPlace get() {
- *             return new QueryPlaceImpl();
  *         }
  *     }
  * </code>
@@ -290,14 +291,10 @@
  * <code class=java>
  *     {@literal @}Inject
  *     public QueryComponentImpl(
- *             QueryPlaceProvider queryPlaceProvider,
  *             ActivitiesFactory&lt;QueryPlace, QueryActivity> activitiesFactory,
  *             GetLatLonActionHelper actionHelper,
  *             DataManager dataManager) {
  *         
- *         // send the place provider to the superclass
- *         super(queryPlaceProvider);
- * 
  *         // Establish that this component has an activity for the
  *         // Layout.Body screen region (in this app, that's the only region).
  *         addRegionAndActivitiesFactory(Body.class, activitiesFactory);
@@ -308,7 +305,7 @@
  * </code>
  * </pre>
  * <p>
- * Here, we tell the superclass about our place provider, and link the UI region
+ * Here, we link the UI region
  * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body
  * Layout.Body} to the activities factory we created in our
  * {@link com.google.gwt.inject.client.GinModule} (see above). This provides the
@@ -386,8 +383,8 @@
  * </p>
  * <p>
  * Standard Pescador MVP fare is to have the activity push to and control the
- * view, not vice versa. The view doesn't do anything except control UI details
- * and fire off events.
+ * view. The view doesn't do anything except control UI details and fire off
+ * events.
  * </p>
  * <p>
  * The first thing we do with our passive view is ask it if the query area
@@ -446,13 +443,11 @@
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivityImpl#doQuery()
  * doQuery()}, the activity first gets the name of the location the user wants
  * to hear about. It gets this information from the current
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace}
- * instance, available via the
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} instance,
+ * available via the
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase#getPlace()
- * getPlace()} method. If the
- * current Place has no
- * information on this, then the activity tells the view to render an empty
- * state.
+ * getPlace()} method. If the current Place has no information on this, then the
+ * activity tells the view to render an empty state.
  * </p>
  * 
  * <pre>
@@ -559,10 +554,9 @@
  * via the {@link mx.org.pescadormvp.core.client.data.DataManager}. When the
  * request comes back, we tell the view to render Error, Lat-lon or No such
  * place, depending on the result. We also provide the view with the localized
- * messages it needs to do this. If the Lat-lon state is to be rendered, 
- * we also do a bit
- * of string processing, set the map location and make sure
- * the view has the required map widget (
+ * messages it needs to do this. If the Lat-lon state is to be rendered, we also
+ * do a bit of string processing, set the map location and make sure the view
+ * has the required map widget (
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMap}&mdash; see
  * below).
  * </p>
@@ -609,4 +603,3 @@
  * </pre>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
-
