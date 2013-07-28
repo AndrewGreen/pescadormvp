@@ -14,9 +14,9 @@ import mx.org.pescadormvp.core.client.components.Component;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 import mx.org.pescadormvp.core.client.session.SessionData;
 
-public interface PescadorMVPPAVComponent<
+public interface PAVComponent<
 		// public interface offered as a component
-		I  extends PescadorMVPPAVComponent<I,P>,
+		I  extends PAVComponent<I,P>,
 		
 		// place we're binding to
 		P extends PescadorMVPPlace>

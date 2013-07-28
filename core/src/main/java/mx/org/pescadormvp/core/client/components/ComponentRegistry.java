@@ -10,7 +10,7 @@ package mx.org.pescadormvp.core.client.components;
 
 import java.util.Set;
 
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PAVComponent;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
 /**
@@ -30,7 +30,7 @@ public interface ComponentRegistry {
 
 	<I extends Component<I>> I getComponent(Class<I> publicInterface);
 
-	PescadorMVPPAVComponent<?, ?> getPAVComponent(String token);
+	PAVComponent<?, ?> getPAVComponent(String token);
 
 	void setRegions(Set<Class<? extends ForRegionTag>> regions);
 }

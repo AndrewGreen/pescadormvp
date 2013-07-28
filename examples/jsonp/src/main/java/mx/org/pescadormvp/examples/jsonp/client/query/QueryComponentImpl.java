@@ -17,7 +17,7 @@ import com.google.inject.TypeLiteral;
 
 import mx.org.pescadormvp.core.client.data.DataManager;
 import mx.org.pescadormvp.core.client.placesandactivities.ActivitiesFactory;
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponentBase;
+import mx.org.pescadormvp.core.client.placesandactivities.PAVComponentBase;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
 import mx.org.pescadormvp.core.client.placesandactivities.RawPlaceFactory;
@@ -30,7 +30,7 @@ import mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body;
  *  
  * @author Andrew Green
  */
-public class QueryComponentImpl extends PescadorMVPPAVComponentBase< 
+public class QueryComponentImpl extends PAVComponentBase< 
 		QueryComponent,
 		QueryPlace>
 		implements
@@ -78,8 +78,8 @@ public class QueryComponentImpl extends PescadorMVPPAVComponentBase<
 					RawPlaceFactory<QueryPlace>>(){}));
 
 			// The next two bindings are for the activity and the view.
-			// Place-activity-view components will do this for each 
-			// activity and view they define.
+			// Place-activity-view components will have bindings like these
+			// for each activity and view they define.
 			// (This component has only one activity and one view.)
 			
 			// Create the activities factory.

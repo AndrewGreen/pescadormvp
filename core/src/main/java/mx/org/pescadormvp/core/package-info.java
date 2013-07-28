@@ -60,7 +60,7 @@
  * "place-activity-view components". These special components associate a place
  * class with one or more activity classes, view classes, and regions of the UI.
  * They also include a class that implements
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent}
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
  * (a subinterface of
  * {@link mx.org.pescadormvp.core.client.components.Component}). Pescador MVP
  * and GWT take care of activating activities and views in the right place at

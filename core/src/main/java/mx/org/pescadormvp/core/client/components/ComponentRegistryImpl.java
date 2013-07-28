@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PAVComponent;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
@@ -27,8 +27,8 @@ import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
  */
 public class ComponentRegistryImpl implements ComponentRegistry {
 
-	private Map<String, PescadorMVPPAVComponent<?,?>> mainTokenIndex =
-			new HashMap<String, PescadorMVPPAVComponent<?,?>>();
+	private Map<String, PAVComponent<?,?>> mainTokenIndex =
+			new HashMap<String, PAVComponent<?,?>>();
 	
 	private Map<Class<?>, Component<?>> componentIndex = 
 			new HashMap<Class<?>, Component<?>>();
@@ -62,7 +62,7 @@ public class ComponentRegistryImpl implements ComponentRegistry {
 	}
 	
 	@Override
-	public PescadorMVPPAVComponent<?,?> getPAVComponent(String token) {
+	public PAVComponent<?,?> getPAVComponent(String token) {
 		return mainTokenIndex.get(token);
 	}
 	
@@ -74,9 +74,9 @@ public class ComponentRegistryImpl implements ComponentRegistry {
 	private void addComponent(Component<?> component) {
 		componentIndex.put(component.publicInterface(), component);
 		
-		if (component instanceof PescadorMVPPAVComponent<?,?>) {
-			PescadorMVPPAVComponent<?,?> pavComponent =
-					(PescadorMVPPAVComponent<?,?>) component;
+		if (component instanceof PAVComponent<?,?>) {
+			PAVComponent<?,?> pavComponent =
+					(PAVComponent<?,?>) component;
 			
 			// get a throwaway place to find the main token
 			PescadorMVPPlace place = pavComponent.getRawPlace();

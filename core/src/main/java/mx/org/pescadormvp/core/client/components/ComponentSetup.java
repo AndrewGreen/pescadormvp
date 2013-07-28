@@ -18,7 +18,7 @@ import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.core.client.placesandactivities.ActivityManagersFactory;
 import mx.org.pescadormvp.core.client.placesandactivities.ActivityMappersFactory;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityMapper;
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PAVComponent;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivity;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceMapper;
@@ -335,16 +335,16 @@ public abstract class ComponentSetup implements RootRegionManager {
 		historyHandler.handleCurrentHistory();
 	}
 
-	private <P extends PescadorMVPPlace> PescadorMVPPAVComponent<?, P>
+	private <P extends PescadorMVPPlace> PAVComponent<?, P>
 			getCastPAVComponent(P place) {
 
-		PescadorMVPPAVComponent<?, ?> pavComponent =
+		PAVComponent<?, ?> pavComponent =
 				componentRegistry.getPAVComponent(place.getMainToken());
 
 		// GWT reflection doesn't provide for finding implemented interfaces
 		@SuppressWarnings("unchecked")
-		PescadorMVPPAVComponent<?, P> castPAVComponent =
-				(PescadorMVPPAVComponent<?, P>) pavComponent;
+		PAVComponent<?, P> castPAVComponent =
+				(PAVComponent<?, P>) pavComponent;
 
 		return castPAVComponent;
 	}
@@ -355,7 +355,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 					Class<? extends ForRegionTag> region,
 					P place) {
 
-		PescadorMVPPAVComponent<?, P> pavComponent =
+		PAVComponent<?, P> pavComponent =
 				getCastPAVComponent(place);
 
 		PescadorMVPPlaceActivity<?, ?, ?> activity =

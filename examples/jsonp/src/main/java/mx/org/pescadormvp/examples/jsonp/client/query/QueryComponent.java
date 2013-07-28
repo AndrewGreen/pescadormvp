@@ -8,7 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
-import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPAVComponent;
+import mx.org.pescadormvp.core.client.placesandactivities.PAVComponent;
 import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider;
 
 /**
@@ -19,7 +19,7 @@ import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvide
  *
  */
 public interface QueryComponent 
-		extends PescadorMVPPAVComponent<
+		extends PAVComponent<
 		QueryComponent, 
 		QueryPlace>,
 		RawDefaultPlaceProvider { }

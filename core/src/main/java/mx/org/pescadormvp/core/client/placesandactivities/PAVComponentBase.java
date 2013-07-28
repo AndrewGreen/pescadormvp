@@ -25,14 +25,14 @@ import mx.org.pescadormvp.core.client.session.SessionData;
  *
  * @param <P> Place class
  */
-public abstract class PescadorMVPPAVComponentBase<
+public abstract class PAVComponentBase<
 		// public interface offered as a component
-		I extends PescadorMVPPAVComponent<I,P>,
+		I extends PAVComponent<I,P>,
 		
 		// place class we're binding to
 		P extends PescadorMVPPlace				
 		
-		> implements PescadorMVPPAVComponent<I,P> {
+		> implements PAVComponent<I,P> {
 
 	private final Map<Class<? extends ForRegionTag>, 
 			ActivitiesFactory<?,?> > regionsAndActivitiesFactories =

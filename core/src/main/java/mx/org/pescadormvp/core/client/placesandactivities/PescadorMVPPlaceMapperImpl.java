@@ -49,7 +49,7 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 	public Place getPlace(String fullToken) {
 		String[] tokenParts = fullToken.split(MAIN_TOKEN_SEPARATOR);
 		
-		PescadorMVPPAVComponent<?, ?> pavComponent =
+		PAVComponent<?, ?> pavComponent =
 				componentRegistry.getPAVComponent(tokenParts[0]);
 
 		// if we've got a bad token, we get the default place
