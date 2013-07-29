@@ -57,6 +57,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 			new ArrayList<ComponentSetup.PendingLog>();
 
 	private ComponentRegistry componentRegistry;
+	private List<Component<?>[]> componentsToAdd = new ArrayList<Component<?>[]>();
 
 	private RootHasFixedSetOfRegions regionsWidget;
 	private Set<Class<? extends ForRegionTag>> regions;
@@ -191,21 +192,29 @@ public abstract class ComponentSetup implements RootRegionManager {
 						}).inject();
 	}
 
-	public ComponentSetup(ComponentRegistry componentRegistry) {
-		this.componentRegistry = componentRegistry;
-	}
-
+	// TODO once multibindings and mapbindings are in Gin, look into using that
+	/**
+	 * Add components to the framework. Only call this in a constructor.
+	 * 
+	 * @param components
+	 */
 	public void addComponents(
 			Component<?>... components) {
-		componentRegistry.addComponents(components);
+		// wait until the componet registry is received via method injection
+		componentsToAdd.add(components);
 	}
 
+	private void reallyAddComponents(Component<?>... components) {
+		componentRegistry.addComponents(components);
+	}
+	
 	/**
 	 * Use method injection to get some basic stuff, to keep subclasses'
 	 * constructors simpler.
 	 */
 	@Inject
 	public void setBasicComponents(
+			ComponentRegistry componentRegistry,
 			PlaceController placeController,
 			EventBus eventBus,
 			PlaceHistoryHandler historyHandler,
@@ -217,7 +226,8 @@ public abstract class ComponentSetup implements RootRegionManager {
 			PescadorMVPPlaceMapper placeMapper,
 			Session session,
 			PescadorMVPLogger logger) {
-
+		
+		this.componentRegistry = componentRegistry;
 		this.placeController = placeController;
 		this.eventBus = eventBus;
 		this.historyHandler = historyHandler;
@@ -225,12 +235,19 @@ public abstract class ComponentSetup implements RootRegionManager {
 		this.activityMappersFactory = activityMappersFactory;
 		this.activityManagersFactory = activityManagersFactory;
 
-		addComponents(new Component<?>[] {
+		// Tell the component registry what the regions are, so it can check
+		// that components handle regions that are actually available
+		componentRegistry.setRegions(regions);
+		
+		reallyAddComponents(new Component<?>[] {
 				dataManager,
 				placeMapper,
 				session,
 				logger });
 
+		for (Component<?>[] componentsArray : componentsToAdd)
+			reallyAddComponents(componentsArray);
+		
 		this.placeMapper = placeMapper;
 	}
 
@@ -250,10 +267,6 @@ public abstract class ComponentSetup implements RootRegionManager {
 
 		// a reference, not a copy
 		regions = regionsWidget.getRegions();
-
-		// Tell the component registry what the regions are, so it can check
-		// that components handle regions that are actually available
-		componentRegistry.setRegions(regions);
 	}
 
 	// not used so far; TODO check

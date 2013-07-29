@@ -18,7 +18,6 @@ package mx.org.pescadormvp.examples.jsonp.client;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 import mx.org.pescadormvp.core.client.PescadorMVPGinModule;
 import mx.org.pescadormvp.core.client.PescadorMVPGinjector;
-import mx.org.pescadormvp.core.client.components.ComponentRegistry;
 import mx.org.pescadormvp.core.client.components.ComponentSetup;
 import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout;
@@ -106,8 +105,6 @@ public class ActiveComponentSetup extends ComponentSetup {
 	 */
 	@Inject
 	public ActiveComponentSetup(
-			// Component registry
-			ComponentRegistry componentRegistry,
 			
 			// The global window layout widget
 			Layout layout,
@@ -117,15 +114,11 @@ public class ActiveComponentSetup extends ComponentSetup {
 			QueryComponent queryComponent
 			
 			) {
-		
-		super(componentRegistry);
 
-		// We do this before registering components, so that Place-Activity-View
-		// components can be checked against the viewport regions available here
+		// Tell the framework about our layout widget
 		setRootRegionsWidget(layout);
 		
 		// Register components
-		// TODO once multibindings and mapbindings are in Gin, look into using that
 		addComponents(queryComponent);
 	}
 	
