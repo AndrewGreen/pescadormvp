@@ -133,21 +133,19 @@
  * component that associates a place class with one or more activity classes,
  * view classes, and regions of the UI. Pescado MVP requires that PAV components
  * include an implementation of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * (a subinterface of
- * {@link mx.org.pescadormvp.core.client.components.Component}).
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} (a
+ * subinterface of {@link mx.org.pescadormvp.core.client.components.Component}).
  * </p>
  * <p>
  * The {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent}
  * interface is a subinterface of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * . So
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} . So
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}, by
  * implementing
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent}, also
  * implements
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * and {@link mx.org.pescadormvp.core.client.components.Component}.
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} and
+ * {@link mx.org.pescadormvp.core.client.components.Component}.
  * </p>
  * <p>
  * Here is the definition of
@@ -166,12 +164,12 @@
  * As you can see,
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent} fills
  * in the generic parameters of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * . (For now, don't worry about the reference to
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} .
+ * (For now, don't worry about the reference to
  * {@link mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider}
  * &mdash;it'll be explained in a moment.) The opening line of
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * goes like this:
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} goes
+ * like this:
  * </p>
  * 
  * <pre>
@@ -570,11 +568,26 @@
  * </p>
  * <h3><a name="queryview"/>The Query View</h3>
  * <p>
- * <i>[TODO]</i>
+ * There's really nothing framework-specific about the view in this example app.
+ * It's implemented as a {@link com.google.gwt.user.client.ui.ResizeComposite}
+ * and uses standard GWT facilities like UiBinder, client bundles, sprites,
+ * {@link com.google.gwt.safehtml.client.SafeHtmlTemplates} and animation. Check
+ * it out if you're interested in how it uses those things.
+ * </p>
+ * <p>
+ * This view knows nothing about the activity that uses it. It just provides
+ * methods for the activity to control it, and fires off events. There's
+ * only one non-display-related task that it's been allowed to handle: setting
+ * data in {@link com.google.gwt.place.shared.Place} objects.
  * </p>
  * <h3><a name="map"/>The Map Widget</h3>
  * <p>
- * <i>[TODO]</i>
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMapImpl} is a small
+ * wrapper for the OpenLayers
+ * {@link org.gwtopenmaps.openlayers.client.MapWidget}. It's been kept separate
+ * from the view and the activity because it contains a bit of logic related to
+ * map rendering that doesn't fit in either. The activity controls it and
+ * sends it to the view for attachment at the appropriate spot in the UI.
  * </p>
  * <h3><a name="queryplace"/>The Query Place</h3>
  * <p>
@@ -603,3 +616,4 @@
  * </pre>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
+
