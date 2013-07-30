@@ -69,6 +69,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 	private ActivityManagersFactory activityManagersFactory;
 
 	private PescadorMVPPlaceMapper placeMapper;
+	private PescadorMVPLogger logger;
 	private NullActivity nullActivity;
 
 	/**
@@ -249,6 +250,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 			reallyAddComponents(componentsArray);
 		
 		this.placeMapper = placeMapper;
+		this.logger = logger;
 	}
 
 	@Override
@@ -304,26 +306,17 @@ public abstract class GlobalSetup implements RootRegionManager {
 		// which should be called after all components are loaded
 		componentRegistry.callFinalizeSetup();
 
-		final PescadorMVPLogger logger =
-				componentRegistry.getComponent(PescadorMVPLogger.class);
+		for (PendingLog pendingLog : pendingLogs)
+			logger.log(pendingLog.getLevel(), pendingLog.getText());
 
-		// Only log if a logger is available, of course--should not assume it is
-		if (logger != null) {
-			for (PendingLog pendingLog : pendingLogs)
-				logger.log(pendingLog.getLevel(), pendingLog.getText());
-
-			logger.log(Level.FINEST, "Components loaded, starting up framework");
-		}
+		logger.log(Level.FINEST, "Components loaded, starting up framework");
 
 		// Check if any requested scripts failed to load
 		if (scriptsFailedToLoad.size() > 0) {
 
-			// If so, and if a logger is available, log the error
-			if (logger != null) {
-				for (String failedSriptURL : scriptsFailedToLoad)
-					logger.log(Level.WARNING, "Couldn't inject script "
-							+ failedSriptURL);
-			}
+			for (String failedSriptURL : scriptsFailedToLoad)
+				logger.log(Level.WARNING, "Couldn't inject script "
+						+ failedSriptURL);
 		}
 
 		// create activity mappers, and
