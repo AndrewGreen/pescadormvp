@@ -10,8 +10,10 @@ package mx.org.pescadormvp.core.client.placesandactivities;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import mx.org.pescadormvp.core.client.components.ComponentRegistry;
+import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
 import com.google.gwt.http.client.UrlBuilder;
@@ -35,14 +37,17 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 	
 	private ComponentRegistry componentRegistry;
 	private RawDefaultPlaceProvider defaultPlaceProvider;
+	private PescadorMVPLogger logger;
 	
 	@Inject
 	protected PescadorMVPPlaceMapperImpl(
 			ComponentRegistry componentRegistry,
-			RawDefaultPlaceProvider defaultPlaceProvider) { 
+			RawDefaultPlaceProvider defaultPlaceProvider,
+			PescadorMVPLogger logger) { 
 		
 		this.componentRegistry = componentRegistry;
 		this.defaultPlaceProvider = defaultPlaceProvider;
+		this.logger = logger;
 	}
 	
 	@Override
@@ -52,15 +57,22 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 		PAVComponent<?, ?> pavComponent =
 				componentRegistry.getPAVComponent(tokenParts[0]);
 
-		// if we've got a bad token, we get the default place
-		PescadorMVPPlace place;
-		if (pavComponent != null)
-			place = pavComponent.getRawPlace();
-		else
-			place = defaultPlaceProvider.getRawDefaultPlace();
-		
+		// we have an invalid main token if pavComponent is null
+		if (pavComponent == null) {
+			logger.log(Level.INFO, "Invalid main token in " + fullToken);
+			return defaultPlaceProvider.getRawDefaultPlace().asGWTPlace();
+		}
+			
+		PescadorMVPPlace place = pavComponent.getRawPlace();
 		if (tokenParts.length > 1) {
 			Map<String, String> properties = getKVMap(tokenParts[1]);
+			
+			// We have invalid key-values if properties is null
+			if (properties == null) {
+				logger.log(Level.INFO, "Invalid properties in " + fullToken);
+				return defaultPlaceProvider.getRawDefaultPlace().asGWTPlace();
+			}
+				
 			place.setProperties(properties);
 		}
 		
@@ -147,12 +159,14 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 			String[] kv = kvPair.split(KV_SEPARATOR);
 			
 			if (kv.length != 2) {
-				// TODO: log this problem somewhere, or do something here
-				continue;
+				// This tells the calling method that the string 
+				// couldn't be interpreted
+				return null;
 			}
 			
 			propValueMap.put(kv[0], kv[1]);
 		}
+		
 		return propValueMap;
 	}
 	
