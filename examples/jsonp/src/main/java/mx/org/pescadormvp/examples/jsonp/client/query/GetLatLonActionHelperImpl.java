@@ -8,6 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
+import net.customware.gwt.dispatch.shared.Result;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.safehtml.shared.UriUtils;
 
@@ -18,22 +20,22 @@ public class GetLatLonActionHelperImpl
 		implements GetLatLonActionHelper {
 
 	// This class is meant to be used only with this site, and with a specific
-	// version of the API,
-	// so it's OK to hardcode these here.
+	// version of the API, so it's OK to hardcode these here.
 	final static String BASE_URL = "http://nominatim.openstreetmap.org/search?format=json&limit=1&q=";
 	final static String CALLBACK_PARAM ="json_callback";
 
+	/**
+	 * Create the {@link Result} from the received {@link JavaScriptObject}.
+	 */
 	@Override
 	public GetLatLonResult insantiateResult(JavaScriptObject jsResult) {
 
 		LatLonInfo latLonInfo = jsResult.cast();
 		GetLatLonResult result = new GetLatLonResult();
 		
-		boolean valid = latLonInfo.getCount() > 0;
-
-		result.setValid(valid);
+		result.setValid(latLonInfo.getCount() > 0);
 		
-		if (valid) {
+		if (result.isValid()) {
 			result.setDisplayName(latLonInfo.getDisplayName());
 			result.setLat(Double.valueOf(latLonInfo.getLat()));
 			result.setLon(Double.valueOf(latLonInfo.getLon()));
