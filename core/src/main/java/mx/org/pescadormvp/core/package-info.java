@@ -203,7 +203,7 @@
  * never have to make your own
  * {@link com.google.gwt.place.shared.PlaceTokenizer}s.
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
- * store information as key-value pairs that are automatically serialized to and
+ * store information in key-value pairs that are automatically serialized to and
  * retrieved from the URL fragment identifier. They may also contain locale
  * information and presentation text (for describing places in the UI).
  * </p>

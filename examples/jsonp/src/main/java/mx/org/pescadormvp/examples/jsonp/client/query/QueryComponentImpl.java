@@ -69,7 +69,7 @@ public class QueryComponentImpl extends PAVComponentBase<
 			bind(QueryComponent.class).
 					to(QueryComponentImpl.class).in(Singleton.class);
 
-			// Create the places factory.
+			// Create the place factory.
 			// All place-activity-view components will do this.
 			install(new GinFactoryModuleBuilder().implement(
 					QueryPlace.class, QueryPlaceImpl.class)

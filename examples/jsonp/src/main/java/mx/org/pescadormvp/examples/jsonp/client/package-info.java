@@ -39,12 +39,12 @@
  * ...examples.jsonp.client.query} package.
  * </p>
  * <p>
- * Since we're using dependency injection, we want to define variables using
- * only interfaces as much as possible. So the public methods of almost every
- * concrete class are set out in a corresponding interface, which is used in
- * variable definitions. Interfaces have nearly the same name as the concrete
- * classes that implement them (the difference is just that concrete class names
- * have an "Impl" on the end).
+ * Since, in Pescador MVP, we use dependency injection, we want to define
+ * variables with only interfaces as much as possible. So, the public methods of
+ * almost every concrete class are set out in a corresponding interface, which
+ * is used in variable definitions. Interfaces have nearly the same names as the
+ * concrete classes that implement them (the difference is just that concrete
+ * class names have an "Impl" on the end).
  * </p>
  * <p>
  * Here are the Query Component's interface-implementation pairs:
@@ -117,7 +117,7 @@
  * </tbody>
  * </table>
  * <p>
- * Let's look at each of these pairs, one by one.
+ * Let's look at each of these pairs.
  * </p>
  * <h3><a name="generalqcstuff"/>General Query Component Stuff</h3>
  * <p>
@@ -176,7 +176,7 @@
  * <code class=java>
  *     public interface PAVComponent&lt;
  *             I extends PAVComponent&lt;I,P>, // component's interface
- *             P extends PescadorMVPPlace>             // place
+ *             P extends PescadorMVPPlace>  // place
  *             extends Component&lt;I>
  * </code>
  * </pre>
@@ -238,7 +238,7 @@
  *             bind(QueryComponent.class).
  *                     to(QueryComponentImpl.class).in(Singleton.class);
  * 
- *             // Create the places factory.
+ *             // Create the place factory.
  *             // All place-activity-view components will do this.
  *             install(new GinFactoryModuleBuilder().implement(
  *                     QueryPlace.class, QueryPlaceImpl.class)
@@ -306,8 +306,8 @@
  * Here, we link the UI region
  * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body
  * Layout.Body} to the activities factory we created in our
- * {@link com.google.gwt.inject.client.GinModule} (see above). This provides the
- * framework with everything it needs to activate the
+ * {@link com.google.gwt.inject.client.GinModule} (see above). This tells the
+ * framework to activate the
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivity} and
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryView} in the
  * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body
@@ -417,8 +417,8 @@
  * </code>
  * </pre>
  * <p>
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryView} has five
- * renderable states:
+ * Note that {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryView}
+ * has five renderable states:
  * </p>
  * <ol>
  * <li><i>Empty</i>&nbsp;&nbsp;&nbsp;In this state, no messages or information
@@ -576,9 +576,9 @@
  * </p>
  * <p>
  * This view knows nothing about the activity that uses it. It just provides
- * methods for the activity to control it, and fires off events. There's
- * only one non-display-related task that it's been allowed to handle: setting
- * data in {@link com.google.gwt.place.shared.Place} objects.
+ * methods for the activity to control it, and fires off events. There's only
+ * one non-display-related task that it's allowed to handle: setting data in
+ * {@link com.google.gwt.place.shared.Place} objects.
  * </p>
  * <h3><a name="map"/>The Map Widget</h3>
  * <p>
@@ -586,12 +586,106 @@
  * wrapper for the OpenLayers
  * {@link org.gwtopenmaps.openlayers.client.MapWidget}. It's been kept separate
  * from the view and the activity because it contains a bit of logic related to
- * map rendering that doesn't fit in either. The activity controls it and
- * sends it to the view for attachment at the appropriate spot in the UI.
+ * map rendering that doesn't fit in either. The activity controls it and sends
+ * it to the view for attachment at the appropriate spot in the UI.
  * </p>
  * <h3><a name="queryplace"/>The Query Place</h3>
  * <p>
- * <i>[TODO]</i>
+ * In Pescador MVP, Places do have quite a bit of specialness: they're passed
+ * around as interfaces rather than concrete classes, can store information in
+ * key-value pairs, and have extra fields that are useful for creating
+ * hyperlinks. Let's look at all these features.
+ * </p>
+ * <p>
+ * Here's the code for
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlaceImpl}:
+ * </p>
+ * 
+ * <pre>
+ *  <code class=java>
+ *      public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
+ *      
+ *          private static final String MAIN_TOKEN = "query";
+ *          private static final String LOCATION_KEY = "l";
+ *          
+ *          private String location;
+ *          
+ *          public QueryPlaceImpl() {
+ *          
+ *              // Tell the superclass about the main token and the only
+ *              // key.
+ *              super(MAIN_TOKEN, new String[] { LOCATION_KEY });
+ *          }
+ *          
+ *          /**
+ *           * This method is called by the superclass whenever a property needs to be
+ *           * set.
+ *           *{@literal /}
+ *          {@literal @}Override
+ *          protected void processProperty(String key, String value) {
+ *              if (key.compareTo(LOCATION_KEY) == 0) {
+ *                  location = value;
+ *              } 
+ *          }
+ *      
+ *          {@literal @}Override
+ *          public String getLocation() {
+ *              return location;
+ *          }
+ * 
+ *          /**
+ *           * Here, instead of setting an instance variable directly, we tell the
+ *           * superclass to follow its standard procedure for setting a property.
+ *           *{@literal /}
+ *          {@literal @}Override
+ *          public void setLocation(String location) {
+ *              setProperty(LOCATION_KEY, location);
+ *          }
+ *      }
+ *  </code>
+ * </pre>
+ * <p>
+ * All Pescador MVP facilities expect places to be subinterfaces of
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace},
+ * which {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} is.
+ * Dealing with places as interfaces rather than concrete classes allows more
+ * flexibility in how we refer to them, since interfaces can handle multiple
+ * inheritance. (So, for example, if you have code that needs to deal with a
+ * specific set of places, you can use a tag interface that extends
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}.)
+ * </p>
+ * <p>
+ * However, at the same time, all implementations of
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}
+ * should also extend
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase}
+ * , which itself extends GWT's {@link com.google.gwt.place.shared.Place}. So
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * are always GWT {@link com.google.gwt.place.shared.Place}s, too, and can be
+ * gotten as such via the
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace#asGWTPlace()
+ * asGWTPlace()} method.
+ * </p>
+ * <p>
+ * As you can see, there's not much logic in
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlaceImpl}. In the
+ * constructor, we send the superclass the main token and keys to be used in the
+ * URL fragment identifier. There is a getter and a setter for location, which
+ * holds the name of the location the user wants to query. In the setter,
+ * instead of setting our instance variable directly, we call
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase#setProperty(String, String)
+ * setProperty(String, String)}, as shown. This call will eventually get back to
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase#processProperty(String, String)
+ * processProperty(String, String)}, which we must implement. That's where we
+ * set the instance variable, also as shown.
+ * </p>
+ * <p>
+ * This way, we can give our places simple getters and setters for
+ * the data they store, and allow the framework to serialize and deserailize
+ * place state to the URL fragment identifiers. In the case of
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace}, a query
+ * for "London", for example, translates to the following fragment identifier:
+ * <code>#query;l=London</code>.
  * </p>
  * <h3><a name="actionhelper"/>The JSONP Action Helper</h3>
  * <p>
