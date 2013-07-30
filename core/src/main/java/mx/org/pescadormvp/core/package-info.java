@@ -14,11 +14,17 @@
  * >generics</a>.
  * </p>
  * <p>
+ * The following is an overview of Pescador MVP and how to use it. For
+ * more details and examples, please see the <a href="../examples/jsonp/client/package-summary.html">
+ * walk-through of the sample
+ * application</a>.
+ * </p>
+ * <p>
  * Contents:
  * <ol>
  * <li><a href="#components">Components</a></li>
  * <li><a href="#pavcompoennts">Place-Activity-View Components</a></li>
- * <li><a href="#componentsetup">Activating Components and Starting the
+ * <li><a href="#globalsetup">Activating Components and Starting the
  * Framework</a></li>
  * <li><a href="#places">Places</a></li>
  * <li><a href="#layout">Layout</a></li>
@@ -60,14 +66,13 @@
  * "place-activity-view components". These special components associate a place
  * class with one or more activity classes, view classes, and regions of the UI.
  * They also include a class that implements
- * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent}
- * (a subinterface of
- * {@link mx.org.pescadormvp.core.client.components.Component}). Pescador MVP
- * and GWT take care of activating activities and views in the right place at
- * the right time. If you need to share implementations and specifications
- * across places, activities, views and UI regions, you can use standard Java
- * inheritance and polymorphism. (See <a href="#pavcompoennts">below</a> for
- * more on place-activity-view components.)
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} (a
+ * subinterface of {@link mx.org.pescadormvp.core.client.components.Component}).
+ * Pescador MVP and GWT take care of activating activities and views in the
+ * right place at the right time. If you need to share implementations and
+ * specifications across places, activities, views and UI regions, you can use
+ * standard Java inheritance and polymorphism. (See <a
+ * href="#pavcompoennts">below</a> for more on place-activity-view components.)
  * </p>
  * <p>
  * In its present form, Pescador MVP does <b>not</b>:
@@ -120,17 +125,17 @@
  * QueryGinModule}.
  * </p>
  * <p>
- * This PAV component has only one activity class and only one view class because, in
- * this simple example, there is only one UI region (designated with
- * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body}). For each
- * PAV component (and so for each place) there can
- * be as many activity-view pairs as there are UI regions. So in the example,
- * if there were more UI regions, there could be more activity-view pairs. 
+ * This PAV component has only one activity class and only one view class
+ * because, in this simple example, there is only one UI region (designated with
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body}). For
+ * each PAV component (and so for each place) there can be as many activity-view
+ * pairs as there are UI regions. So in the example, if there were more UI
+ * regions, there could be more activity-view pairs.
  * </p>
  * <p>
  * To create your own PAV components, just copy the general pattern in the
  * example, then activate your components and start up the framework as
- * explained <a href="#componentsetup">below</a>, and you should be set. Behind
+ * explained <a href="#globalsetup">below</a>, and you should be set. Behind
  * the scenes, Pescador MVP activates the standard GWT
  * {@link com.google.gwt.place.shared.PlaceController},
  * {@link com.google.gwt.place.shared.PlaceHistoryHandler} and
@@ -144,14 +149,13 @@
  * {@link com.google.gwt.junit.client.GWTTestCase}s for tests that require a
  * browser context. (See the source code under examples/jsonp/src/test/java.)
  * </p>
- * <h3><a name="componentsetup" />Activating Components and Starting the
+ * <h3><a name="globalsetup" />Activating Components and Starting the
  * Framework</h3>
  * <p>
  * In Pescador MVP, you control the global configuration of your application by
  * creating a class that extends
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} (in the
- * example app,
- * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup}).
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} (in the example
+ * app, {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup}).
  * Inside this class you define an interface that extends
  * {@link mx.org.pescadormvp.core.client.PescadorMVPGinjector} (which itself
  * extends {@link com.google.gwt.inject.client.Ginjector}) and has a
@@ -162,29 +166,29 @@
  * </p>
  * <p>
  * In the constructor of your
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} subclass,
- * you must send the superclass a list of the components you want to activate,
- * along with your application's general layout widget (see <a
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} subclass, you
+ * must send the superclass a list of the components you want to activate, along
+ * with your application's general layout widget (see <a
  * href="#layout">below</a> for more about layouts).
  * </p>
  * <p>
  * Framework initialization works like this:
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} has a static
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} has a static
  * method that you use to pass in your
  * {@link com.google.gwt.inject.client.Ginjector} and start everything up. You
  * can call this method directly from your GWT entry point method.
- * (Alternatively, you can do so from a static method in your subclass of
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and call
- * <b>that</b> static method from the GWT entry point. See
- * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup} and
+ * Or, you can do so from a static method in your subclass of
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup}, and call
+ * <b>that</b> static method from the GWT entry point. (See
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup} and
  * {@link mx.org.pescadormvp.examples.jsonp.client.JSONPExample} in the example
  * app. With this approach, you keep all general setup code inside your subclass
- * of {@link mx.org.pescadormvp.core.client.components.ComponentSetup}, and your
+ * of {@link mx.org.pescadormvp.core.client.components.GlobalSetup}, and your
  * GWT entry point stays dirt-simple.)
  * </p>
  * <p>
  * Once the static startup method in
- * {@link mx.org.pescadormvp.core.client.components.ComponentSetup} is called,
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} is called,
  * that's that! Dependency injection will boot up, your layout widget will be
  * attached to the DOM and your app will go to the default place (or to whatever
  * place is described in the URL fragment identifier in the browser's location
@@ -295,7 +299,7 @@
  * corresponding action must implement the tag interface
  * {@link mx.org.pescadormvp.core.client.data.CacheableAction}. The maximum
  * cache size is configurable (look at
- * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveComponentSetup} to see
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup} to see
  * how to set it.)
  * </p>
  * <p>
@@ -320,9 +324,8 @@
  * work well with
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
  * and produce native HTML hyperlinks that stay within your application when
- * clicked on normally, and can
- * also be control-clicked and right-clicked for native browser hyperlink
- * actions.
+ * clicked on normally, and can also be control-clicked and right-clicked for
+ * native browser hyperlink actions.
  * </p>
  * <h4><a name="logger"/>Logger</h4>
  * <p>

@@ -23,7 +23,8 @@
  * <li><a href="#queryplace">The Query Place</a></li>
  * <li><a href="#actionhelper">The JSONP Action Helper</a></li>
  * <li><a href="#layout">Application Layout</a></li>
- * <li><a href="#generalsetup">General Setup</a></li>
+ * <li><a href="#globalsetup">Global Setup</a></li>
+ * <li><a href="#frameworkstartup">Starting Up the Framework</a></li>
  * <li><a href="#tests">Tests</a></li>
  * </ol>
  * <h3><a name="component"/>The Query Component</h3>
@@ -576,9 +577,9 @@
  * it out if you're interested in how it uses those things.
  * </p>
  * <p>
- * This view knows nothing about the activity that uses it. It just provides
- * methods for the activity to control it, and fires off events. There's only
- * one non-display-related task that it's allowed to handle: setting data in
+ * This view knows nothing about the activity that controls it. It just provides
+ * methods for the activity, and fires off events. There's only one
+ * non-display-related task that it's allowed to handle: setting data in
  * {@link com.google.gwt.place.shared.Place} objects.
  * </p>
  * <h3><a name="map"/>The Map Widget</h3>
@@ -660,9 +661,10 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}
  * should also extend
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase}
- * , which itself extends GWT's {@link com.google.gwt.place.shared.Place}. So
+ * , which itself extends GWT's {@link com.google.gwt.place.shared.Place}. That
+ * means
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
- * are always GWT {@link com.google.gwt.place.shared.Place}s, too, and can be
+ * are always GWT {@link com.google.gwt.place.shared.Place}s, too. They can be
  * gotten as such via the
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace#asGWTPlace()
  * asGWTPlace()} method.
@@ -722,7 +724,7 @@
  * servers via JSONP. In this case, instead of implementing an
  * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler}, you
  * create a {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} that
- * encapsulates details of the server call and the creation of a
+ * encapsulates details of the server call, including the creation of a
  * {@link net.customware.gwt.dispatch.shared.Result Result} instance.
  * </p>
  * <p>
@@ -817,10 +819,10 @@
  * Pescacdor MVP is basically agnostic about how you lay out your application.
  * It does, however make a few simple assumptions&mdash;namely, that your app
  * has regions that you can designate with a tag interface and can associate
- * with a container widget of some sort.
+ * with a container widget.
  * </p>
  * <p>
- * (However, the regions' dimentions need not remain static, nor must they
+ * (However, the regions' dimentions need not remain static, nor must regions
  * always be visible. It's also possible to have UI elements that are logically
  * contained in a region without being visually tied to it.)
  * </p>
@@ -887,7 +889,19 @@
  * attach()} method, and some boilerplate hidden away by
  * {@link mx.org.pescadormvp.core.client.regionsandcontainers.LayoutHelper}.
  * </p>
- * <h3><a name="generalsetup"/>General Setup</h3>
+ * <h3><a name="globalsetup"/>Global Setup</h3>
+ * <p>
+ * So far we've seen how to create a PAV component, a
+ * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} and a global
+ * layout widget. Now let's look at Pescador MVP's facilities for global
+ * application setup.
+ * </p>
+ * Just as the setup of each component is contained in a single class, global
+ * application setup is also done in a single class, which must be a
+ * subclass of {@link mx.org.pescadormvp.core.client.components.GlobalSetup}.
+ * <p>
+ * </p>
+ * <h3><a name="frameworkstartup"/>Starting Up the Framework</h3>
  * <p>
  * <i>[TODO]</i>
  * </p>
