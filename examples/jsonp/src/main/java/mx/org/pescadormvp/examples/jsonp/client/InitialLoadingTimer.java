@@ -6,7 +6,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client;
 
-import mx.org.pescadormvp.core.client.components.ComponentSetup.LoadingPleaseWait;
+import mx.org.pescadormvp.core.client.components.GlobalSetup.LoadingPleaseWait;
 
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.Scheduler;

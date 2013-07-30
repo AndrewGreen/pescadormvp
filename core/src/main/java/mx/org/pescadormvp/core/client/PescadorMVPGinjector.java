@@ -8,7 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client;
 
-import mx.org.pescadormvp.core.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.components.GlobalSetup;
 
 import com.google.gwt.inject.client.Ginjector;
 
@@ -17,5 +17,5 @@ import com.google.gwt.inject.client.Ginjector;
  * @author Andrew Green
  */
 public interface PescadorMVPGinjector extends Ginjector {
-	public ComponentSetup getComponetSetup();
+	public GlobalSetup getGlobalSetup();
 }

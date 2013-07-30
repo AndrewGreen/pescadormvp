@@ -18,7 +18,7 @@ package mx.org.pescadormvp.examples.jsonp.client;
 import net.customware.gwt.dispatch.client.gin.StandardDispatchModule;
 import mx.org.pescadormvp.core.client.PescadorMVPGinModule;
 import mx.org.pescadormvp.core.client.PescadorMVPGinjector;
-import mx.org.pescadormvp.core.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.components.GlobalSetup;
 import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout;
 import mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl;
@@ -47,7 +47,7 @@ import com.google.inject.name.Named;
  * @author Andrew Green
  *
  */
-public class ActiveComponentSetup extends ComponentSetup {
+public class ActiveGlobalSetup extends GlobalSetup {
 
 	/**
 	 * This method calls the superclass's static startup method, providing
@@ -69,7 +69,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 		// The framework will ensure that these are loaded and available
 		// before the framework actually starts up.
 		// Also send an object to display a loading timer while scripts load.
-		ComponentSetup.loadJSthenStartUp(
+		GlobalSetup.loadJSthenStartUp(
 				ginjectorHolder,
 				new InitialLoadingTimer(),
 				true,
@@ -104,7 +104,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 	 *  pom.xml.</p>
 	 */
 	@Inject
-	public ActiveComponentSetup(
+	public ActiveGlobalSetup(
 			
 			// The global window layout widget
 			Layout layout,
@@ -132,7 +132,7 @@ public class ActiveComponentSetup extends ComponentSetup {
 		protected void configure() {
 			
 			// component setup
-			bind(ComponentSetup.class).to(ActiveComponentSetup.class)
+			bind(GlobalSetup.class).to(ActiveGlobalSetup.class)
 				.in(Singleton.class);
 
 			// window layout

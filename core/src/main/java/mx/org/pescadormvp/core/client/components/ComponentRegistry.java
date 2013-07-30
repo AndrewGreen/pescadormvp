@@ -16,7 +16,7 @@ import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 /**
  * Registry of components.
  * 
- * <p>By keeping this separate from {@link ComponentSetup} we avoid circular
+ * <p>By keeping this separate from {@link GlobalSetup} we avoid circular
  * dependencies.</p>
  * 
  * @author Andrew Green

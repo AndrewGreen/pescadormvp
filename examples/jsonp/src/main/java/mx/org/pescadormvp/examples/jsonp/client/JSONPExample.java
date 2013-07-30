@@ -24,6 +24,6 @@ public class JSONPExample implements EntryPoint{
 		// This static call on the class we've created in turn
 		// calls a static method on the superclass that starts everything 
 		// up, including DI, history management and the UI.
-		ActiveComponentSetup.startUp();
+		ActiveGlobalSetup.startUp();
 	}
 }

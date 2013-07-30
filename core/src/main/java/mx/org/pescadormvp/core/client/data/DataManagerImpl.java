@@ -25,7 +25,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import mx.org.pescadormvp.core.client.components.ComponentSetup;
 import mx.org.pescadormvp.core.client.util.Reflect;
 import net.customware.gwt.dispatch.client.DispatchAsync;
 import net.customware.gwt.dispatch.shared.Action;
@@ -41,10 +40,6 @@ public class DataManagerImpl implements DataManager {
 
 	private static Integer maxCacheSize;
 	private static int DEFAULT_MAX_CACHE_SIZE = 100;
-	
-	// will be used once we associate callbacks with app state
-	@SuppressWarnings("unused")
-	private ComponentSetup componentSetup;
 	
 	// find a way to annotate actions as server dispatched
 	// server dispatched and cached, or locally handled

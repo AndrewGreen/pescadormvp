@@ -8,7 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.placesandactivities;
 
-import mx.org.pescadormvp.core.client.components.ComponentSetup;
+import mx.org.pescadormvp.core.client.components.GlobalSetup;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
 import com.google.gwt.activity.shared.Activity;
@@ -20,14 +20,14 @@ import com.google.inject.assistedinject.Assisted;
 public class PescadorMVPActivityMapper implements ActivityMapper {
 
 	private final Class<? extends ForRegionTag> region;
-	private final ComponentSetup componentSetup;
+	private final GlobalSetup globalSetup;
 	
 	@Inject
 	PescadorMVPActivityMapper(
 			@Assisted Class<? extends ForRegionTag> region,
-			ComponentSetup componentSetup) {
+			GlobalSetup globalSetup) {
 		this.region = region;
-		this.componentSetup = componentSetup;
+		this.globalSetup = globalSetup;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class PescadorMVPActivityMapper implements ActivityMapper {
 		if (!(place instanceof PescadorMVPPlace))
 			throw new IllegalArgumentException();
 		
-		return componentSetup
+		return globalSetup
 				.getActivityForRegionAndPlace(region, (PescadorMVPPlace) place);
 	}
 }

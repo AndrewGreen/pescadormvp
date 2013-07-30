@@ -42,7 +42,7 @@ import com.google.web.bindery.event.shared.EventBus;
  * Instances of this class configure the app, including specific place-activity
  * bindings, DI bindings, and the root layout widget for viewport.
  */
-public abstract class ComponentSetup implements RootRegionManager {
+public abstract class GlobalSetup implements RootRegionManager {
 
 	// static stuff used for injecting scripts before startup
 	private static String[] scriptsToLoad;
@@ -54,7 +54,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 
 	private static PescadorMVPGinjectorHolder pendingGinjectorHolder;
 	private static List<PendingLog> pendingLogs =
-			new ArrayList<ComponentSetup.PendingLog>();
+			new ArrayList<GlobalSetup.PendingLog>();
 
 	private ComponentRegistry componentRegistry;
 	private List<Component<?>[]> componentsToAdd = new ArrayList<Component<?>[]>();
@@ -90,10 +90,10 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 *            up DI.
 	 */
 	public static void startUp(PescadorMVPGinjectorHolder ginjectorHolder) {
-		// The Ginjector provides the active ComponentSetup instance, which
+		// The Ginjector provides the active GlobalSetup instance, which
 		// we use to start the app. This will initialize the UI
 		// and go to the default place.
-		ginjectorHolder.getPescadorMVPGinjector().getComponetSetup().start();
+		ginjectorHolder.getPescadorMVPGinjector().getGlobalSetup().start();
 	}
 
 	/**
@@ -127,10 +127,10 @@ public abstract class ComponentSetup implements RootRegionManager {
 			boolean loadScriptsInOrder,
 			String... scriptsToLoad) {
 
-		ComponentSetup.pendingGinjectorHolder = ginjectorHolder;
-		ComponentSetup.loadingPleaseWait = loadingPleaseWait;
-		ComponentSetup.loadScriptsInOrder = loadScriptsInOrder;
-		ComponentSetup.scriptsToLoad = scriptsToLoad;
+		GlobalSetup.pendingGinjectorHolder = ginjectorHolder;
+		GlobalSetup.loadingPleaseWait = loadingPleaseWait;
+		GlobalSetup.loadScriptsInOrder = loadScriptsInOrder;
+		GlobalSetup.scriptsToLoad = scriptsToLoad;
 		
 		// if a loadingPleaseWait has been sent, start it up
 		if (loadingPleaseWait != null)
@@ -403,7 +403,7 @@ public abstract class ComponentSetup implements RootRegionManager {
 	 * Implement this interface on a class that does something when JS
 	 * scriptloading starts (like show a "please wait" message) and when it
 	 * finishes (like remove the message). Then pass an instance to
-	 * {@link ComponentSetup#loadJSthenStartUp}.
+	 * {@link GlobalSetup#loadJSthenStartUp}.
 	 * 
 	 * @author Andrew Green
 	 */
