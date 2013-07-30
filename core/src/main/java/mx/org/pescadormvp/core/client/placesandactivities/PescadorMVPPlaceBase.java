@@ -223,7 +223,7 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 			StringBuffer sb = new StringBuffer();
 			
 			for (String key : properties.keySet()) {
-				sb.append(separator + key + ":" + properties.get(key));
+				sb.append(separator + key + "=" + properties.get(key));
 				separator = ", ";
 			}
 			
