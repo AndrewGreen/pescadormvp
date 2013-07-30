@@ -319,7 +319,8 @@
  * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} with the
  * {@link mx.org.pescadormvp.core.client.data.DataManager}. This is necessary
  * for the JSONP requests the component will perform (more about
- * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper}s below).
+ * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper}s <a
+ * href="#actionhelper">below</a>).
  * </p>
  * <p>
  * If you find all of the above a bit boilerplatey, you're right! Admittedly, it
@@ -555,8 +556,8 @@
  * messages it needs to do this. If the Lat-lon state is to be rendered, we also
  * do a bit of string processing, set the map location and make sure the view
  * has the required map widget (
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMap}&mdash; see
- * below).
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.OSMMap}&mdash; see <a
+ * href="#map">below</a>).
  * </p>
  * <p>
  * In truth, there's not much extraordinary about this activity. The most
@@ -564,7 +565,7 @@
  * provided by the superclass, push to the view and handle events from it, and
  * send requests via a handy
  * {@link mx.org.pescadormvp.core.client.data.DataManager} that uses the command
- * pattern (more on that below).
+ * pattern (more on that <a href="#actionhelper">below</a>).
  * </p>
  * <h3><a name="queryview"/>The Query View</h3>
  * <p>
@@ -648,14 +649,14 @@
  * All Pescador MVP facilities expect places to be subinterfaces of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace},
  * which {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} is.
- * Dealing with places as interfaces rather than concrete classes allows more
- * flexibility in how we refer to them, since interfaces can handle multiple
+ * Refering to places as interfaces rather than concrete (or even abstract)
+ * classes allows more flexibility, since interfaces can handle multiple
  * inheritance. (So, for example, if you have code that needs to deal with a
  * specific set of places, you can use a tag interface that extends
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}.)
  * </p>
  * <p>
- * However, at the same time, all implementations of
+ * At the same time, all implementations of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}
  * should also extend
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase}
@@ -680,20 +681,211 @@
  * set the instance variable, also as shown.
  * </p>
  * <p>
- * This way, we can give our places simple getters and setters for
- * the data they store, and allow the framework to serialize and deserailize
- * place state to the URL fragment identifiers. In the case of
+ * By doing things this way, we can give our places simple getters and setters
+ * for the data they store, and allow the framework to serialize and deserailize
+ * place state to and from URL fragment identifiers. In the case of
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace}, a query
- * for "London", for example, translates to the following fragment identifier:
- * <code>#query;l=London</code>.
+ * for "London", for example, translates to the following fragment identifier: "
+ * <code>#query;l=London</code>". (So with Pescador MVP, you don't have to write
+ * any {@link com.google.gwt.place.shared.PlaceTokenizer}s.)
+ * </p>
+ * <p>
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}s
+ * can hold the following additional information: a locale, a history token
+ * (that is, the URL fragment identifier without the "#"), a full URL, and
+ * presentation text. All this is useful mostly with the framework's facilities
+ * for creating internal hyperlinks (see
+ * {@link mx.org.pescadormvp.core.client.internallinks
+ * ...core.client.internallinks}). (BTW, there are parts of the framework where
+ * places are refered to as "raw"&mdash;that just means that they haven't had
+ * any of this additional information set up yet.)
  * </p>
  * <h3><a name="actionhelper"/>The JSONP Action Helper</h3>
  * <p>
- * <i>[TODO]</i>
+ * Pescador MVP includes a caching command-pattern
+ * {@link mx.org.pescadormvp.core.client.data.DataManager} (based on <a
+ * href="http://code.google.com/p/gwt-dispatch/">gwt-dispatch</a> and a <a href=
+ * "http://turbomanage.wordpress.com/2010/07/12/caching-batching-dispatcher-for-gwt-dispatch/"
+ * > blog post by David Chandler</a>). It doesn't quite belong in an MVP
+ * framework proper, but it's still kinda useful.
+ * </p>
+ * <p>
+ * Normally, your server calls go to your own server. The
+ * {@link mx.org.pescadormvp.core.client.data.DataManager} can handle such
+ * calls, for which you should implement server-side
+ * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler}s, as
+ * per the <a href="http://code.google.com/p/gwt-dispatch/wiki/GettingStarted">
+ * gwt-dispatch documentation</a>.
+ * </p>
+ * <p>
+ * Pescador MVP also lets you use the command pattern for calls to third-party
+ * servers via JSONP. In this case, instead of implementing an
+ * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler}, you
+ * create a {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} that
+ * encapsulates details of the server call and the creation of a
+ * {@link net.customware.gwt.dispatch.shared.Result Result} instance.
+ * </p>
+ * <p>
+ * Here is the example app's
+ * {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper},
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonActionHelperImpl}
+ * :
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *  public class GetLatLonActionHelperImpl 
+ *             implements GetLatLonActionHelper {
+ *     
+ *         final static String BASE_URL = "http://nominatim.openstreetmap.org/search?format=json&limit=1&q=";
+ *         final static String CALLBACK_PARAM ="json_callback";
+ * 
+ *         /**
+ *          * Create the Result from the received JavaScriptObject.
+ *          *{@literal /}
+ *         {@literal @}Override
+ *         public GetLatLonResult insantiateResult(JavaScriptObject jsResult) {
+ *     
+ *             LatLonInfo latLonInfo = jsResult.cast();
+ *             GetLatLonResult result = new GetLatLonResult();
+ *             
+ *             result.setValid(latLonInfo.getCount() > 0);
+ *             
+ *             if (result.isValid()) {
+ *                 result.setDisplayName(latLonInfo.getDisplayName());
+ *                 result.setLat(Double.valueOf(latLonInfo.getLat()));
+ *                 result.setLon(Double.valueOf(latLonInfo.getLon()));
+ *             }
+ *     
+ *             return result;
+ *         }
+ *     
+ *         {@literal @}Override
+ *         public String getRequestURL(GetLatLonAction action) {
+ *             return UriUtils.sanitizeUri(BASE_URL + action.getLocation());
+ *         }
+ *     
+ *         {@literal @}Override
+ *         public String getCallbackParameter() {
+ *             return CALLBACK_PARAM;
+ *         }
+ *         
+ *         {@literal @}Override
+ *         public Class<GetLatLonAction> getActionType() {
+ *             return GetLatLonAction.class;
+ *         }
+ *         
+ *         /**
+ *          * Overlay Java type for accessing contents of Javascript object
+ *          * returned over JSONP.
+ *          *{@literal /}
+ *         static private class LatLonInfo extends JavaScriptObject {
+ *     
+ *             protected LatLonInfo() {}
+ *             
+ *             public final native int getCount() /*-{
+ *                 return this.length;
+ *             }-*{@literal /};
+ *             
+ *             public final native String getDisplayName() /*-{
+ *                 return this[0].display_name;
+ *             }-*{@literal /};
+ *             
+ *             public final native String getLat() /*-{
+ *                 return this[0].lat;
+ *             }-*{@literal /};
+ *             
+ *             public final native String getLon() /*-{
+ *                 return this[0].lon;
+ *             }-*{@literal /};
+ *         }
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * Remember that {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper}s
+ * must be registered with the
+ * {@link mx.org.pescadormvp.core.client.data.DataManager}, as we <a
+ * href="#generalqcstuff">saw earlier</a>.
+ * </p>
+ * <p>
+ * Also, note that for an action's result to be cached, the action must
+ * implement {@link mx.org.pescadormvp.core.client.data.CacheableAction}.
  * </p>
  * <h3><a name="layout"/>Application Layout</h3>
  * <p>
- * <i>[TODO]</i>
+ * Pescacdor MVP is basically agnostic about how you lay out your application.
+ * It does, however make a few simple assumptions&mdash;namely, that your app
+ * has regions that you can designate with a tag interface and can associate
+ * with a container widget of some sort.
+ * </p>
+ * <p>
+ * (However, the regions' dimentions need not remain static, nor must they
+ * always be visible. It's also possible to have UI elements that are logically
+ * contained in a region without being visually tied to it.)
+ * </p>
+ * <p>
+ * The framework's assumptions about regions are embodied in
+ * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions}
+ * . Applications must provide an implementation of this interface. Here is the
+ * very simple implementation used in the example app:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ * public class LayoutImpl extends ResizeComposite implements Layout {
+ *     
+ *        private SimpleLayoutPanel outer = new SimpleLayoutPanel();
+ *        private DynamicSimpleLayoutPanel body = new DynamicSimpleLayoutPanel();
+ *        
+ *        private LayoutHelper layoutHelper;
+ *        
+ *        {@literal @}Inject
+ *        public LayoutImpl(LayoutHelper layoutHelper) {
+ *           this.layoutHelper = layoutHelper;
+ *           
+ *           // set up region(s)
+ *           layoutHelper.setupRegion(Body.class, body);
+ *     
+ *           // take up the whole viewport
+ *           body.setWidth("100%");
+ *           body.setHeight("100%");
+ *           outer.setWidth("100%");
+ *           outer.setHeight("100%");
+ *           
+ *           outer.add(body);
+ *           
+ *           // required call for all children of GWT's Composite widget
+ *           initWidget(outer);
+ *        }
+ *        
+ *        {@literal @}Override
+ *        public void attach() {
+ *           RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+ *           rootLayoutPanel.add(this);
+ *           onResize(); // make sure everything's the right size
+ *        }
+ *     
+ *        {@literal @}Override
+ *        public Set&lt;Class&lt;? extends ForRegionTag>> getRegions() {
+ *           return layoutHelper.getRegions();
+ *        }
+ *     
+ *        {@literal @}Override
+ *        public DynamicContainer
+ *              getContainer(Class&lt;? extends ForRegionTag> regionTag) {
+ *           return layoutHelper.getContainer(regionTag);
+ *        }
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * So there you go: one region (
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body Body}),
+ * one container, an
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl#attach()
+ * attach()} method, and some boilerplate hidden away by
+ * {@link mx.org.pescadormvp.core.client.regionsandcontainers.LayoutHelper}.
  * </p>
  * <h3><a name="generalsetup"/>General Setup</h3>
  * <p>

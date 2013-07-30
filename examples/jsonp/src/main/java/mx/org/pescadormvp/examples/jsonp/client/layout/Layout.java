@@ -25,7 +25,7 @@ public interface Layout extends RequiresResize, ProvidesResize,
 		RootHasFixedSetOfRegions {
 
 	/**
-	 * A tag interface designating the only region in this app.
+	 * A tag interface designating the only region in the JSONP Example app.
 	 * 
 	 * @author Andrew Green
 	 */
