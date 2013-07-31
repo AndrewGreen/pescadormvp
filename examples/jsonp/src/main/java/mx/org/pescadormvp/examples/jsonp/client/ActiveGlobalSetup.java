@@ -62,7 +62,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 
 			@Override
 			public PescadorMVPGinjector getPescadorMVPGinjector() {
-				return GWT.create(ActiveSetupGinjector.class);
+				return GWT.create(ActiveGlobalSetupGinjector.class);
 			}
 		};
 		
@@ -85,7 +85,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 	 */
 	@GinModules({
 		// Global bindings for this app that are not part of any component
-		ActiveSetupGinModule.class,
+		ActiveGlobalSetupGinModule.class,
 		
 		// Bindings for query component, which provides a place, an activity
 		// and a view. In a larger app, there would be many of these.
@@ -95,7 +95,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 		PescadorMVPGinModule.class,
 		StandardDispatchModule.class
 	})
-	public interface ActiveSetupGinjector extends PescadorMVPGinjector {}
+	public interface ActiveGlobalSetupGinjector extends PescadorMVPGinjector {}
 
 	/**
 	 *  <p>Note: components that rely on automatic generation of internationalized
@@ -120,7 +120,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 	 * that are not part of the larger framework.
 	 * 
 	 */
-	public static class ActiveSetupGinModule extends AbstractGinModule {
+	public static class ActiveGlobalSetupGinModule extends AbstractGinModule {
 		@Override
 		protected void configure() {
 			

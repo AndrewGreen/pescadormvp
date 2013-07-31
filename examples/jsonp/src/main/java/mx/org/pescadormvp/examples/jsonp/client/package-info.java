@@ -913,7 +913,7 @@
  * 
  * <pre>
  * <code class=java>
- *     public static class ActiveSetupGinModule extends AbstractGinModule {
+ *     public static class ActiveGlobalSetupGinModule extends AbstractGinModule {
  *         {@literal @}Override
  *         protected void configure() {
  *             
@@ -983,7 +983,7 @@
  * <code class=java>
  *     {@literal @}GinModules({
  *         // Global bindings for this app that are not part of any component
- *         ActiveSetupGinModule.class,
+ *         ActiveGlobalSetupGinModule.class,
  *         
  *         // Bindings for the Query Component
  *         QueryGinModule.class,
@@ -992,7 +992,7 @@
  *         PescadorMVPGinModule.class,
  *         StandardDispatchModule.class
  *     })
- *     public interface ActiveSetupGinjector extends PescadorMVPGinjector {}
+ *     public interface ActiveGlobalSetupGinjector extends PescadorMVPGinjector {}
  * </code>
  * </pre>
  * <p>
