@@ -86,15 +86,15 @@ public abstract class GlobalSetup implements RootRegionManager {
 	 * * This method is static so we can use it before DI boots up. That way the
 	 * framework to take care of booting up DI.
 	 * 
-	 * @param ginjectorHolder
-	 *            A holder for the {@link PescadorMVPGinjector} to use to boot
+	 * @param ginjector
+	 *            A {@link PescadorMVPGinjector} to use to boot
 	 *            up DI.
 	 */
-	public static void startUp(PescadorMVPGinjectorHolder ginjectorHolder) {
+	public static void startUp(PescadorMVPGinjector ginjector) {
 		// The Ginjector provides the active GlobalSetup instance, which
 		// we use to start the app. This will initialize the UI
 		// and go to the default place.
-		ginjectorHolder.getPescadorMVPGinjector().getGlobalSetup().start();
+		ginjector.getGlobalSetup().start();
 	}
 
 	/**
@@ -153,7 +153,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 			if (loadingPleaseWait != null)
 				loadingPleaseWait.finish();
 			
-			startUp(pendingGinjectorHolder);
+			startUp(pendingGinjectorHolder.getPescadorMVPGinjector());
 			
 		} else if (loadScriptsInOrder) {
 			scriptNowLoading++;
