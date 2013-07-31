@@ -216,6 +216,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 	@Inject
 	public void setBasicComponents(
 			ComponentRegistry componentRegistry,
+			RootHasFixedSetOfRegions regionsWidget,
 			PlaceController placeController,
 			EventBus eventBus,
 			PlaceHistoryHandler historyHandler,
@@ -236,6 +237,9 @@ public abstract class GlobalSetup implements RootRegionManager {
 		this.activityMappersFactory = activityMappersFactory;
 		this.activityManagersFactory = activityManagersFactory;
 
+		// set regions widget
+		setRootRegionsWidget(regionsWidget);
+		
 		// Tell the component registry what the regions are, so it can check
 		// that components handle regions that are actually available
 		componentRegistry.setRegions(regions);
@@ -271,13 +275,11 @@ public abstract class GlobalSetup implements RootRegionManager {
 		regions = regionsWidget.getRegions();
 	}
 
-	// not used so far; TODO check
 	@Override
 	public HasRegions getRegionsWidget() {
 		return regionsWidget;
 	}
 
-	// not used so far; TODO check
 	@Override
 	public void setRegionsWidget(HasRegions regionsWidget) {
 		if (!(regionsWidget instanceof RootHasFixedSetOfRegions))

@@ -20,6 +20,7 @@ import mx.org.pescadormvp.core.client.PescadorMVPGinModule;
 import mx.org.pescadormvp.core.client.PescadorMVPGinjector;
 import mx.org.pescadormvp.core.client.components.GlobalSetup;
 import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider;
+import mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout;
 import mx.org.pescadormvp.examples.jsonp.client.layout.LayoutImpl;
 import mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent;
@@ -106,18 +107,12 @@ public class ActiveGlobalSetup extends GlobalSetup {
 	@Inject
 	public ActiveGlobalSetup(
 			
-			// The global window layout widget
-			Layout layout,
-			
 			// Query component, which provides a place, an activity
 			// and a view. In a larger app, there would be many of these.
 			QueryComponent queryComponent
 			
 			) {
 
-		// Tell the framework about our layout widget
-		setRootRegionsWidget(layout);
-		
 		// Register components
 		addComponents(queryComponent);
 	}
@@ -133,12 +128,21 @@ public class ActiveGlobalSetup extends GlobalSetup {
 			
 			// component setup
 			bind(GlobalSetup.class).to(ActiveGlobalSetup.class)
-				.in(Singleton.class);
+					.in(Singleton.class);
 
-			// window layout
+			// global layout widget
 			bind(Layout.class).to(LayoutImpl.class).in(Singleton.class);
 			
+			// tell the framework that this is our global layout widget 
+			// Here, it's important that we bind the Layout interface,
+			// not the implementing class--otherwise, we'll get two instances
+			// of the implementing class.
+			bind(RootHasFixedSetOfRegions.class).to(Layout.class)
+					.in(Singleton.class);
+			
 			// default place provider
+			// Here, it's important that we bind the QueryComponent interface,
+			// for the same reason.
 			bind(RawDefaultPlaceProvider.class)
 					.to(QueryComponent.class).in(Singleton.class);
 		}
