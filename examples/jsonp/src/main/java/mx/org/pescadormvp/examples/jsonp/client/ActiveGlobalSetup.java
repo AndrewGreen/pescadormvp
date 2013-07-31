@@ -84,22 +84,20 @@ public class ActiveGlobalSetup extends GlobalSetup {
 	 * as well as for basic infrastructure.
 	 */
 	@GinModules({
-		// General bindings for this app that are not part of the larger framework
+		// Global bindings for this app that are not part of any component
 		ActiveSetupGinModule.class,
 		
 		// Bindings for query component, which provides a place, an activity
 		// and a view. In a larger app, there would be many of these.
 		QueryGinModule.class,
 		
-		// Framework
+		// Modules required by the framework
 		PescadorMVPGinModule.class,
 		StandardDispatchModule.class
 	})
 	public interface ActiveSetupGinjector extends PescadorMVPGinjector {}
 
 	/**
-	 *  <p>Set the root region provider.</p>
-	 *  
 	 *  <p>Note: components that rely on automatic generation of internationalized
 	 *  {@link Messages} by Maven must also set up the appropriate configuration in the
 	 *  pom.xml.</p>
@@ -126,7 +124,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 		@Override
 		protected void configure() {
 			
-			// component setup
+			// global setup
 			bind(GlobalSetup.class).to(ActiveGlobalSetup.class)
 					.in(Singleton.class);
 
@@ -140,7 +138,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 			bind(RootHasFixedSetOfRegions.class).to(Layout.class)
 					.in(Singleton.class);
 			
-			// default place provider
+			// tell the framework that this is our default place provider
 			// Here, it's important that we bind the QueryComponent interface,
 			// for the same reason.
 			bind(RawDefaultPlaceProvider.class)

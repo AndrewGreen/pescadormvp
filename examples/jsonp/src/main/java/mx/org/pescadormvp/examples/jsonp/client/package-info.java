@@ -168,7 +168,8 @@
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} .
  * (For now, don't worry about the reference to
  * {@link mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider}
- * &mdash;it'll be explained in a moment.) The opening line of
+ * &mdash;it'll be explained in a <a href="#globalsetup">moment</a>.) The
+ * opening line of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} goes
  * like this:
  * </p>
@@ -829,7 +830,7 @@
  * <p>
  * The framework's assumptions about regions are embodied in
  * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions}
- * . Applications must provide an implementation of this interface. Here is the
+ * . Applications must provide an implementation of that interface. Here is the
  * very simple implementation used in the example app:
  * </p>
  * 
@@ -896,12 +897,133 @@
  * layout widget. Now let's look at Pescador MVP's facilities for global
  * application setup.
  * </p>
- * Just as the setup of each component is contained in a single class, global
- * application setup is also done in a single class, which must be a
- * subclass of {@link mx.org.pescadormvp.core.client.components.GlobalSetup}.
  * <p>
+ * Just as the setup of each component is contained in a single class, global
+ * application setup is also done in a single class&mdash;which must be a
+ * subclass of {@link mx.org.pescadormvp.core.client.components.GlobalSetup}. In
+ * the example app, the class used for global setup is
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup}.
  * </p>
- * <h3><a name="frameworkstartup"/>Starting Up the Framework</h3>
+ * <p>
+ * An important part of global setup is DI binding. There will normally be some
+ * bindings that are truly global, rather than being tied to a given component.
+ * In the example app, global bindings are set in a static inner class within
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup}:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *     public static class ActiveSetupGinModule extends AbstractGinModule {
+ *         {@literal @}Override
+ *         protected void configure() {
+ *             
+ *             // global setup
+ *             bind(GlobalSetup.class).to(ActiveGlobalSetup.class)
+ *                     .in(Singleton.class);
+ * 
+ *             // global layout widget
+ *             bind(Layout.class).to(LayoutImpl.class).in(Singleton.class);
+ * 
+ *             // WARNING: in the next two bindings, it's important to bind
+ *             // to interfaces, not implementations.
+ * 
+ *             // tell the framework that this is our global layout widget
+ *             bind(RootHasFixedSetOfRegions.class).to(Layout.class)
+ *                     .in(Singleton.class);
+ *             
+ *             // tell the framework that this is our default place provider
+ *             bind(RawDefaultPlaceProvider.class)
+ *                     .to(QueryComponent.class).in(Singleton.class);
+ *         }
+ * 
+ *         // An example of Guice-style global configurations:
+ *         // set the max cache size for the DataManager.
+ *         {@literal @}Provides
+ *         {@literal @}Named("maxDataManagerCacheSize")
+ *         Integer providesMaxDataManagerCacheSize() {
+ *             return 50;
+ *         }
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * First we bind the enclosing class, then the global layout widget, then tell
+ * the framework that that widget is to be used for global layout.
+ * </p>
+ * <p>
+ * The fourth binding tells the framework that
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent} will
+ * provide the application's default place. That means that if there is no URL
+ * fragment identifier, or if there is a fragment identifier that framework is
+ * unable to interpret, the application will go to the place provided by
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}'s
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider#getRawDefaultPlace()
+ * getRawDefaultPlace()} method. (That's why the
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponent}
+ * interface extends
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider}
+ * , as we <a href="#generalqcstuff">saw earlier</a>.)
+ * </p>
+ * <p>
+ * The last few lines of the above code show how to use binding annotations to
+ * set global configuration values. Here we override the
+ * {@link mx.org.pescadormvp.core.client.data.DataManager}'s default maximum
+ * cache size, setting it to 50. (Normally, there's no need to do this&mdash;the
+ * default value should be fine.)
+ * </p>
+ * <p>
+ * To complete DI setup, we define a
+ * {@link com.google.gwt.inject.client.Ginjector} interface that brings in all
+ * the {@link com.google.gwt.inject.client.GinModule}s that contain bindings we
+ * want to use. In the example app, we do this with an inner interface in
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup}:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *     {@literal @}GinModules({
+ *         // Global bindings for this app that are not part of any component
+ *         ActiveSetupGinModule.class,
+ *         
+ *         // Bindings for the Query Component
+ *         QueryGinModule.class,
+ *         
+ *         // Modules required by the framework
+ *         PescadorMVPGinModule.class,
+ *         StandardDispatchModule.class
+ *     })
+ *     public interface ActiveSetupGinjector extends PescadorMVPGinjector {}
+ * </code>
+ * </pre>
+ * <p>
+ * The last two modules are required and should be included in all Pescador MVP
+ * apps. The first module is the one we defined within this class, for global
+ * bindings. The second module belongs to our Query Component.
+ * </p>
+ * <p>
+ * Of course, most applications will have more than one component. The
+ * {@link com.google.gwt.inject.client.GinModule}s for all components should be
+ * brought like this, just as we do for the Query Component.
+ * </p>
+ * <p>
+ * The last step in global application setup is to inject our components in the
+ * constructor of our subclass of
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup}, and tell the
+ * superclass about them, as shown:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *     {@literal @}Inject
+ *     public ActiveGlobalSetup(QueryComponent queryComponent) {
+ * 
+ *         // Register components
+ *         addComponents(queryComponent);
+ *     }
+ * </code>
+ * </pre>
+ * 
+ * </p> <h3><a name="frameworkstartup"/>Starting Up the Framework</h3>
  * <p>
  * <i>[TODO]</i>
  * </p>
@@ -916,4 +1038,3 @@
  * </pre>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
-

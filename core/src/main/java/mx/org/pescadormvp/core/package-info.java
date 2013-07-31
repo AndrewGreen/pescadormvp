@@ -78,7 +78,7 @@
  * In its present form, Pescador MVP does <b>not</b>:
  * </p>
  * <ul>
- * <li>enforce any conventions;</li>
+ * <li>enforce most conventions;</li>
  * <li>enforce encapsulation;</li>
  * <li>provide a way to specify dependencies among components;</li>
  * <li>provide a way to group components into larger units;</li>
