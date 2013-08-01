@@ -24,7 +24,7 @@ public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 	
 	public void testInstantiateResultWithoutData() {
 		GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
-		GetLatLonResult result = helper.insantiateResult(getJSObjectWithout());
+		GetLatLonResult result = helper.insantiateResult(getJSObjectWithoutData());
 		assertFalse(result.hasData());
 	}
 	
@@ -38,7 +38,7 @@ public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 		       ];
 	}-*/;
 	
-	private final native JavaScriptObject getJSObjectWithout()  /*-{
+	private final native JavaScriptObject getJSObjectWithoutData()  /*-{
 		return [ ];
 	}-*/;
 }
