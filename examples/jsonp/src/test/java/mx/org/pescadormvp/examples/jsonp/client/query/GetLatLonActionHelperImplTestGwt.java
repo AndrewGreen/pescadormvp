@@ -41,5 +41,4 @@ public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 	private final native JavaScriptObject getInvalidJSObject()  /*-{
 		return [ ];
 	}-*/;
-
 }

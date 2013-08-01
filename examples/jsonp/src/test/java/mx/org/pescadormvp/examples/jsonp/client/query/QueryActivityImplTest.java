@@ -257,16 +257,16 @@ public class QueryActivityImplTest {
 	 */
 	private QueryActivity startTestActivity(
 			boolean placeHasData,
-			boolean succeed,
+			boolean jsonpCallSucceeds,
 			boolean resultIsValid) {
 
 		QueryActivity activity = activitiesFactory.create();
 
 		QueryPlace mockedPlace = placeHasData ? mockedPlaceWithData : mockedPlaceEmpty;
-		activity.setStatePointer(mockedPlace);
+		activity.setPlace(mockedPlace);
 		
 		MockDataManager mockDataManager = (MockDataManager) dataManager;
-		mockDataManager.setSucceed(succeed);
+		mockDataManager.setSucceed(jsonpCallSucceeds);
 		GetLatLonResult result = resultIsValid ? validResult : invalidResult; 
 		mockDataManager.setResult(result);
 		
