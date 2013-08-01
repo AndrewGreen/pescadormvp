@@ -59,8 +59,8 @@ public class QueryActivityImplTest {
 	// Here are some mocks we set with Mockito
 	private QueryPlace mockedPlaceWithData;
 	private QueryPlace mockedPlaceEmpty;
-	private GetLatLonResult validResult;
-	private GetLatLonResult invalidResult;
+	private GetLatLonResult resultWithData;
+	private GetLatLonResult resultWithoutData;
 	
 	// constant strings for tests
 	private static final String MOCK_SERVER_ERROR_STR = "Test of OnFailure";
@@ -145,14 +145,14 @@ public class QueryActivityImplTest {
 		when(mockedPlaceEmpty.getLocation()).thenReturn("");
 		
 		// set up mock results here
-		validResult = mock(GetLatLonResult.class);
-		when(validResult.isValid()).thenReturn(true);
-		when(validResult.getDisplayName()).thenReturn(MOCK_DISPLAY_NAME_STR);
-		when(validResult.getLat()).thenReturn(MOCK_LATITUDE);
-		when(validResult.getLon()).thenReturn(MOCK_LONGITUDE);
+		resultWithData = mock(GetLatLonResult.class);
+		when(resultWithData.hasData()).thenReturn(true);
+		when(resultWithData.getDisplayName()).thenReturn(MOCK_DISPLAY_NAME_STR);
+		when(resultWithData.getLat()).thenReturn(MOCK_LATITUDE);
+		when(resultWithData.getLon()).thenReturn(MOCK_LONGITUDE);
 
-		invalidResult = mock(GetLatLonResult.class);
-		when(invalidResult.isValid()).thenReturn(false);
+		resultWithoutData = mock(GetLatLonResult.class);
+		when(resultWithoutData.hasData()).thenReturn(false);
 	}
 
 	/**
@@ -258,7 +258,7 @@ public class QueryActivityImplTest {
 	private QueryActivity startTestActivity(
 			boolean placeHasData,
 			boolean jsonpCallSucceeds,
-			boolean resultIsValid) {
+			boolean resultHasData) {
 
 		QueryActivity activity = activitiesFactory.create();
 
@@ -267,7 +267,7 @@ public class QueryActivityImplTest {
 		
 		MockDataManager mockDataManager = (MockDataManager) dataManager;
 		mockDataManager.setSucceed(jsonpCallSucceeds);
-		GetLatLonResult result = resultIsValid ? validResult : invalidResult; 
+		GetLatLonResult result = resultHasData ? resultWithData : resultWithoutData; 
 		mockDataManager.setResult(result);
 		
 		activity.start(panel, eventBus);

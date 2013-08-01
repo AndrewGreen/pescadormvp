@@ -19,20 +19,20 @@ import net.customware.gwt.dispatch.shared.Result;
  */
 public class GetLatLonResult implements Result {
 
-	private boolean valid;
+	private boolean hasData;
 	private String displayName;
 	private double lat;
 	private double lon;
 
 	/** 
-	 * @return Has valid temperature information been returned for somewhere?
+	 * @return Has temperature information been returned for somewhere?
 	 */
-	public boolean isValid() {
-		return valid;
+	public boolean hasData() {
+		return hasData;
 	}
 	
-	void setValid(boolean valid) {
-		this.valid = valid;
+	void setHasData(boolean hasData) {
+		this.hasData = hasData;
 	}
 
 	String getDisplayName() {
@@ -70,7 +70,7 @@ public class GetLatLonResult implements Result {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(lon);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (valid ? 1231 : 1237);
+		result = prime * result + (hasData ? 1231 : 1237);
 		return result;
 	}
 
@@ -92,14 +92,14 @@ public class GetLatLonResult implements Result {
 			return false;
 		if (Double.doubleToLongBits(lon) != Double.doubleToLongBits(other.lon))
 			return false;
-		if (valid != other.valid)
+		if (hasData != other.hasData)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "GetLongLatResult [" + valid + ","
+		return "GetLongLatResult [" + hasData + ","
 				+ displayName + "," + lat + "," + lon + "]";
 	}
 }

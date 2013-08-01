@@ -33,9 +33,9 @@ public class GetLatLonActionHelperImpl
 		LatLonInfo latLonInfo = jsResult.cast();
 		GetLatLonResult result = new GetLatLonResult();
 		
-		result.setValid(latLonInfo.getCount() > 0);
+		result.setHasData(latLonInfo.getCount() > 0);
 		
-		if (result.isValid()) {
+		if (result.hasData()) {
 			result.setDisplayName(latLonInfo.getDisplayName());
 			result.setLat(Double.valueOf(latLonInfo.getLat()));
 			result.setLon(Double.valueOf(latLonInfo.getLon()));

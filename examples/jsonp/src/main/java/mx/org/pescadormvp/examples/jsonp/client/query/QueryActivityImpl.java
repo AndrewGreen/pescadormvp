@@ -146,7 +146,7 @@ public class QueryActivityImpl
 				@Override
 				public void onSuccess(GetLatLonResult result) {
 					
-					if (result.isValid()) {
+					if (result.hasData()) {
 						
 						double lat = result.getLat();
 						double lon = result.getLon();

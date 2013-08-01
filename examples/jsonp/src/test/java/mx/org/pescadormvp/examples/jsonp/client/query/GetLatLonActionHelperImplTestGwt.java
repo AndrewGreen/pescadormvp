@@ -13,22 +13,22 @@ public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 		return "mx.org.pescadormvp.examples.jsonp.JSONPExample";
 	}
 
-	public void testInstantiateValidResult() {
+	public void testInstantiateResultWithData() {
 		GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
-		GetLatLonResult result = helper.insantiateResult(getValidJSObject());
-		assertTrue(result.isValid());
+		GetLatLonResult result = helper.insantiateResult(getJSObjectWihData());
+		assertTrue(result.hasData());
 		assertEquals(result.getDisplayName(), "Somewhere, someplace");
 		assertEquals(result.getLat(), 45.5224507);
 		assertEquals(result.getLon(), -73.5912827);
 	}
 	
-	public void testInstantiateInvalidResult() {
+	public void testInstantiateResultWithoutData() {
 		GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
-		GetLatLonResult result = helper.insantiateResult(getInvalidJSObject());
-		assertFalse(result.isValid());
+		GetLatLonResult result = helper.insantiateResult(getJSObjectWithout());
+		assertFalse(result.hasData());
 	}
 	
-	private final native JavaScriptObject getValidJSObject()  /*-{
+	private final native JavaScriptObject getJSObjectWihData()  /*-{
 		return [
 		          {
 		              "display_name": "Somewhere, someplace",
@@ -38,7 +38,7 @@ public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
 		       ];
 	}-*/;
 	
-	private final native JavaScriptObject getInvalidJSObject()  /*-{
+	private final native JavaScriptObject getJSObjectWithout()  /*-{
 		return [ ];
 	}-*/;
 }
