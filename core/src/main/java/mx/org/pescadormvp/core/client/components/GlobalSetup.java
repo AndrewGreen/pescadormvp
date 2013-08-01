@@ -295,10 +295,6 @@ public abstract class GlobalSetup implements RootRegionManager {
 	 * start history handling, and go to the default place (if no place is
 	 * specified in the fragment identifier in the URL).
 	 * </p>
-	 * <p>
-	 * Note that if there are scripts remaining to be injected, actual startup
-	 * will be silently delayed until the scripts become available.
-	 * </p>
 	 */
 	public void start() {
 

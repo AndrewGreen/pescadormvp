@@ -167,9 +167,7 @@
  * <p>
  * In the constructor of your
  * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} subclass, you
- * must send the superclass a list of the components you want to activate, along
- * with your application's general layout widget (see <a
- * href="#layout">below</a> for more about layouts).
+ * must send the superclass a list of the components you want to activate.
  * </p>
  * <p>
  * Framework initialization works like this:

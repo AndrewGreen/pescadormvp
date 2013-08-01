@@ -74,6 +74,7 @@
 									<link>http://google-gin.googlecode.com/svn/trunk/javadoc/</link>
 									<link>http://google-guice.googlecode.com/git/javadoc/</link>
 									<link>http://www.gwt-openlayers.org/apidocs/</link>
+									<link>http://docs.mockito.googlecode.com/hg/latest/</link>
 								</links>
 							</configuration>
 						</plugin>
@@ -104,6 +105,7 @@
 						<link>http://google-gin.googlecode.com/svn/trunk/javadoc/</link>
 						<link>http://google-guice.googlecode.com/git/javadoc/</link>
 						<link>http://www.gwt-openlayers.org/apidocs/</link>
+						<link>http://docs.mockito.googlecode.com/hg/latest/</link>
 					</links>
 				</configuration>
 			</plugin>

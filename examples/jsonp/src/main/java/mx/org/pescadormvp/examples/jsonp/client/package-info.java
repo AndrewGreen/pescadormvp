@@ -11,7 +11,11 @@
  * >Here it is</a>, compiled and running in your browser.
  * </p>
  * <p>
- * Here's how it works.
+ * This document explains how it works.
+ * </p>
+ * <p>
+ * (Note: a shorter <a href="../../../core/package-summary.html">overview of
+ * Pescador MVP</a> is also available.)
  * </p>
  * <h4>Contents:</h4>
  * <ol>
@@ -463,7 +467,7 @@
  * </pre>
  * <p>
  * On the other hand, if the
- * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} <i>does</i>
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} <b>does</b>
  * have the name of a location to be queried, then the activity sends a request
  * to the {@link mx.org.pescadormvp.core.client.data.DataManager}, and decides
  * what to do on the basis of the result. Here's the code:
@@ -1025,16 +1029,211 @@
  * 
  * </p> <h3><a name="frameworkstartup"/>Starting Up the Framework</h3>
  * <p>
- * <i>[TODO]</i>
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} provides two
+ * static methods for starting up the application. They're static so they can be
+ * accessed <b>before</b> DI starts.
  * </p>
- * <h3><a name="tests"/>Tests</h3>
  * <p>
- * <i>[TODO]</i>
+ * While it's possible to call either of these methods directly from your
+ * {@link com.google.gwt.core.client.EntryPoint} class, the recommended strategy
+ * is to call one of them from a static method in your subclass of
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup}, and call
+ * <b>that</b> method from your {@link com.google.gwt.core.client.EntryPoint}.
+ * That way, you keep all global setup code inside your subclass of
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup}. This is the
+ * approach used in the example app.
+ * </p>
+ * <p>
+ * Here is the example app's entry point:
  * </p>
  * 
  * <pre>
  * <code class=java>
+ *     public class JSONPExample implements EntryPoint {
+ *     
+ *         {@literal @}Override
+ *         public void onModuleLoad() {
+ *             ActiveGlobalSetup.startUp();
+ *         }
+ *     }
  * </code>
  * </pre>
+ * <p>
+ * And here's
+ * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup#startUp()}:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *     public static void startUp() {
+ *         
+ *         PescadorMVPGinjectorHolder ginjectorHolder = 
+ *                 new PescadorMVPGinjectorHolder() {
+ * 
+ *             {@literal @}Override
+ *             public PescadorMVPGinjector getPescadorMVPGinjector() {
+ *                 return GWT.create(ActiveGlobalSetupGinjector.class);
+ *             }
+ *         };
+ *         
+ *         // Inject external Javascript libraries for OpenLayers, display 
+ *         // a loading image if the scripts take a long time to load,
+ *         // and start up the application.
+ *         GlobalSetup.loadJSthenStartUp(
+ *                 ginjectorHolder,
+ *                 new InitialLoadingTimer(),
+ *                 true,
+ *                 "JSONPExample/js/gwt-openlayers/util.js",
+ *                 "http://www.openlayers.org/api/OpenLayers.js",
+ *                 "http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * Startup in the example app is a bit more complicated than in most cases,
+ * because our OpenLayers map widget relies on Javascript libraries that must be
+ * loaded before the widget is used. The static method
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup#loadJSthenStartUp(mx.org.pescadormvp.core.client.components.GlobalSetup.PescadorMVPGinjectorHolder, mx.org.pescadormvp.core.client.components.GlobalSetup.LoadingPleaseWait, boolean, String...)
+ * GlobalSetup.loadJSthenStartUp()} helps us handle such cases. We send it the
+ * URLs of the Javascript libraries to load and a wrapper containing our
+ * {@link com.google.gwt.inject.client.Ginjector}. It will ensure the Javascript
+ * is loaded before the {@link com.google.gwt.inject.client.Ginjector} is
+ * created. We also send it a widget that displays an egg timer to tell the user
+ * the page is loading. This image will appear if it take a long time to get the
+ * Javascript.
+ * </p>
+ * <p>
+ * If you don't need to load any Javascript libraries before starting your app,
+ * you can use the much simpler
+ * {@link mx.org.pescadormvp.core.client.components.GlobalSetup#startUp(PescadorMVPGinjector)}
+ * method instead.
+ * </p>
+ * <h3><a name="tests"/>Tests</h3>
+ * <p>
+ * One of the biggest reasons for using DI is to facilitate testing. So, no
+ * demonstration of a DI-based framework would be complete without some juicy
+ * unit tests!
+ * </p>
+ * <p>
+ * The example app, like many GWT apps, has two kinds of tests: those that
+ * require a browser, and those that run on a plain JVM. (Tests of the second
+ * kind are preferable because they're faster.)
+ * </p>
+ * <p>
+ * The tests are run automatically by Maven when the example app is built (see
+ * the <a href=
+ * "https://github.com/AndrewGreen/pescadormvp#how-to-compile-run-and-debug">
+ * README</a>). We use {@link com.google.gwt.junit.tools.GWTTestSuite} and the
+ * <a href="http://mojo.codehaus.org/gwt-maven-plugin/user-guide/testing.html">
+ * naming conventions provided by the gwt-maven-plugin</a> to specify how and
+ * when tests should be run.
+ * </p>
+ * <p>
+ * For example, here is the test for
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonActionHelperImpl}
+ * :
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *      public class GetLatLonActionHelperImplTestGwt extends GWTTestCase {
+ *         
+ *         {@literal @}Override
+ *         public String getModuleName() {
+ *             return "mx.org.pescadormvp.examples.jsonp.JSONPExample";
+ *         }
+ *     
+ *         public void testInstantiateResultWithData() {
+ *             GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
+ *             GetLatLonResult result = helper.insantiateResult(getJSObjectWihData());
+ *             assertTrue(result.hasData());
+ *             assertEquals(result.getDisplayName(), "Somewhere, someplace");
+ *             assertEquals(result.getLat(), 45.5224507);
+ *             assertEquals(result.getLon(), -73.5912827);
+ *         }
+ *         
+ *         public void testInstantiateResultWithoutData() {
+ *             GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
+ *             GetLatLonResult result = helper.insantiateResult(getJSObjectWithout());
+ *             assertFalse(result.hasData());
+ *         }
+ *         
+ *         private final native JavaScriptObject getJSObjectWihData()  /*-{
+ *             return [
+ *                       {
+ *                           "display_name": "Somewhere, someplace",
+ *                             "lat": "45.5224507",
+ *                             "lon": "-73.5912827",
+ *                       }
+ *                    ];
+ *         }-*{@literal /};
+ *         
+ *         private final native JavaScriptObject getJSObjectWithout()  /*-{
+ *             return [ ];
+ *         }-*{@literal /};
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * This test requires a browser because it verifies that a native Javascript
+ * object is been correctly converted to a GWT Java object. (In fact, by
+ * default, Maven doesn't run it in a real browser, but in <a
+ * href="http://htmlunit.sourceforge.net/">HtmlUnit</a>, a gui-less, simulated
+ * browser for testing Java-based Web applications.)
+ * </p>
+ * <p>
+ * The test for
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryActivityImpl}, on
+ * the other hand, is JVM-only. For this kind of test, the example app uses <a
+ * href="https://github.com/ArcBees/Jukito">Jukito</a>, which provides <a
+ * href="http://code.google.com/p/mockito/">Mockito</a> and DI support for tests
+ * in GWT. Here's a fragment of that test:
+ * </p>
+ * 
+ * <pre>
+ * <code class=java>
+ *     {@literal @}Test
+ *     public void testNoSuchPlace() {
+ *         startTestActivity(true, true, false);
+ * 
+ *         InOrder inOrder = inOrder(queryView);
+ *         inOrder.verify(queryView).scheduleLoadingMessage();
+ *         inOrder.verify(queryView).renderNoSuchPlace();
+ *     }
+ *     
+ *     private QueryActivity startTestActivity(
+ *             boolean placeHasData,
+ *             boolean jsonpCallSucceeds,
+ *             boolean resultHasData) {
+ * 
+ *         QueryActivity activity = activitiesFactory.create();
+ * 
+ *         QueryPlace mockedPlace = placeHasData ? mockedPlaceWithData : mockedPlaceEmpty;
+ *         activity.setPlace(mockedPlace);
+ *         
+ *         MockDataManager mockDataManager = (MockDataManager) dataManager;
+ *         mockDataManager.setSucceed(jsonpCallSucceeds);
+ *         GetLatLonResult result = resultHasData ? resultWithData : resultWithoutData;  
+ *         mockDataManager.setResult(result);
+ *         
+ *         activity.start(panel, eventBus);
+ *         return activity;
+ *     }
+ * </code>
+ * </pre>
+ * <p>
+ * Here, <code>testNoSuchPlace()</code> requests a test activity with a
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlace} containing
+ * location information and a mock
+ * {@link mx.org.pescadormvp.core.client.data.DataManager} that will appear to
+ * perform a successful JSONP call and return a
+ * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonResult} with
+ * no data. (A dataless result means the server couldn't find a place with the
+ * name indicated.) Then it uses Mockito's {@link org.mockito.InOrder} to verify
+ * that the activity has set up the view as expected.
+ * </p>
+ * <p>
+ * See the source code for more test examples.
+ * </p>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
