@@ -135,14 +135,12 @@ public class ActiveGlobalSetup extends GlobalSetup {
 			// Here, it's important that we bind the Layout interface,
 			// not the implementing class--otherwise, we'll get two instances
 			// of the implementing class.
-			bind(RootHasFixedSetOfRegions.class).to(Layout.class)
-					.in(Singleton.class);
+			bind(RootHasFixedSetOfRegions.class).to(Layout.class);
 			
 			// tell the framework that this is our default place provider
 			// Here, it's important that we bind the QueryComponent interface,
 			// for the same reason.
-			bind(RawDefaultPlaceProvider.class)
-					.to(QueryComponent.class).in(Singleton.class);
+			bind(RawDefaultPlaceProvider.class).to(QueryComponent.class);
 		}
 
 		// If you need to set application-wide configuration values, you can
