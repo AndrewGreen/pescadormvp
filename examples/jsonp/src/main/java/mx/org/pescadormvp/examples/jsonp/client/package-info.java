@@ -44,12 +44,12 @@
  * ...examples.jsonp.client.query} package.
  * </p>
  * <p>
- * Since, in Pescador MVP, we use dependency injection, we want to define
- * variables with only interfaces as much as possible. So, the public methods of
- * almost every concrete class are set out in a corresponding interface, which
- * is used in variable definitions. Interfaces have nearly the same names as the
- * concrete classes that implement them (the difference is just that concrete
- * class names have an "Impl" on the end).
+ * Since we're using dependency injection, we want variables to refer to
+ * interfaces, rather than concrete classes, as much as possible. So, the public
+ * methods of almost every concrete class are set out in a corresponding
+ * interface, which is used in variable definitions. Interfaces have nearly the
+ * same names as the concrete classes that implement them (the difference is
+ * just that concrete class names have an "Impl" on the end).
  * </p>
  * <p>
  * Here are the Query Component's interface-implementation pairs:
@@ -77,8 +77,8 @@
  * <td class="colFirst"><a href=
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryActivityImpl.html"
  * > QueryActivityImpl</a></td>
- * <td class="colOne"><div class="block">The activity associated with this
- * component and the main (and only) region of the UI.</div></td>
+ * <td class="colOne"><div class="block">The activity that this component
+ * provides for the main (and only) region of the UI.</div></td>
  * </tr>
  * <tr class="rowColor">
  * <td class="colFirst"><a href=
@@ -87,8 +87,8 @@
  * <td class="colFirst"><a href=
  * "../../../../../../mx/org/pescadormvp/examples/jsonp/client/query/QueryViewImpl.html"
  * > QueryViewImpl</a></td>
- * <td class="colOne"><div class="block">The view associated with this component
- * and the main (and only) region of the UI.</div></td>
+ * <td class="colOne"><div class="block">The view that this component provides
+ * for the main (and only) region of the UI.</div></td>
  * </tr>
  * <tr class="altColor">
  * <td class="colFirst"><a href=
@@ -129,15 +129,15 @@
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl}
  * takes responsibility for everything of general interest to the Query
  * Component. One such responsibility is the implementation
- * {@link mx.org.pescadormvp.core.client.components.Component}&mdash;Pescado MVP
- * requires that all components include an implementation of that interface.
+ * {@link mx.org.pescadormvp.core.client.components.Component}&mdash;Pescador
+ * MVP requires that all components include an implementation of that interface.
  * </p>
  * <p>
  * However, Query Component is not just an ordinary component&mdash;it's a
  * "place-activity-view" (PAV) component. That is, it's a special kind of
  * component that associates a place class with one or more activity classes,
- * view classes, and regions of the UI. Pescado MVP requires that PAV components
- * include an implementation of
+ * view classes, and regions of the UI. Pescador MVP requires that PAV
+ * components include an implementation of
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PAVComponent} (a
  * subinterface of {@link mx.org.pescadormvp.core.client.components.Component}).
  * </p>
@@ -220,7 +220,7 @@
  * The Query Component offers only one method of this sort,
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryComponentImpl#getRawDefaultPlace()
  * getRawDefaultPlace()}, which provides the application's default place. (More
- * about this in a minute.)
+ * about this <a href="#globalsetup">below</a>.)
  * </p>
  * <p>
  * Dependency injection bindings also are of general interest to the component,
@@ -373,8 +373,7 @@
  *     {@literal @}Override
  *     public void start(AcceptsOneWidget container, EventBus eventBus) {
  * 
- *         // Attach the view to the container for this region of the layout.
- *         // (In this example there's only one region.)
+ *         // Attach the view to the container for the only UI region
  *         QueryView view = getView(); 
  *         contaier.setWidget(view);
  *         ...
@@ -384,7 +383,9 @@
  * The only unusual thing here is that we conveniently have access to our view
  * via the
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPActivityBase#getView()
- * getView()} method.
+ * getView()} method (available to us because the activity extends
+ * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase}
+ * , as required).
  * </p>
  * <p>
  * Standard Pescador MVP fare is to have the activity push to and control the
@@ -510,7 +511,7 @@
  *                 {@literal @}Override
  *                 public void onSuccess(GetLatLonResult result) {
  *                     
- *                     if (result.isValid()) {
+ *                     if (result.hasData()) {
  *                         
  *                         double lat = result.getLat();
  *                         double lon = result.getLon();
@@ -571,7 +572,7 @@
  * provided by the superclass, push to the view and handle events from it, and
  * send requests via a handy
  * {@link mx.org.pescadormvp.core.client.data.DataManager} that uses the command
- * pattern (more on that <a href="#actionhelper">below</a>).
+ * pattern (more on that <a href="#actionhelper">in a minute</a>).
  * </p>
  * <h3><a name="queryview"/>The Query View</h3>
  * <p>
@@ -583,7 +584,7 @@
  * </p>
  * <p>
  * This view knows nothing about the activity that controls it. It just provides
- * methods for the activity, and fires off events. There's only one
+ * methods that the activity accesses, and fires off events. There's only one
  * non-display-related task that it's allowed to handle: setting data in
  * {@link com.google.gwt.place.shared.Place} objects.
  * </p>
@@ -641,7 +642,7 @@
  *          }
  * 
  *          /**
- *           * Here, instead of setting an instance variable directly, we tell the
+ *           * Here, instead of setting our instance variable directly, we tell the
  *           * superclass to follow its standard procedure for setting a property.
  *           *{@literal /}
  *          {@literal @}Override
@@ -658,7 +659,7 @@
  * Refering to places as interfaces rather than concrete (or even abstract)
  * classes allows more flexibility, since interfaces can handle multiple
  * inheritance. (So, for example, if you have code that needs to deal with a
- * specific set of places, you can use a tag interface that extends
+ * specific set of places, you can use a tag interface that may or may not
  * {@link mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace}.)
  * </p>
  * <p>
@@ -713,20 +714,22 @@
  * {@link mx.org.pescadormvp.core.client.data.DataManager} (based on <a
  * href="http://code.google.com/p/gwt-dispatch/">gwt-dispatch</a> and a <a href=
  * "http://turbomanage.wordpress.com/2010/07/12/caching-batching-dispatcher-for-gwt-dispatch/"
- * > blog post by David Chandler</a>). It doesn't quite belong in an MVP
- * framework proper, but it's still kinda useful.
+ * > blog post by David Chandler</a>). It doesn't have much to do with MVP, but
+ * it's still kinda useful.
  * </p>
  * <p>
- * Normally, your server calls go to your own server. The
- * {@link mx.org.pescadormvp.core.client.data.DataManager} can handle such
- * calls, for which you should implement server-side
+ * Normally, server calls go to your own server. The
+ * {@link mx.org.pescadormvp.core.client.data.DataManager} manages such calls
+ * via standard gwt-dispatch {@link net.customware.gwt.dispatch.shared.Action}
+ * and {@link net.customware.gwt.dispatch.shared.Result} classes. To handle them
+ * on the server, you implement
  * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler}s, as
  * per the <a href="http://code.google.com/p/gwt-dispatch/wiki/GettingStarted">
  * gwt-dispatch documentation</a>.
  * </p>
  * <p>
  * Pescador MVP also lets you use the command pattern for calls to third-party
- * servers via JSONP. In this case, instead of implementing an
+ * servers via JSONP. In that case, instead of implementing an
  * {@link net.customware.gwt.dispatch.server.ActionHandler ActionHandler}, you
  * create a {@link mx.org.pescadormvp.core.client.data.JsonpActionHelper} that
  * encapsulates details of the server call, including the creation of a
@@ -823,19 +826,18 @@
  * <p>
  * Pescacdor MVP is basically agnostic about how you lay out your application.
  * It does, however make a few simple assumptions&mdash;namely, that your app
- * has regions that you can designate with a tag interface and can associate
- * with a container widget.
+ * has regions, and that each region has a container widget.
  * </p>
  * <p>
- * (However, the regions' dimentions need not remain static, nor must regions
- * always be visible. It's also possible to have UI elements that are logically
- * contained in a region without being visually tied to it.)
+ * (However, the regions' dimensions need not remain static, and regions are not
+ * required to always be visible. It's also possible to have UI elements that
+ * are logically contained in a region without being visually tied to it.)
  * </p>
  * <p>
- * The framework's assumptions about regions are embodied in
+ * The framework's assumptions about regions are embodied in the
  * {@link mx.org.pescadormvp.core.client.regionsandcontainers.RootHasFixedSetOfRegions}
- * . Applications must provide an implementation of that interface. Here is the
- * very simple implementation used in the example app:
+ * interface. Applications must provide an implementation of that interface.
+ * Here is the very simple implementation used in the example app:
  * </p>
  * 
  * <pre>
@@ -932,12 +934,10 @@
  *             // to interfaces, not implementations.
  * 
  *             // tell the framework that this is our global layout widget
- *             bind(RootHasFixedSetOfRegions.class).to(Layout.class)
- *                     .in(Singleton.class);
+ *             bind(RootHasFixedSetOfRegions.class).to(Layout.class);
  *             
  *             // tell the framework that this is our default place provider
- *             bind(RawDefaultPlaceProvider.class)
- *                     .to(QueryComponent.class).in(Singleton.class);
+ *             bind(RawDefaultPlaceProvider.class).to(QueryComponent.class);
  *         }
  * 
  *         // An example of Guice-style global configurations:
@@ -977,9 +977,9 @@
  * </p>
  * <p>
  * To complete DI setup, we define a
- * {@link com.google.gwt.inject.client.Ginjector} interface that brings in all
- * the {@link com.google.gwt.inject.client.GinModule}s that contain bindings we
- * want to use. In the example app, we do this with an inner interface in
+ * {@link com.google.gwt.inject.client.Ginjector} interface and bring in all the
+ * {@link com.google.gwt.inject.client.GinModule}s containing bindings we want
+ * to use. In the example app, we do this with an inner interface inside
  * {@link mx.org.pescadormvp.examples.jsonp.client.ActiveGlobalSetup}:
  * </p>
  * 
@@ -1007,7 +1007,7 @@
  * <p>
  * Of course, most applications will have more than one component. The
  * {@link com.google.gwt.inject.client.GinModule}s for all components should be
- * brought like this, just as we do for the Query Component.
+ * brought in like this, just as we do for the Query Component.
  * </p>
  * <p>
  * The last step in global application setup is to inject our components in the
@@ -1031,10 +1031,10 @@
  * <p>
  * {@link mx.org.pescadormvp.core.client.components.GlobalSetup} provides two
  * static methods for starting up the application. They're static so they can be
- * accessed <b>before</b> DI starts.
+ * accessed <b>before</b> DI gets going.
  * </p>
  * <p>
- * While it's possible to call either of these methods directly from your
+ * While it's possible to call these methods directly from your
  * {@link com.google.gwt.core.client.EntryPoint} class, the recommended strategy
  * is to call one of them from a static method in your subclass of
  * {@link mx.org.pescadormvp.core.client.components.GlobalSetup}, and call
@@ -1092,7 +1092,7 @@
  * <p>
  * Startup in the example app is a bit more complicated than in most cases,
  * because our OpenLayers map widget relies on Javascript libraries that must be
- * loaded before the widget is used. The static method
+ * loaded before the widget can be used. The static method
  * {@link mx.org.pescadormvp.core.client.components.GlobalSetup#loadJSthenStartUp(mx.org.pescadormvp.core.client.components.GlobalSetup.PescadorMVPGinjectorHolder, mx.org.pescadormvp.core.client.components.GlobalSetup.LoadingPleaseWait, boolean, String...)
  * GlobalSetup.loadJSthenStartUp()} helps us handle such cases. We send it the
  * URLs of the Javascript libraries to load and a wrapper containing our
@@ -1106,7 +1106,7 @@
  * If you don't need to load any Javascript libraries before starting your app,
  * you can use the much simpler
  * {@link mx.org.pescadormvp.core.client.components.GlobalSetup#startUp(PescadorMVPGinjector)}
- * method instead.
+ * method, instead.
  * </p>
  * <h3><a name="tests"/>Tests</h3>
  * <p>
@@ -1154,7 +1154,7 @@
  *         
  *         public void testInstantiateResultWithoutData() {
  *             GetLatLonActionHelperImpl helper = new GetLatLonActionHelperImpl();
- *             GetLatLonResult result = helper.insantiateResult(getJSObjectWithout());
+ *             GetLatLonResult result = helper.insantiateResult(getJSObjectWithoutData());
  *             assertFalse(result.hasData());
  *         }
  *         
@@ -1162,13 +1162,13 @@
  *             return [
  *                       {
  *                           "display_name": "Somewhere, someplace",
- *                             "lat": "45.5224507",
- *                             "lon": "-73.5912827",
+ *                           "lat": "45.5224507",
+ *                           "lon": "-73.5912827",
  *                       }
  *                    ];
  *         }-*{@literal /};
  *         
- *         private final native JavaScriptObject getJSObjectWithout()  /*-{
+ *         private final native JavaScriptObject getJSObjectWithoutData()  /*-{
  *             return [ ];
  *         }-*{@literal /};
  *     }
@@ -1176,8 +1176,8 @@
  * </pre>
  * <p>
  * This test requires a browser because it verifies that a native Javascript
- * object is been correctly converted to a GWT Java object. (In fact, by
- * default, Maven doesn't run it in a real browser, but in <a
+ * object is correctly converted to a GWT Java object. (In fact, Maven doesn't
+ * run it in a real browser, but in <a
  * href="http://htmlunit.sourceforge.net/">HtmlUnit</a>, a gui-less, simulated
  * browser for testing Java-based Web applications.)
  * </p>
@@ -1230,10 +1230,11 @@
  * {@link mx.org.pescadormvp.examples.jsonp.client.query.GetLatLonResult} with
  * no data. (A dataless result means the server couldn't find a place with the
  * name indicated.) Then it uses Mockito's {@link org.mockito.InOrder} to verify
- * that the activity has set up the view as expected.
+ * that the activity sets up the view as expected.
  * </p>
  * <p>
  * See the source code for more test examples.
  * </p>
  */
 package mx.org.pescadormvp.examples.jsonp.client;
+
