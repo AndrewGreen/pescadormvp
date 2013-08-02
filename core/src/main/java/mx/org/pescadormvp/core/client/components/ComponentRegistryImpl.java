@@ -17,13 +17,8 @@ import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.client.regionsandcontainers.ForRegionTag;
 
 /**
- * Registry of components.
- * 
- * <p>By keeping this separate from {@link GlobalSetup} we avoid circular
- * dependencies.</p>
- * 
- * @author Andrew Green
- *
+ * Internal Pescador MVP use. Registry of components (implementation). Pescador MVP
+ * applications shouldn't need to access this class directly.
  */
 public class ComponentRegistryImpl implements ComponentRegistry {
 

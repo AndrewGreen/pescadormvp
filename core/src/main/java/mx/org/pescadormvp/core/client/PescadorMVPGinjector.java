@@ -13,9 +13,16 @@ import mx.org.pescadormvp.core.client.components.GlobalSetup;
 import com.google.gwt.inject.client.Ginjector;
 
 /**
- * Framework ginjector, for bootstrapping dependency injection. 
+ * {@link Ginjector} for bootstrapping dependency injection. Normally
+ * applications will define a {@link Ginjector} that extends this one. 
  * @author Andrew Green
  */
 public interface PescadorMVPGinjector extends Ginjector {
+	/**
+	 * Returns an instance of a subclass of {@link GlobalSetup} as
+	 * bound in a module associated with this {@link Ginjector}.
+	 * This is used internally in the static startup methods of
+	 * {@link GlobalSetup}.
+	 */
 	public GlobalSetup getGlobalSetup();
 }

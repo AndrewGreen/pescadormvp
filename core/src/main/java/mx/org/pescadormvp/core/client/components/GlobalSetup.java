@@ -39,9 +39,12 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * Instances of this class configure the app, including specific place-activity
- * bindings, DI bindings, and the root layout widget for viewport.
+ * Abstract class for global application setup. All Pescador MVP applications
+ * should create a subclass of this class containing things related to global
+ * setup. For more information, see {@link mx.org.pescadormvp.core ...core} and
+ * {@link mx.org.pescadormvp.examples.jsonp.client ...examples.jsonp.client}.
  */
+@SuppressWarnings({ "javadoc" })
 public abstract class GlobalSetup implements RootRegionManager {
 
 	// static stuff used for injecting scripts before startup
@@ -83,12 +86,11 @@ public abstract class GlobalSetup implements RootRegionManager {
 	}
 
 	/**
-	 * * This method is static so we can use it before DI boots up. That way the
-	 * framework to take care of booting up DI.
+	 * Start up the framework. This method is static so we can use it before DI
+	 * boots up. That way the framework to take care of booting up DI.
 	 * 
 	 * @param ginjector
-	 *            A {@link PescadorMVPGinjector} to use to boot
-	 *            up DI.
+	 *            A {@link PescadorMVPGinjector} to use to boot up DI.
 	 */
 	public static void startUp(PescadorMVPGinjector ginjector) {
 		// The Ginjector provides the active GlobalSetup instance, which
@@ -99,14 +101,13 @@ public abstract class GlobalSetup implements RootRegionManager {
 
 	/**
 	 * <p>
-	 * Request the loading of scripts before the framework starts. Scripts are
-	 * injected in the top window. Then the framework is started.
+	 * Load JS scripts and then start up the framework. Scripts are
+	 * injected in the top window.
 	 * </p>
 	 * <p>
-	 * This method is static so we can use it before DI boots up. That way we
-	 * don't have to worry about DI bringing in Java classes that rely on
-	 * external JS before it's loaded. Also allows the framework to take care of
-	 * booting up DI.
+	 * This method is static so it can be accessed before DI boots up. That way the
+	 * framework takes care of starting DI, and we don't have to worry about DI
+	 * bringing in Java classes that rely on external JS before it's loaded.
 	 * </p>
 	 * 
 	 * @param ginjectorHolder
@@ -132,7 +133,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 		GlobalSetup.loadingPleaseWait = loadingPleaseWait;
 		GlobalSetup.loadScriptsInOrder = loadScriptsInOrder;
 		GlobalSetup.scriptsToLoad = scriptsToLoad;
-		
+
 		// if a loadingPleaseWait has been sent, start it up
 		if (loadingPleaseWait != null)
 			loadingPleaseWait.start();
@@ -152,9 +153,9 @@ public abstract class GlobalSetup implements RootRegionManager {
 			// if a loadingPleaseWait has been sent, finish it
 			if (loadingPleaseWait != null)
 				loadingPleaseWait.finish();
-			
+
 			startUp(pendingGinjectorHolder.getPescadorMVPGinjector());
-			
+
 		} else if (loadScriptsInOrder) {
 			scriptNowLoading++;
 			launchScriptInjector(scriptsToLoad[scriptNowLoading]);
@@ -193,25 +194,31 @@ public abstract class GlobalSetup implements RootRegionManager {
 						}).inject();
 	}
 
-	// TODO once multibindings and mapbindings are in Gin, look into using that
+	// TODO look into using multibindings and/or mapbindings
 	/**
-	 * Add components to the framework. Only call this in a constructor.
+	 * Add components to the framework. Normally this method should be called
+	 * from the constructor of a subclass of this class. It's expected that it
+	 * will not be called after that.
 	 * 
 	 * @param components
+	 *            The components to add.
 	 */
 	public void addComponents(
 			Component<?>... components) {
-		// wait until the componet registry is received via method injection
-		componentsToAdd.add(components);
+		// Only really add components if the componentRegistry has been injected
+		if (componentRegistry != null)
+			reallyAddComponents(components);
+		else
+			componentsToAdd.add(components);
 	}
 
 	private void reallyAddComponents(Component<?>... components) {
 		componentRegistry.addComponents(components);
 	}
-	
+
 	/**
-	 * Use method injection to get some basic stuff, to keep subclasses'
-	 * constructors simpler.
+	 * Internal Pescador MVP use. Here we get some basic stuff via method
+	 * injection, to keep subclasses' constructors simpler.
 	 */
 	@Inject
 	public void setBasicComponents(
@@ -228,7 +235,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 			PescadorMVPPlaceMapper placeMapper,
 			Session session,
 			PescadorMVPLogger logger) {
-		
+
 		this.componentRegistry = componentRegistry;
 		this.placeController = placeController;
 		this.eventBus = eventBus;
@@ -239,11 +246,11 @@ public abstract class GlobalSetup implements RootRegionManager {
 
 		// set regions widget
 		setRootRegionsWidget(regionsWidget);
-		
+
 		// Tell the component registry what the regions are, so it can check
 		// that components handle regions that are actually available
 		componentRegistry.setRegions(regions);
-		
+
 		reallyAddComponents(new Component<?>[] {
 				dataManager,
 				placeMapper,
@@ -252,7 +259,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 
 		for (Component<?>[] componentsArray : componentsToAdd)
 			reallyAddComponents(componentsArray);
-		
+
 		this.placeMapper = placeMapper;
 		this.logger = logger;
 	}
@@ -290,10 +297,13 @@ public abstract class GlobalSetup implements RootRegionManager {
 
 	/**
 	 * <p>
-	 * Start up the framework: attach the layout widget to the viewport, create
-	 * activity managers and attach them to the region they're concerned with,
-	 * start history handling, and go to the default place (if no place is
-	 * specified in the fragment identifier in the URL).
+	 * Internal Pescador MVP use (unless, for some reason, you don't use one of
+	 * the static startup methods, {@link #startUp startUp()} or
+	 * {@link #loadJSthenStartUp loadJSthenStartUp()}). Start up the framework:
+	 * attach the layout widget to the viewport, create activity managers and
+	 * attach them to the region they're concerned with, start history handling,
+	 * and go to the default place (if no place is specified in the fragment
+	 * identifier in the URL).
 	 * </p>
 	 */
 	public void start() {
@@ -353,6 +363,10 @@ public abstract class GlobalSetup implements RootRegionManager {
 		return castPAVComponent;
 	}
 
+	/**
+	 * Internal Pescador MVP use. Get a new activity for the specified region
+	 * and place.
+	 */
 	public <P extends PescadorMVPPlace,
 			PS extends P> PescadorMVPPlaceActivity<?, ?, ?>
 			getActivityForRegionAndPlace(
@@ -394,13 +408,25 @@ public abstract class GlobalSetup implements RootRegionManager {
 	 * Implement this interface on a class that does something when JS
 	 * scriptloading starts (like show a "please wait" message) and when it
 	 * finishes (like remove the message). Then pass an instance to
-	 * {@link GlobalSetup#loadJSthenStartUp}.
+	 * {@link GlobalSetup#loadJSthenStartUp loadJSthenStartUp(...)}. See, for
+	 * example,
+	 * {@link mx.org.pescadormvp.examples.jsonp.client.InitialLoadingTimer}.
 	 * 
 	 * @author Andrew Green
 	 */
 	public interface LoadingPleaseWait {
+		/**
+		 * If passed to {@link GlobalSetup#loadJSthenStartUp
+		 * loadJSthenStartUp(...)}, this method will be called before JS loading
+		 * starts.
+		 */
 		public void start();
 
+		/**
+		 * If passed to {@link GlobalSetup#loadJSthenStartUp
+		 * loadJSthenStartUp(...)}, this method will be called after JS loading
+		 * finishes.
+		 */
 		public void finish();
 	}
 }

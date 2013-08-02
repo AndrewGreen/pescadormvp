@@ -9,7 +9,5 @@
 package mx.org.pescadormvp.core.client.data;
 /**
  * Tag interface for actions that may be cached by the {@link DataManager}. 
- *  
- * @author Andrew Green
  */
 public interface CacheableAction { }

@@ -20,9 +20,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 
 /**
- * Keeps track of {@link JsonpActionHelper}s used for performing specific
- * {@link JsonpAction}s, sends requests using GWT's JSONP facilities, and
- * uses the helpers to construct URLs and {@link Result}s. 
+ * Internal Pescador MVP use. The Jsonp dispatcher (implementation). 
  */
 public class JsonpDispatchAsyncImpl implements JsonpDispatchAsync {
 

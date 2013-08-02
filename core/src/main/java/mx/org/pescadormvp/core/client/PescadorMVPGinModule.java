@@ -42,7 +42,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
- * Specifies DI bindings for framework facilities.
+ * Specifies DI bindings for core Pescador MVP facilities. This module is
+ * required for all Pescador MVP applications.
  * 
  * @author Andrew Green
  *
@@ -97,8 +98,7 @@ public class PescadorMVPGinModule extends AbstractGinModule {
 	
 	// Null activity used to deactivate regions when required.
 	// Created in a provides method to avoid the method injection in the
-	// superclass, which in this case is not needed and would create a
-	// circular dependency.
+	// superclass, which in this case is not needed.
 	@Provides
 	NullActivity provideNullActivity() {
 		return new NullActivity();

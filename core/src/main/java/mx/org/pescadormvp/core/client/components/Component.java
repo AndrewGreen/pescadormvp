@@ -16,7 +16,7 @@ package mx.org.pescadormvp.core.client.components;
 public interface Component<I> {
 	
 	/**
-	 * Do stuff that can only be done once all components have been loaded
+	 * Do stuff that can only be done once all components have been loaded.
 	 */
 	void finalizeSetup();
 	

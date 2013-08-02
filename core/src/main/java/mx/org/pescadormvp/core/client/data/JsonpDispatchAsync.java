@@ -13,21 +13,20 @@ import net.customware.gwt.dispatch.shared.Result;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * The interface for the Jsonp dispatcher. 
+ * Internal Pescador MVP use. The Jsonp dispatcher: leeps track of {@link JsonpActionHelper}s used for performing specific
+ * {@link JsonpAction}s, sends requests using GWT's JSONP facilities, and
+ * uses the helpers to construct URLs and {@link Result}s. 
  */
 public interface JsonpDispatchAsync {
 
 	/**
-	 * Register a helper for specific types of actions. (The helper itself
-	 * specifies which  type of action it's for.)
+	 * Register a helper for actions of a certain type. (The helper itself
+	 * specifies the type of action it's for.)
 	 */
 	void registerActionHelper(JsonpActionHelper<?, ?> helper);
 	
 	/**
 	 * Perform an action using the specified callback.
-	 * 
-	 * @param action
-	 * @param callback
 	 */
 	<A extends JsonpAction<R>, R extends Result> void execute(A action, AsyncCallback<R> callback);
 }

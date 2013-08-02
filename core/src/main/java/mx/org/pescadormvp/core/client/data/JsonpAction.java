@@ -12,12 +12,10 @@ import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 
 /**
- * A tag interface for indicating that an action should be performed with JSONP.
+ * Tag interface for indicating that an action should be performed with JSONP.
  * (Note: JSONP actions also require a {@link JsonpActionHelper}, which must be registered with 
- * the {@link DataManager}.
+ * the {@link DataManager}).
  * 
- * @author Andrew Green
- *
  * @param <R> The class of result associated with this action.
  */
 public interface JsonpAction<R extends Result> extends Action<R>{
