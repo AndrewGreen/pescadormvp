@@ -8,10 +8,10 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.internallinks;
 
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent.HasActivateInternalLinkHandlers;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PlaceRequestEvent.HasPlaceRequestHandlers;
 
-public interface InternalLink extends HasActivateInternalLinkHandlers {
+public interface InternalLink extends HasPlaceRequestHandlers {
 
 	public abstract void setPlace(PescadorMVPPlace place);
 

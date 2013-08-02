@@ -417,7 +417,7 @@
  * <pre>
  * <code class=java>
  *         linkHandlerReg = eventBus.addHandlerToSource(
- *                 ActivateInternalLinkEvent.TYPE,
+ *                 PlaceRequestEvent.TYPE,
  *                 view, this);
  * 
  *          doQuery();

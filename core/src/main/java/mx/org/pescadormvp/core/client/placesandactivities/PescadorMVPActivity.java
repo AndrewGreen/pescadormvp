@@ -9,7 +9,6 @@
 package mx.org.pescadormvp.core.client.placesandactivities;
 
 import mx.org.pescadormvp.core.client.components.Component;
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.core.client.session.StatePointer;
 
 import com.google.gwt.activity.shared.Activity;
@@ -28,7 +27,7 @@ public interface PescadorMVPActivity<
 		V extends IsWidget, 
 		S extends StatePointer,
 		I extends Component<I>>
-		extends Activity, ActivateInternalLinkEvent.Handler {
+		extends Activity, PlaceRequestEvent.Handler {
 
 	
 	void setStatePointer(S StatePointer);

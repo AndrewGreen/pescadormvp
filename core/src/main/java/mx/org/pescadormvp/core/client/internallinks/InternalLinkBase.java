@@ -9,6 +9,7 @@
 package mx.org.pescadormvp.core.client.internallinks;
 
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
+import mx.org.pescadormvp.core.client.placesandactivities.PlaceRequestEvent;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -97,9 +98,9 @@ public abstract class InternalLinkBase extends Composite
 	protected abstract void setPresentationText(String presentationText);
 
 	@Override
-	public HandlerRegistration addActivateInternalLinkHandler(
-			ActivateInternalLinkEvent.Handler handler) {
-		return addHandler(handler, ActivateInternalLinkEvent.TYPE);
+	public HandlerRegistration addPlaceRequestHandler(
+			PlaceRequestEvent.Handler handler) {
+		return addHandler(handler, PlaceRequestEvent.TYPE);
 	}
 	
 	@Override
@@ -140,7 +141,7 @@ public abstract class InternalLinkBase extends Composite
 	protected void handleClick(Event event) {
 		if (hyperlinkImpl.handleAsClick(event)) {
 			DOM.eventPreventDefault(event);
-			fireEvent(new ActivateInternalLinkEvent(place));
+			fireEvent(new PlaceRequestEvent(place));
 		}		
 	}
 }

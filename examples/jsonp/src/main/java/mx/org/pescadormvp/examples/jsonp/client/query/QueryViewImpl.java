@@ -8,7 +8,7 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
+import mx.org.pescadormvp.core.client.placesandactivities.PlaceRequestEvent;
 import mx.org.pescadormvp.core.client.util.DOMUtils;
 
 import com.google.gwt.animation.client.Animation;
@@ -196,7 +196,7 @@ public class QueryViewImpl extends ResizeComposite implements
 	private void doQuery() {
 		rawQueryPlace.setLocation(suggestBox.getText());
 		eventBus.fireEventFromSource(
-				new ActivateInternalLinkEvent(rawQueryPlace), this);
+				new PlaceRequestEvent(rawQueryPlace), this);
 	}
 
 	/**

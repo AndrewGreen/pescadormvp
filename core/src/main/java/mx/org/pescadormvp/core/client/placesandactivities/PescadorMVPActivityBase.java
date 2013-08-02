@@ -9,7 +9,6 @@
 package mx.org.pescadormvp.core.client.placesandactivities;
 
 import mx.org.pescadormvp.core.client.components.Component;
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.core.client.regionsandcontainers.NullPanelTools.NullActivity;
 import mx.org.pescadormvp.core.client.session.Session;
 import mx.org.pescadormvp.core.client.session.StatePointer;
@@ -83,10 +82,10 @@ public abstract class PescadorMVPActivityBase<
 
 	/**
 	 * Makes it easy for {@link PescadorMVPActivity PescadorMVPActivities} to respond to
-	 * {@link ActivateInternalLinkEvent}s from views.
+	 * {@link PlaceRequestEvent}s from views.
 	 */
 	@Override
-	public void onActivateInternalLink(ActivateInternalLinkEvent event) {
+	public void onPlaceRequest(PlaceRequestEvent event) {
 		goTo(event.getPlace());
 	}
 

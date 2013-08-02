@@ -13,9 +13,9 @@ import java.util.logging.Level;
 import mx.org.pescadormvp.examples.jsonp.client.query.QueryMessages;
 
 import mx.org.pescadormvp.core.client.data.DataManager;
-import mx.org.pescadormvp.core.client.internallinks.ActivateInternalLinkEvent;
 import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivityBase;
+import mx.org.pescadormvp.core.client.placesandactivities.PlaceRequestEvent;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -90,7 +90,7 @@ public class QueryActivityImpl
 		// object to hear about user interactions, and mainly it just passes
 		// them on here.
 		linkHandlerReg = eventBus.addHandlerToSource(
-				ActivateInternalLinkEvent.TYPE,
+				PlaceRequestEvent.TYPE,
 				view, this);
 		
 		doQuery();
@@ -187,7 +187,7 @@ public class QueryActivityImpl
 	}
 	
 	@Override
-	public void onActivateInternalLink(ActivateInternalLinkEvent event) {
+	public void onPlaceRequest(PlaceRequestEvent event) {
 		
 		// If we've been asked to go to the same place again, well, try
 		// the server call again. In fact, this only has the possibility of 
@@ -199,7 +199,7 @@ public class QueryActivityImpl
 		if (event.getPlace().equals(getPlace())) {
 			 doQuery();
 		} else {
-			super.onActivateInternalLink(event);
+			super.onPlaceRequest(event);
 		}
 	}
 	
