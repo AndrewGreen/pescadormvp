@@ -37,8 +37,8 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
- * <p>This class, together with its inner classes and interfaces, provides a full
- * configuration of the modular framework. It specifies which components are
+ * <p>This class, together with its inner classes and interfaces, provides the 
+ * app's global setup. It specifies which components are
  * active, activates {@link GinModule}s that specify dependency injections,
  * and specifies a provider for the root widget for the viewport.</p> 
  * 
@@ -116,8 +116,7 @@ public class ActiveGlobalSetup extends GlobalSetup {
 	}
 	
 	/**
-	 * Local GIN module, with general bindings for this app 
-	 * that are not part of the larger framework.
+	 * Local GIN module, with global bindings for this app.
 	 * 
 	 */
 	public static class ActiveGlobalSetupGinModule extends AbstractGinModule {

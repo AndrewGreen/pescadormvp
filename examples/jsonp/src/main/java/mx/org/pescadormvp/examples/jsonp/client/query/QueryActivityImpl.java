@@ -24,13 +24,10 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 
 /**
- * <p>Implementation of the Query component's only activity, {@link QueryActivity}.
- * (That's the presenter in GWT-MVP-speak.)</p>
- * 
- * <p>This class controls the display (view), through which it interacts with the user. This
- * class also uses PescadorMVP facilities to get data from OpenWeatherMap.</p>
- *  
- * @author Andrew Green
+ * Activity for the Query Component in the
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body} region
+ * in the JSONP Example app (implementation).
+ * It's the only activity the component has.
  */
 public class QueryActivityImpl 
 		extends 
@@ -96,6 +93,9 @@ public class QueryActivityImpl
 		doQuery();
 	}
 
+	/**
+	 * Actually preform the query.
+	 */
 	private void doQuery() {
 		final QueryView view = getView();
 		
@@ -186,6 +186,9 @@ public class QueryActivityImpl
 		}		
 	}
 	
+	/**
+	 * Handles {@link PlaceRequestEvent}s.
+	 */
 	@Override
 	public void onPlaceRequest(PlaceRequestEvent event) {
 		

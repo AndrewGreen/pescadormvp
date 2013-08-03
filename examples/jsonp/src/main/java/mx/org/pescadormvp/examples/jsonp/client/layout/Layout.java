@@ -15,11 +15,8 @@ import com.google.gwt.user.client.ui.ProvidesResize;
 import com.google.gwt.user.client.ui.RequiresResize;
 
 /**
- * The global layout system for this app. In this case, there is only one viewport
+ * The global layout system for JSONP Example. In this app, there is only one viewport
  * region, but in larger apps there are usually many.
- * 
- * @author Andrew Green
- *
  */
 public interface Layout extends RequiresResize, ProvidesResize,
 		RootHasFixedSetOfRegions {

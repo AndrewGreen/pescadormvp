@@ -18,11 +18,9 @@ import org.gwtopenmaps.openlayers.client.layer.OSM;
 import com.google.gwt.user.client.ui.Composite;
 
 /**
- * The MapWidget class provided by OpenLayers is a widget, but setting
- * it up involves tasks that are beyond the scope of our view. So here is a little
- * class that encapsulates the logic for the map setup and manipulation.
- *  
- * @author Andrew Green
+ * A small wrapper for the OpenLayers {@link MapWidget} (implementation). It's been kept separate from
+ * the view and the activity because it contains a bit of logic related to map
+ * rendering that doesn't fit in either.
  */
 public class OSMMapImpl extends Composite implements OSMMap {
 

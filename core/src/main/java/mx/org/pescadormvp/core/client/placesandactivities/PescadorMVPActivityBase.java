@@ -93,7 +93,8 @@ public abstract class PescadorMVPActivityBase<
 	}
 
 	/**
-	 * Makes it easy for {@link PescadorMVPActivity PescadorMVPActivities} to
+	 * Handles {@link PlaceRequestEvent}s. Placing this method in {@link PescadorMVPActivityBase}
+	 * makes it easy for {@link PescadorMVPActivity PescadorMVPActivities} to
 	 * respond to {@link PlaceRequestEvent}s from views.
 	 */
 	@Override

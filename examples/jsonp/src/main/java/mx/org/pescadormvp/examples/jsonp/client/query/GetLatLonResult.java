@@ -11,11 +11,8 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
 import net.customware.gwt.dispatch.shared.Result;
 
 /**
- * Contains the result of a call to the OpenWeatherMap API for temperature
- * information about a location.
- * 
- * @author Andrew Green
- *
+ * Contains the result of a call to the OpenStreetMap for latitude
+ * and longitude information about a location.
  */
 public class GetLatLonResult implements Result {
 

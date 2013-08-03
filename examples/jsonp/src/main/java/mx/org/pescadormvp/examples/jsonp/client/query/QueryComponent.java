@@ -12,11 +12,9 @@ import mx.org.pescadormvp.core.client.placesandactivities.PAVComponent;
 import mx.org.pescadormvp.core.client.placesandactivities.RawDefaultPlaceProvider;
 
 /**
- * The interface representing the general Query component. If we wanted this component
- * to provide methods to other components, they would go here.
- * 
- * @author Andrew Green
- *
+ * The interface representing the Query Component in the JSONP Example. If we
+ * wanted this component to provide methods to other components, they would go
+ * here.
  */
 public interface QueryComponent 
 		extends PAVComponent<

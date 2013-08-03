@@ -11,12 +11,10 @@ package mx.org.pescadormvp.examples.jsonp.client;
 import com.google.gwt.core.client.EntryPoint;
 
 /**
- * This class is the entry point--where GWT client code starts executing.
+ * This class is the entry point&mdash;where GWT client code starts executing.
  * As always in GWT, this is specified in the corresponding .gwt.xml file.
- * 
- * @author Andrew Green
  */
-public class JSONPExample implements EntryPoint{
+public class JSONPExample implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {

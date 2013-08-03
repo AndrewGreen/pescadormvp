@@ -25,12 +25,10 @@ import com.google.gwt.user.client.ui.Widget;
  * loaded.
  * </p>
  * <p>
- * Since this class is only used before the component framework even boots up,
+ * Since this class is only used before DI and components even boot up,
  * there's no sense in worrying about what component it's a
  * part of.
  * </p>
- * 
- * @author Andrew Green
  */
 public class InitialLoadingTimer extends Composite implements LoadingPleaseWait {
 

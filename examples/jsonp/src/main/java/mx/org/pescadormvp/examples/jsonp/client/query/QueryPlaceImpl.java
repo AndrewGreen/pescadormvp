@@ -9,11 +9,9 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceBase;
 
 /**
- * Implementation for our only place, which only has one key/value property to
- * serialize to the URL fragment identifier. (Specifically, the location whose
- * temperature we're querying.)
- * 
- * @author Andrew Green
+ * The place associated with the {@link QueryComponent} (implementation).
+ * Contains the name of the location whose latitude and longitude data the user
+ * wishes to query.
  */
 public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
 
@@ -46,12 +44,17 @@ public class QueryPlaceImpl extends PescadorMVPPlaceBase implements QueryPlace {
 	}
 
 	/**
+	 * <p>
+	 * Set the name of the location to query.
+	 * </p>
+	 * <p>
 	 * Here, instead of setting an instance variable directly, we tell the
 	 * superclass to follow its standard procedure for setting a property. The
 	 * superclass will call {@link #processProperty(String, String)}, which is
 	 * where our instance variable will finally be set. This allows the framework
 	 * to serialize and deserialize key-value pairs to and from the
 	 * URL fragment identifier.
+	 * </p>
 	 */
 	@Override
 	public void setLocation(String location) {

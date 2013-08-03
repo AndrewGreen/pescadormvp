@@ -11,22 +11,38 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
 import com.google.gwt.user.client.ui.IsWidget;
 
 /**
- * <p>Query view. As per MVP, views are only responsible for display logic. In
- * GWT, view objects are long-lived, while activities are disposable.</p>
- * 
- * <p>Usage: set the required info, then call one of the render methods.</p>
- *  
- * @author Andrew Green
+ * <p>
+ * Query View, with various renderable states, to be controlled by the activity.
+ * </p>
+ * <p>
+ * The renderable states are:
+ * </p>
+ * <ol>
+ * <li><i>Empty</i>&nbsp;&nbsp;&nbsp;In this state, no messages or information
+ * are shown.</li>
+ * <li><i>Loading</i>&nbsp;&nbsp;&nbsp;The view displays a message saying that
+ * the requested information is loading.</li>
+ * <li><i>Error</i>&nbsp;&nbsp;&nbsp;The view displays a message explaining that
+ * there was an error communicating with the server.</li>
+ * <li><i>Lat-lon</i>&nbsp;&nbsp;&nbsp;The view displays a place's latitude and
+ * longitude, and a map.</li>
+ * <li><i>No such place</i>&nbsp;&nbsp;&nbsp;The view displays a message
+ * explaining that no place was found with the name entered.</li>
+ * </ol>
+ * <p>
  */
 public interface QueryView extends
 		IsWidget {
 	
 	void renderQueryArea(String beforeQueryTextBox, String afterQueryTextBox);
 
+	/**
+	 * Indicates whether the query area has been rendered or not. 
+	 */
 	boolean isQueryAreaRendered();
 
 	/**
-	 * Does the view have the OSMMap to it will use?
+	 * Does the view have the OSMMap it will use?
 	 */
 	boolean osmMapSet();
 	
@@ -35,21 +51,35 @@ public interface QueryView extends
 	 */
 	void setOSMMap(OSMMap map);
 	
-	void setLatLonMsg(String tempInfoMsg);
+	/**
+	 * Sets latitude and longitude message.
+	 */
+	void setLatLonMsg(String latLonMsg);
 
+	/**
+	 * Strings to display when no matching place has been found.
+	 */
 	void setNoSuchPlaceStrings(String neverHeardOf, String tryAgain);
 	
+	/**
+	 * Set string for loading message. 
+	 */
 	void setLoadingString(String loading);
 	
+	/**
+	 * Set strings to display for a server or network error. 
+	 */
 	void setErrorStrings(String errorCommunicating, String tryAgain);
 
 	/**
-	 * Sets the text to display in the textbox. Unlike other methods that set
+	 * Sets the text to display in the text box. Unlike other methods that set
 	 * text, this one renders immediately.
-	 * @param textBoxContents
 	 */
 	void setTextboxContents(String textBoxContents);
 	
+	/**
+	 * Render an empty view (no messages).
+	 */
 	void renderEmpty();
 	
 	void renderLatLon();
@@ -58,9 +88,20 @@ public interface QueryView extends
 	
 	void renderError();
 	
+	/**
+	 * Start a timer; if no other state has been rendered by a certain time,
+	 * display a message saying that the requested information is loading.
+	 */
 	void scheduleLoadingMessage();
 
+	/**
+	 * Cancel the loading timer and, if the loading message is being displayed,
+	 * the related animation. 
+	 */
 	void cancelLoadingMessage();
 
+	/**
+	 * Set the place object, with no data yet, needed to prepare the next query.
+	 */
 	void setRawQueryPlace(QueryPlace rawQueryPlace);
 }

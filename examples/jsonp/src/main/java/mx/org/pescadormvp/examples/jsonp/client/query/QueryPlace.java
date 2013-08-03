@@ -11,20 +11,19 @@ package mx.org.pescadormvp.examples.jsonp.client.query;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 /**
- * <p>Interface representing the Query place (in GWT's MVP scheme),
- * in this app the only place we have.</p>
- * 
- * <p>As with standard GWT MVP, places have a representation as fragment identifier
- * of the URL. PescadorMVP places, while retaining compatibility, are more flexible
- * with regard to the information they contain and serialize in the fragment identifier.</p>
- * 
- * @author Andrew Green
- *
+ * The place associated with the {@link QueryComponent}. Contains the name of
+ * the location whose latitude and longitude data the user wishes to query.
  */
 public interface QueryPlace extends PescadorMVPPlace {
 	
+	/**
+	 * Get the name of the location to query. 
+	 */
 	String getLocation();
 	
+	/**
+	 * Set the name of the location to query.
+	 */
 	void setLocation(String location);
 
 }

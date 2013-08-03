@@ -31,7 +31,9 @@ public interface PescadorMVPPlaceActivity<
 		extends PescadorMVPActivity<V, P, I> {
 
 	/**
-	 * Internal Pescador MVP use. Used for checking casts of generic types. 
+	 * The place class associated with the activation of this activity. Place
+	 * activities must implement this; it's used for checking casts of generic
+	 * types.
 	 */
 	public Class<P> getPlaceClass();
 	

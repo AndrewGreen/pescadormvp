@@ -146,6 +146,10 @@ public class QueryViewImpl extends ResizeComposite implements
 
 	private Templates templates;
 
+	/**
+	 * The CSS string indicating the amount of padding for containers.
+	 * Used in the related UiBinder, QueryViewImpl.ui.xml 
+	 */
 	public static String getTextContainerPadding() {
 		return TEXT_CONTAINER_PADDING_PX + "px";
 	}
@@ -199,9 +203,6 @@ public class QueryViewImpl extends ResizeComposite implements
 				new PlaceRequestEvent(rawQueryPlace), this);
 	}
 
-	/**
-	 * Receive the place for the next query.
-	 */
 	@Override
 	public void setRawQueryPlace(QueryPlace rawQueryPlace) {
 		this.rawQueryPlace = rawQueryPlace;
@@ -262,9 +263,6 @@ public class QueryViewImpl extends ResizeComposite implements
 		return queryAreaRendered;
 	}
 	
-	/**
-	 * Set info elements surrounding the text box, which remain static.
-	 */
 	@Override
 	public void renderQueryArea(String beforeQueryTextBox,
 			String afterQueryTextBox) {
@@ -281,34 +279,22 @@ public class QueryViewImpl extends ResizeComposite implements
 		fixLayout();
 	}
 
-	/**
-	 * Set the view's OSMMap. 
-	 */
 	@Override
 	public void setOSMMap(OSMMap map) {
 		this.map = map;
 		mapContainer.add(map);
 	}
 
-	/**
-	 * Does the view have the OSMMap to it will use?
-	 */
 	@Override
 	public boolean osmMapSet() {
 		return map != null;
 	}
 	
-	/**
-	 * Sets latitude and longitude and related message
-	 */
 	@Override
 	public void setLatLonMsg(String latLonMsg) {
 		this.latLonMsg = latLonMsg;
 	}
 
-	/**
-	 * Strings for when no matching place has been found.
-	 */
 	@Override
 	public void setNoSuchPlaceStrings(String neverHeardOf,
 			String tryAgain) {

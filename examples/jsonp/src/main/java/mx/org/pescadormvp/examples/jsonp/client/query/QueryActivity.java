@@ -8,16 +8,13 @@
  ******************************************************************************/
 package mx.org.pescadormvp.examples.jsonp.client.query;
 
-import com.google.gwt.activity.shared.AbstractActivity;
-
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlaceActivity;
 
 /**
- * Activity for query. In this case, it's the only activity the app has. Implementations
- * of this interface are normally instances of GWT's {@link AbstractActivity}. This
- * interface and related classes build on GWT's MPV facilities.
- * 
- * @author Andrew Green
+ * Activity for the Query Component in the
+ * {@link mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body} region
+ * in the JSONP Example app.
+ * It's the only activity the component has.
  */
 public interface QueryActivity extends 
 	PescadorMVPPlaceActivity<QueryView, QueryPlace, QueryComponent> { }

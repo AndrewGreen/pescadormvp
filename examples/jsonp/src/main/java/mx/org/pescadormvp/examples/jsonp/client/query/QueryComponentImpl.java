@@ -24,11 +24,10 @@ import mx.org.pescadormvp.core.client.placesandactivities.RawPlaceFactory;
 import mx.org.pescadormvp.examples.jsonp.client.layout.Layout.Body;
 
 /**
- * General setup for the query component. Sets dependency injections, provides
- * a place as the default place for the app. There is some boilerplate here that could
- * eventually be avoided via annotations and code generation.
- *  
- * @author Andrew Green
+ * The Query Component in the JSONP Example (implementation). This class
+ * contains general stuff for that component, including DI bindings. Any methods
+ * this component provides to other components should go
+ * here.
  */
 public class QueryComponentImpl extends PAVComponentBase< 
 		QueryComponent,

@@ -21,10 +21,8 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.inject.Inject;
 
 /**
- * <p>Implementation of {@link Layout}. Controls global app layout.</p>
- *
- * @author Andrew Green
- *
+ * The global layout system for JSONP Example (implementation). In this app,
+ * there is only one viewport region, but in larger apps there are usually many.
  */
 public class LayoutImpl extends ResizeComposite implements Layout {
 

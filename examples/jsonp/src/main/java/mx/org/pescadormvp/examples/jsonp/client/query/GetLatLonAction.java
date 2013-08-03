@@ -13,16 +13,11 @@ import mx.org.pescadormvp.core.client.data.JsonpAction;
 import mx.org.pescadormvp.core.client.data.CacheableAction;
 
 /**
- * Action (following the Command pattern) for requesting temperature
- * information from OpenWeatherMap.
- *  
- * @author Andrew Green
+ * Action for requesting latitude and longitude information from OpenStreetMap 
+ * via JSONP.
  */
 public class GetLatLonAction implements JsonpAction<GetLatLonResult>, CacheableAction {
 
-//	// This class is meant to be used only with this site 
-//	final static String BASE_URL = "http://api.openweathermap.org/data/2.5/find?q=";
-	
 	private final String location;
 	
 	/**
@@ -33,6 +28,9 @@ public class GetLatLonAction implements JsonpAction<GetLatLonResult>, CacheableA
 		this.location = location;
 	}
 
+	/**
+	 * Get the location to be queried by this action. 
+	 */
 	String getLocation() {
 		return location;
 	}
@@ -65,6 +63,6 @@ public class GetLatLonAction implements JsonpAction<GetLatLonResult>, CacheableA
 
 	@Override
 	public String toString() {
-		return "GetTempAction[" + location + "]";
+		return "GetLatLonAction[" + location + "]";
 	}
 }
