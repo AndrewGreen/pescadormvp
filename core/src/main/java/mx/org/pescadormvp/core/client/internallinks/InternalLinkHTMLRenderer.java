@@ -53,24 +53,39 @@ public class InternalLinkHTMLRenderer {
 	private SafeHtml presentationSafeHTML;
 	private String href;
 
+	/**
+	 * Set the image for the link. 
+	 */
 	public void setMainImageResource(ImageResource mainImageResource) {
 		this.imageResource = mainImageResource;
 	}
 	
+	/**
+	 * Set the presentation text for the link. 
+	 */
 	public void setPresentationText(String presentationText) {
 		this.presentationText = presentationText;
 		presentationSafeHTML = null;
 	}
 
+	/**
+	 * Set the presentation text for the link. 
+	 */
 	public void setPresentationText(SafeHtml presentationSafeHTML) {
 		this.presentationSafeHTML = presentationSafeHTML;
 		presentationText = null;
 	}
 
+	/**
+	 * Set the URL for the link. 
+	 */
 	public void setHref(String href) {
 		this.href = UriUtils.sanitizeUri(href);
 	}
 
+	/**	
+	 * Render the link. 
+	 */
 	public SafeHtml render() {
 		if (presentationText == null)
 			presentationText = "";

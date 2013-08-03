@@ -22,6 +22,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * A button that's a link to a place in the application, and a native
+ * hyperlink, too. 
+ */
 public class InternalButtonLink extends InternalLinkBase {
 
 	interface InternalButtonLinkUiBinder extends 
@@ -71,17 +75,26 @@ public class InternalButtonLink extends InternalLinkBase {
 		link.getStyle().setProperty("backgroundPosition", "bottom");
 		completeSetup();
 	}
-
+	
+	/**
+	 * Set whether or not to display text in the button. 
+	 */
 	public void setShowText(boolean showText) {
 		this.showText = showText;
 		setupPresentationText();
 	}
 
+	/**
+	 * Set whether or not to show an image in the button.
+	 */
 	public void setShowImage(boolean showImage) {
 		this.showImage = showImage;
 		setupImage();
 	}
 	
+	/**
+	 * Set the height that we'd like the button to be, in pixels. 
+	 */
 	public void setTargetHeightPx(Integer targetHeight) {
 		this.targetHeight = targetHeight;
 		
@@ -99,6 +112,9 @@ public class InternalButtonLink extends InternalLinkBase {
 		setupImage();
 	}
 
+	/**
+	 * Set the image to be used in the button. 
+	 */
 	public void setImageResource(ImageResource imageResource) {
 		ensureImage();
 		imageWidth = imageResource.getWidth();
@@ -107,6 +123,9 @@ public class InternalButtonLink extends InternalLinkBase {
 		setupImage();
 	}
 
+	/**
+	 * Set the source and dimensions of the image to be used in the button. 
+	 */
 	public void setImageInfo(String imageSrc, int width, int height) {
 		ensureImage();
 
@@ -120,6 +139,9 @@ public class InternalButtonLink extends InternalLinkBase {
 		setupImage();
 	}
 	
+	/**
+	 * Set whether or not there will be rounded corners on the left of the button. 
+	 */
 	public void setFlushLeft(boolean flushLeft) {
 		String radius = 
 				flushLeft ? 
@@ -130,6 +152,9 @@ public class InternalButtonLink extends InternalLinkBase {
 		link.getStyle().setProperty("borderRadius", radius);
 	}
 
+	/**
+	 * Set whether or not there will be rounded corners on the right of the button.
+	 */
 	public void setFlushRight(boolean flushRight) {
 		String radius = 
 				flushRight ? 
@@ -139,6 +164,9 @@ public class InternalButtonLink extends InternalLinkBase {
 		link.getStyle().setProperty("borderRadius", radius);
 	}
 	
+	/**
+	 * Choose the style of the button-link 
+	 */
 	public void setHyperStyle(boolean hyperStyle) {
 		this.hyperStyle = hyperStyle;
 		setupStyles();

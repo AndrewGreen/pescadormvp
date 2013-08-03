@@ -25,6 +25,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * An item in a menu that leads to a place in the application, is a
+ * native hyperlink, and may have a checkmark beside it. 
+ */
 public class InternalCheckableItemLink extends InternalLinkBase
 		implements IsItem {
 
@@ -67,8 +71,6 @@ public class InternalCheckableItemLink extends InternalLinkBase
 		completeSetup();
 	}
 	
-	// for some reason UiField way of doing this doesn't seem to work
-	// perhaps because we can do ensureInjected() on the style resource
 	@UiFactory
 	public ItemResources getItemResources() {
 		if (itemResources == null) {
@@ -102,7 +104,10 @@ public class InternalCheckableItemLink extends InternalLinkBase
 		textArea.setInnerHTML(SafeHtmlUtils.htmlEscape(presentaitonText));
 		setMinSizes();
 	}
-	
+
+	/**
+	 * Set whether or not there should be a checkmark next to the item. 
+	 */
 	public void setChecked(boolean checked) {
 		ImageResource checkmarkImage = itemResources.checkmarkImage(); 
 		
@@ -125,7 +130,6 @@ public class InternalCheckableItemLink extends InternalLinkBase
 		return minWidth;
 	}
 
-
 	@Override
 	public int getMinHeight() {
 		return minHeight;
@@ -133,7 +137,7 @@ public class InternalCheckableItemLink extends InternalLinkBase
 
 	/**
 	 * Does not actually change sizes, but sets data that is used by the widget
-	 * this is attached to
+	 * this is attached to.
 	 */
 	private void setMinSizes() {
 		if (!isAttached())
@@ -151,7 +155,7 @@ public class InternalCheckableItemLink extends InternalLinkBase
 				DOMUtils.getElementWidth(textArea) +
 				(ITEM_CONTAINER_PADDING * 2);
 	}
-	
+
 	@Override
 	public void resizeContentWidth(int pxWidth) {
 		int itemContainerWidth = pxWidth - (ITEM_CONTAINER_PADDING * 2);

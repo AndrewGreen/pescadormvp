@@ -12,6 +12,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * A panel widget that can contain items. Used to create menu-like widgets
+ * whose items are native hyperlinks. 
+ */
 public class ItemPanel extends Composite {
 	
 	private final FlowPanel flowPanel = new FlowPanel();
@@ -20,22 +24,38 @@ public class ItemPanel extends Composite {
 		initWidget(flowPanel);
 	}
 	
+	/**
+	 * Add an item. 
+	 */
 	public void add(IsItem i) {
 		flowPanel.add(i);
 	}
 
+	/**
+	 * Get the item at the specified index. 
+	 */
 	public IsItem getItem(int index) {
 		return (IsItem) flowPanel.getWidget(index);
 	}
 
+	/**
+	 * Clear the panel.
+	 */
 	public void clear() {
 		flowPanel.clear();
 	}
 
+	/**
+	 * Get the number of items in the panel. 
+	 */
 	public int getItemCount() {
 		return flowPanel.getWidgetCount();
 	}
 	
+	/**
+	 * Set up the dimensions of the panel and the items it contains based
+	 * on the minimum space required by all the items.
+	 */
 	public void setupSizes() {
 		// find item dimensions
 		int itemCount = getItemCount();

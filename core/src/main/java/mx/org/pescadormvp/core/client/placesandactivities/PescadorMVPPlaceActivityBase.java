@@ -10,13 +10,22 @@ package mx.org.pescadormvp.core.client.placesandactivities;
 
 import mx.org.pescadormvp.core.client.components.Component;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.user.client.ui.IsWidget;
 
 /**
- * PescadorMVP activities extend this. They should override the start
- * method, and
- * attach the view widget to the appropriate container there.
- *
+ * Abstract base class for {@link PescadorMVPPlaceActivity
+ * PescadorMVPPlaceActivities}. Subclasses should implement the
+ * {@link Activity#start start(...)} method, and attach the view widget to the
+ * appropriate container there.
+ * 
+ * @param <V>
+ *            The public interface of view associated with this activity.
+ * @param <P>
+ *            The {@link PescadorMVPPlace} class associated with the activation
+ *            of this activity.
+ * @param <I>
+ *            The {@link Component} that this activity is a part of.
  */
 public abstract class
 	PescadorMVPPlaceActivityBase<
@@ -26,6 +35,9 @@ public abstract class
 	extends PescadorMVPActivityBase<V,P,I>
 	implements PescadorMVPPlaceActivity<V,P,I> {
 
+	/**
+	 * Get the current {@link PescadorMVPPlace} object that brought us here.
+	 */
 	protected P getPlace() {
 		return getStatePointer();
 	}

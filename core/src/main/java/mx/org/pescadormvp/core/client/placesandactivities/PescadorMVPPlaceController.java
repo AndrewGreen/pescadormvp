@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * Subclassing allows the use of injection without a provider class
+ * Internal Pescador MVP use. Guice-friendly {@link PlaceController}.
  *
  */
 public class PescadorMVPPlaceController extends PlaceController {

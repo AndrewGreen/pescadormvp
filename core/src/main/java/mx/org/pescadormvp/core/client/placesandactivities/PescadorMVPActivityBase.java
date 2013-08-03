@@ -16,14 +16,26 @@ import mx.org.pescadormvp.core.client.session.StatePointer;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
+
 /**
- * Here's some stuff
+ * <p>
+ * Abstract base class for {@link PescadorMVPActivity PescadorMVPActivities}.
+ * </p>
+ * <p>
+ * Note that this abstract class is extended by activities not associated with a
+ * place, as well as those associated with one. Activities associated with a
+ * place (as part of a {@link PAVComponent}) should extend the subclass,
+ * {@link PescadorMVPPlaceActivityBase}.
+ * </p>
  * 
- * @author Andrew Green
- *
  * @param <V>
+ *            The public interface of view associated with this activity.
  * @param <S>
+ *            The {@link StatePointer} class (often a subinterface of
+ *            {@link PescadorMVPPlace}) associated with the activation of
+ *            this activity.
  * @param <I>
+ *            The {@link Component} that this activity is a part of.
  */
 public abstract class PescadorMVPActivityBase<
 		V extends IsWidget,
@@ -44,7 +56,7 @@ public abstract class PescadorMVPActivityBase<
 	}
 	
 	/**
-	 * Method used by GIN to inject some stuff we need. 
+	 * Internal Pescador MVP use. Method used by GIN to inject some stuff we need. 
 	 */
 	@Inject
 	public void setupStuff(Session session, V view) {
@@ -65,9 +77,9 @@ public abstract class PescadorMVPActivityBase<
 	}
 
 	/**
-	 * Used only by {@link NullActivity NullActivity}, which does not follow the standard
-	 * factory injection procedure used by other {@link PescadorMVPActivity PescadorMVPActivities}.
-	 * s.
+	 * Internal Pescador MVP use. Used only by {@link NullActivity NullActivity}
+	 * , which does not follow the standard factory injection procedure used by
+	 * other {@link PescadorMVPActivity PescadorMVPActivities}.
 	 */
 	protected void setView(V view) {
 		this.view = view;
@@ -81,8 +93,8 @@ public abstract class PescadorMVPActivityBase<
 	}
 
 	/**
-	 * Makes it easy for {@link PescadorMVPActivity PescadorMVPActivities} to respond to
-	 * {@link PlaceRequestEvent}s from views.
+	 * Makes it easy for {@link PescadorMVPActivity PescadorMVPActivities} to
+	 * respond to {@link PlaceRequestEvent}s from views.
 	 */
 	@Override
 	public void onPlaceRequest(PlaceRequestEvent event) {

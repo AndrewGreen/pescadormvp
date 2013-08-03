@@ -14,7 +14,9 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import com.google.gwt.logging.client.TextLogFormatter;
-
+/**
+ * An injectable a wrapper for GWT's logger (implementation). 
+ */
 public class PescadorMVPLoggerImpl implements PescadorMVPLogger {
 
 	private Logger logger;

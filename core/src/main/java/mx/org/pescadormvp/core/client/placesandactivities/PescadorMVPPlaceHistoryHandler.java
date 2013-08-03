@@ -12,7 +12,7 @@ import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.inject.Inject;
 
 /**
- * Subclassing allows the use of injection without a provider class 
+ * Internal Pescador MVP use. Guice-friendly {@link PlaceHistoryHandler}. 
  *
  */
 public class PescadorMVPPlaceHistoryHandler extends PlaceHistoryHandler {

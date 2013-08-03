@@ -17,6 +17,10 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
+/**
+ * Internal Pescador MVP use. A Guice-enabled {@link ActivityMapper}, associated
+ * with a UI region.
+ */
 public class PescadorMVPActivityMapper implements ActivityMapper {
 
 	private final Class<? extends ForRegionTag> region;
@@ -30,6 +34,10 @@ public class PescadorMVPActivityMapper implements ActivityMapper {
 		this.globalSetup = globalSetup;
 	}
 
+	/**
+	 * Internal Pescador MVP use. Provide an activity for the specified place,
+	 * associated with this {@link PescadorMVPActivityMapper}'s region.
+	 */
 	@Override
 	public Activity getActivity(Place place) {
 		if (!(place instanceof PescadorMVPPlace))

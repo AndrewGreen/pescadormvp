@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import mx.org.pescadormvp.core.client.components.Component;
 import mx.org.pescadormvp.core.client.components.ComponentRegistry;
 import mx.org.pescadormvp.core.client.logging.PescadorMVPLogger;
 import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
@@ -24,10 +25,8 @@ import com.google.gwt.user.client.Window.Location;
 import com.google.inject.Inject;
 
 /**
- * An extended {@link PlaceHistoryMapper} that works with the PescadorMVP
- * place mechanisms.
- * 
- * @author Andrew Green
+ * A {@link PlaceHistoryMapper} for {@link PescadorMVPPlace}s. Implemented as a
+ * {@link Component}.
  */
 public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 
@@ -79,11 +78,6 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 		return place.asGWTPlace();
 	}
 
-	/**
-	 * A method for getting a copy of a any place. Does not copy or set up
-	 * URL info.
-	 * 
-	 */
 	@Override
 	public <P extends PescadorMVPPlace> P copyPlaceInto(
 			P originalPlace,
@@ -139,6 +133,7 @@ public class PescadorMVPPlaceMapperImpl implements PescadorMVPPlaceMapper {
 			place.setRequiresReload(false);
 			
 		} else {
+			// TODO check that the locale is not the same as the current one (?)
 			String queryParam = LocaleInfo.getLocaleQueryParam();
 		    UrlBuilder builder = Location.createUrlBuilder();
 		    builder.setParameter(queryParam, newLocale.getLocaleName());

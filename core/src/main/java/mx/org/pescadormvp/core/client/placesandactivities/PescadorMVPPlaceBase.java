@@ -17,19 +17,14 @@ import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 import com.google.gwt.place.shared.Place;
 
 /**
- * <p>A WebClientPlace contains a main token which designates the general
- * type of place, plus a set of property-value pairs that provide
- * further information about the place. Which properties are implemented
- * will vary from depending on the concrete WebClientPlace subclass. The
- * information in the main token and properties is expressed in 
- * the fragment part of the URL.</p>
- * 
- * <p>Use {@link #setNewLocale(PescadorMVPLocale)} to indicate that going
- * to this place should activate a new locale. This will result in a page
- * reload. Don't set this field, or set it to null, to stay in the current
- * locale.</p>
- * 
+ * Abstract base class for places in Pescador MVP.
+ * {@link PescadorMVPPlace}s have a few extra features that standard GWT
+ * {@link Place}s lack. They can always be obtained as a standard GWT {@link Place}
+ * via {@link #asGWTPlace()}. See
+ * {@link mx.org.pescadormvp.examples.jsonp.client ...examples.jsonp.client} for
+ * more information.
  */
+@SuppressWarnings("javadoc")
 public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPPlace {
 
 	private final String mainToken;
@@ -71,6 +66,16 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 		properties = new HashMap<String, String>();
 	}
 	
+	/**
+	 * Set the (string-serialized) value of the property associated with the
+	 * specified key. Subclasses should call this method to set a value
+	 * that is meant to be stored in the URL fragment identifier's key-value
+	 * system. This method will call {@link #processProperty(String, String)},
+	 * which is where any local instance variables should be set.
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	protected void setProperty(String key, String value) {
 		if (properties == null)
 			initializeProperties();
@@ -85,42 +90,28 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 	}
 	
 	/**
-	 * Called from {@link #setProperties(Map)} for each property set.
-	 * Subclasses will check the property being set, and set some aspect of
-	 * their state if an appropriate key is used.
+	 * Called from {@link #setProperties(Map)} and
+	 * {@link #setProperty(String, String)} . Subclasses must implement this
+	 * method. In it they should check which property is
+	 * being set, and set some aspect of their state depending on the key
+	 * used. See {@link mx.org.pescadormvp.examples.jsonp.client.query.QueryPlaceImpl}
+	 * for an example.
 	 * 
 	 * @param key
 	 * @param value
 	 */
 	protected abstract void processProperty(String key, String value);
 	
-	/**
-	 * Set the text used to produce a user-friendly reference to this place
-	 * to display somewhere in the UI. May not be set when not needed.
-	 * Local-specific; when the local changes, this must be re-set.
-	 * 
-	 */
 	@Override
 	public void setPresentationText(String presentationText) {
 		this.presentationText = presentationText;
 	}
 
-	/**
-	 * Returns presentation text for this locale. Warning: may return null.
-	 * 
-	 * @return presentation text
-	 */
 	@Override
 	public String getPresentationText() {
 		return presentationText;
 	}
 
-	/**
-	 * Full history token to use in URLs in UI. Convenience field that may or may not
-	 * be set in any given case.
-	 * 
-	 * @return full history token
-	 */
 	@Override
 	public String getHistoryToken() {
 		return historyToken;
@@ -131,11 +122,6 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 		this.historyToken = historyToken;
 	}
 
-	/**
-	 * If set to non-null, then activating this place results in reloading
-	 * the whole app in the new locale. Null is used to indicate the same
-	 * locale as is currently active, whatever that may be. 
-	 */
 	@Override
 	public PescadorMVPLocale getNewLocale() {
 		return newLocale;
@@ -166,6 +152,7 @@ public abstract class PescadorMVPPlaceBase extends Place implements PescadorMVPP
 		this.requiresReload = requiresReload;
 	}
 
+	@Override
 	public Place asGWTPlace() {
 		return this;
 	}

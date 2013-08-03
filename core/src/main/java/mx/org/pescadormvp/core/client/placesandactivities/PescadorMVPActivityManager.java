@@ -14,6 +14,9 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
 
+/**
+ * Internal Pescador MVP use. Guice-enabled {@link ActivityManager}. 
+ */
 public class PescadorMVPActivityManager extends ActivityManager {
 
 	@Inject

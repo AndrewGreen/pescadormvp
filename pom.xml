@@ -64,7 +64,7 @@
 										<packages>mx.org.pescadormvp.core*</packages>
 									</group>
 									<group>
-										<title>Examples: JSONP</title>
+										<title>JSONP Example</title>
 										<packages>mx.org.pescadormvp.examples.jsonp*</packages>
 									</group>
 								</groups>
@@ -95,7 +95,7 @@
 							<packages>mx.org.pescadormvp.core*</packages>
 						</group>
 						<group>
-							<title>Examples: JSONP</title>
+							<title>JSONP Example</title>
 							<packages>mx.org.pescadormvp.examples.jsonp*</packages>
 						</group>
 					</groups>

@@ -75,22 +75,28 @@ public abstract class InternalLinkBase extends Composite
 		setPresentationText(SafeHtmlUtils.htmlEscape(alternatePresentationText));
 	}
 	
+	/**
+	 * Is the link enabled?
+	 */
 	protected boolean isEnabled() {
 		return enabled;
 	}
 
+	/**
+	 * Set the link as enabled or not. 
+	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
 	/**
-	 * URI should be sanitized <em>before</em> it is sent to this method.
+	 * Set the URI. URI should be sanitized <b>before</b> it is sent to this method.
 	 * 
 	 */
 	protected abstract void setHref(String href);
 	
 	/**
-	 * Text might <em>NOT</em> be sanitized it is sent to this method.
+	 * Text might <b>NOT</b> be sanitized it is sent to this method.
 	 * Sanitizing is implementing class's responsibility.
 	 * 
 	 * @param presentationText
@@ -129,7 +135,7 @@ public abstract class InternalLinkBase extends Composite
 	}
 	
 	/**
-	 * We could simply let the browser handle all clicks on internal links.
+	 * Handle the click. We could simply let the browser handle all clicks on internal links.
 	 * That would work, but it's faster to handle the links and place changes
 	 * directly. But for control-clicks and other non-standard clicks, we need
 	 * to let the browser handle things.

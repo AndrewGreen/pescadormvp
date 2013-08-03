@@ -14,6 +14,10 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
+/**
+ * An event indicating that something, somewhere, wants the application
+ * to go to the specified place. 
+ */
 public class PlaceRequestEvent
 		extends GwtEvent<PlaceRequestEvent.Handler> {
 
@@ -39,6 +43,9 @@ public class PlaceRequestEvent
 		return TYPE;
 	}
 
+	/**
+	 * Get the place that has been requested. 
+	 */
 	public PescadorMVPPlace getPlace() {
 		return place;
 	}
