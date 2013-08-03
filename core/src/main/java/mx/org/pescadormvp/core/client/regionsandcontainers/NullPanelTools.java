@@ -17,6 +17,9 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Some tools for deactivating UI regions. 
+ */
 public class NullPanelTools {
 
 	/**

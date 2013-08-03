@@ -25,7 +25,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * <p>A class that holds a localeName (as used in URLs or locale cookies) and
  * a localized (display) name for that locale.</p>
  * 
- * <p>Here {@link #hashCode} and {@link #equals} only take into account
+ * <p>Note: here {@link #hashCode} and {@link #equals} only take into account
  * localeName, and not the display name.</p>
  */
 

@@ -14,6 +14,9 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Indicates that the state of a UI region needs updating. 
+ */
 public class RegionStateUpdateRequiredEvent extends
 		GwtEvent<RegionStateUpdateRequiredEvent.Handler> {
 

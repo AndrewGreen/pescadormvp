@@ -14,10 +14,21 @@ import mx.org.pescadormvp.core.client.components.Component;
 import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 import mx.org.pescadormvp.core.shared.PescadorMVPLocale;
 
+/**
+ * Session component. Provides information on the current locale and available
+ * locales, as well as methods for going to places, storing session data, and
+ * generating unique IDs.
+ */
 public interface Session extends Component<Session>{
 
+	/**
+	 * Get the application's current locale. 
+	 */
 	PescadorMVPLocale currentLocale();
 	
+	/**
+	 * Get the locales available for the application. 
+	 */
 	List<PescadorMVPLocale> availableLocales();
 	
 	/**
@@ -28,12 +39,24 @@ public interface Session extends Component<Session>{
 	 */
 	int currentStateHash();
 
+	/**
+	 * Go to the place specified. 
+	 */
 	void goTo(PescadorMVPPlace place);
 
+	/**
+	 * Get the current place. 
+	 */
 	PescadorMVPPlace getWhere();
 
+	/**
+	 * Set session data for the component specified. 
+	 */
 	void setSessionData(Class<? extends Component<?>> component, SessionData data);
 
+	/**
+	 * Get session data for the component specified. 
+	 */
 	SessionData getSessionData(Class<? extends Component<?>> component);
 
 	/**

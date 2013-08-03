@@ -12,7 +12,17 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * Interface for widgets (say, views) that have absolutely positioned widgets
+ * associated with them but not necessarily contained in them visually.
+ * Used by {@link DynamicSimpleLayoutPanel} to inform about absolutely positioned
+ * widgets to add to or remove from the UI. 
+ */
 public interface HasAbsolutelyPositionedWidgets {
 
+	/**
+	 * Get the absolutely positioned widgets logically "contained" in this
+	 * widget. 
+	 */
 	public List<Widget> getAbsolutelyPositionedWidgets();
 }

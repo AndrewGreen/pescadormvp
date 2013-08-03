@@ -18,6 +18,9 @@ package mx.org.pescadormvp.core.client.util;
 
 import com.google.gwt.dom.client.Element;
 
+/**
+ * Some utilities related to DOM elements. 
+ */
 public class DOMUtils {
 
 	public static int getElementWidth(Element el) {

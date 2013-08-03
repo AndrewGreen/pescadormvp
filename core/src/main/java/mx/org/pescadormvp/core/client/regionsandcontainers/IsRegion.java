@@ -8,8 +8,14 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.regionsandcontainers;
 
-
+/**
+ * An entity that, for example a {@link DynamicContainer}, is a
+ * UI region and provide the tag interface that designates that region. 
+ */
 public interface IsRegion {
 
+	/**
+	 * Get the tag interface that designates this region.  
+	 */
 	public Class<? extends ForRegionTag> getRegionTag();
 }

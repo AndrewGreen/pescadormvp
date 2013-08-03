@@ -24,6 +24,11 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
+/**
+ * Session component (implementation). Provides information on the current
+ * locale and available locales, as well as methods for going to places, storing
+ * session data, and generating unique IDs.
+ */
 public class SessionImpl implements Session, PlaceChangeEvent.Handler {
 
 	private int placeChangeCounter = 0;

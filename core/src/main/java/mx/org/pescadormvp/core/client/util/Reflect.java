@@ -16,7 +16,10 @@
  */
 package mx.org.pescadormvp.core.client.util;
 
-// TODO perhaps move to a real reflection framework like gwt-ent?
+/**
+ * A bit of simple reflection. Note: much more complete reflection is
+ * available for GWT via other libraries. 
+ */
 public class Reflect {
 	
 	/**

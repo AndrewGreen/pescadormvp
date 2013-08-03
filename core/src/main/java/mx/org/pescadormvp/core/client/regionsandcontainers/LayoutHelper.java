@@ -18,8 +18,6 @@ import com.google.web.bindery.event.shared.EventBus;
 /**
  * Helper class for standard layout/region/container actions normally used
  * in classes that manage global app layout.
- * 
- * @author Andrew Green
  *
  */
 public class LayoutHelper {

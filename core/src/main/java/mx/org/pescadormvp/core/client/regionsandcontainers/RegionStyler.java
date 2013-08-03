@@ -12,6 +12,9 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
+/**
+ * A class used for complex styling of regions.
+ */
 public interface RegionStyler {
 
 	List<IsWidget> getAbsPositionedWidgets();

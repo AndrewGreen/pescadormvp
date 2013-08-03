@@ -8,4 +8,8 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.regionsandcontainers;
 
+/**
+ * A superinterface for tag interfaces that refer to UI regions. Such interfaces
+ * should extend this one. 
+ */
 public interface ForRegionTag { }

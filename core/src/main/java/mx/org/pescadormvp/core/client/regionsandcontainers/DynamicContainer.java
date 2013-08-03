@@ -13,20 +13,10 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * <p>
- * Widget containers whose {@link AcceptsOneWidget#setWidget} method has extra
- * functionality: when the widget is set to an instance of
- * {@link ContainerDeactivation}, any real widgets are removed from the
- * container, and the container is hidden or otherwise disposed in some way
- * within the current UI context. In the Pescador
- * implementation, this means the container is hidden.
- * </p>
- * <p>
- * Implementations so far set commands for activation and deactivation, and for
- * adding/removing absolutely-placed widgets related to the container. (So far,
- * these are widgets that appear visually within the container, but for
- * implementation reasons, are actually not within it in the DOM hierarchy.)
- * </p>
+ * A special container that can be told to de-activate or have a minimum height
+ * or width, can pass those messages on (probable to a larger layout widget it's
+ * a part of), and can be associated with absolutely positioned widgets not
+ * visually contained within it.
  */
 public interface DynamicContainer extends AcceptsOneWidget, IsWidget,
 		RegionStateUpdateRequiredEvent.Handler {

@@ -10,6 +10,13 @@ package mx.org.pescadormvp.core.client.session;
 
 import java.io.Serializable;
 
+/**
+ * Data related to the current session. If a component needs to store session
+ * data, it should store it in a class
+ * that implements an extension of this interface. That will give it access
+ * to convenience methods for session data provided by the {@link Session}
+ * component.
+ */
 public interface SessionData extends Serializable {
 
 }

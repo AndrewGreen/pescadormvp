@@ -12,11 +12,9 @@ import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
 
 /**
  * Tag interface, extended by interfaces that are used to indicate general
- * application state on some level. One such interface is {@link PescadorMVPPlace}.
- * This allows us to create
- * activities that are not necessarily linked to places, but to some other
- * aspect of application state.
- * 
+ * application state on some level. One such interface is
+ * {@link PescadorMVPPlace}. Alternate state pointers are useful for activities
+ * that are not linked to places, but to some other aspect of application state.
  */
 public interface StatePointer {
 

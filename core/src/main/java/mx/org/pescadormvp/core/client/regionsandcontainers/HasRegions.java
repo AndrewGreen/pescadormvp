@@ -8,8 +8,14 @@
  ******************************************************************************/
 package mx.org.pescadormvp.core.client.regionsandcontainers;
 
-
+/**
+ * A class that has regions designated by a subinterface of {@link ForRegionTag}
+ * and can provide {@link DynamicContainer}s for them.
+ */
 public interface HasRegions {
 
+	/**
+	 * Get the {@link DynamicContainer} for the region specified. 
+	 */
 	public DynamicContainer getContainer(Class<? extends ForRegionTag> regionTag);
 }

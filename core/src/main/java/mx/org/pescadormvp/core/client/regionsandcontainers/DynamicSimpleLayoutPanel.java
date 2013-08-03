@@ -17,6 +17,17 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
+/**
+ * <p>
+ * An implementation of {@link DynamicContainer}.
+ * </p>
+ * <p>
+ * This widget can be told to de-activate or have a minimum height or width, can
+ * pass those messages on (probable to a larger layout widget it's a part of),
+ * and can be associated with absolutely positioned widgets not visually
+ * contained within it.
+ * </p>
+ */
 public class DynamicSimpleLayoutPanel extends SimpleLayoutPanel
 	implements DynamicContainer, IsRegion {
 	
