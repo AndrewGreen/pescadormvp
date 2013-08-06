@@ -75,8 +75,8 @@ public class ActiveGlobalSetup extends GlobalSetup {
 				new InitialLoadingTimer(),
 				true,
 				"JSONPExample/js/gwt-openlayers/util.js",
-				"http://www.openlayers.org/api/OpenLayers.js",
-				"http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+				"http://cdnjs.cloudflare.com/ajax/libs/openlayers/2.12/OpenLayers.min.js",
+				"js/OpenStreetMap.js");
 	}
 	
 	/**
