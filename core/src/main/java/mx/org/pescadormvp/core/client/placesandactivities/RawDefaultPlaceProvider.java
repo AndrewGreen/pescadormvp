@@ -21,11 +21,11 @@ import mx.org.pescadormvp.core.client.placesandactivities.PescadorMVPPlace;
  * default places for the framework.
  * </p>
  * <p>
- * Instead, implement this interface on the {@link PAVComponent} that you wish
- * to associated with your application's default place, and then bind that
- * component's interface to this interface in your global setup. See
- * {@link mx.org.pescadormvp.examples.jsonp.client ...examples.jsonp.client} for
- * a full example.
+ * Instead, implement this interface on the {@link PAVComponent} that is
+ * associated with the place that will be your application's default place, and
+ * then bind that component's interface to this interface in your global setup.
+ * See {@link mx.org.pescadormvp.examples.jsonp.client ...examples.jsonp.client}
+ * for a full example.
  * </p>
  */
 @SuppressWarnings("javadoc")
