@@ -28,12 +28,6 @@ application](http://andrewgreen.github.io/pescadormvp/site/apidocs/index.html?mx
 Pescador MVP was developed by Andrew Green at the [Audiovisual Laboratory for Social Research](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-LAIS) of the  [Instituto Mora](http://www.mora.edu.mx). It was originally developed as part of the [Pescador](http://lais.mora.edu.mx/huellasdeluz/#contenido;id=MXIMHDL-AcercaDelSitio-Pescador) system.
 
 
-# How to use [TODO]
-
-Add maven dependency
-Alternately, include in build path
-
-
 # Building, running and hacking the source
 
 # How to compile, run and debug
