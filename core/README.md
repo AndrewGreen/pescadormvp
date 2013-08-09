@@ -1,5 +1,7 @@
 # Pescador MVP
 
-[TODO]
+Pescador MVP is a modular MVP framework for GWT that builds on the standard MVP-related
+classes provided by GWT.
 
-See README.md in parent directory.
+This directory contains the core Maven module. For more information, see README
+in the project's root directory.
