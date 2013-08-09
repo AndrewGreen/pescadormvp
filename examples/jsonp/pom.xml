@@ -252,12 +252,4 @@
 		</pluginManagement>
 
 	</build>
-	
-	<distributionManagement>
-		<site>
-			<id>website</id>
-			<url>http://andrewgreen.github.io/pescadormvp/maven-site/examples/jsonp/</url>
-		</site>
-	</distributionManagement>
-
 </project>
