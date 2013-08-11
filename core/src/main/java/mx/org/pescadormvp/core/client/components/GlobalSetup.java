@@ -317,7 +317,7 @@ public abstract class GlobalSetup implements RootRegionManager {
 		for (PendingLog pendingLog : pendingLogs)
 			logger.log(pendingLog.getLevel(), pendingLog.getText());
 
-		logger.log(Level.FINEST, "Components loaded, starting up framework");
+		logger.log(Level.INFO, "Components loaded, starting up framework");
 
 		// Check if any requested scripts failed to load
 		if (scriptsFailedToLoad.size() > 0) {
