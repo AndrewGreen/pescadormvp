@@ -34,6 +34,10 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface QueryView extends
 		IsWidget {
 	
+	/**
+	 * Render the area with the text box, placing the provided strings before
+	 * and after it.
+	 */
 	void renderQueryArea(String beforeQueryTextBox, String afterQueryTextBox);
 
 	/**
@@ -82,10 +86,21 @@ public interface QueryView extends
 	 */
 	void renderEmpty();
 	
+	/**
+	 * Render the LatLon state, showing a location's coordinates and a map.
+	 */
 	void renderLatLon();
 	
+	/**
+	 * Render a state with a message explaining that no place was found with
+	 * the name entered.
+	 */
 	void renderNoSuchPlace();
 	
+	/**
+	 * Render a state with a message explaining that there was an error
+	 * communicating with the server.
+	 */
 	void renderError();
 	
 	/**
